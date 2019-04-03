@@ -1,8 +1,10 @@
+package Model;
+
 public class Mois {
 
     private FamilleEquipement armoireForte;
     private FamilleEquipement centralesAlarmes;
-    //private FamilleEquipement superviseur;
+    //private Model.FamilleEquipement superviseur;
     private FamilleEquipement teleSono;
     private FamilleEquipement videoSurveillance;
     private FamilleEquipement sono;
