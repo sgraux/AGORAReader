@@ -1,5 +1,6 @@
 package Model;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -32,7 +33,17 @@ public abstract class ExtractReader {
     }
 
     public void read(){
-        Iterator<Row> extractRowIterator = extract.getSheetAt(0).iterator();
+        Iterator<Row> rowIterator = extract.getSheetAt(0).iterator();
+        Row currentRow;
+        Iterator<Cell> cellIterator;
+
+        while (rowIterator.hasNext()){
+            currentRow = rowIterator.next();
+            cellIterator = currentRow.cellIterator();
+            while (cellIterator.hasNext()){
+                
+            }
+        }
     }
 
 
