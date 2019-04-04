@@ -34,7 +34,7 @@ public class ExtractReader {
         }
 
         System.out.println("Launch read ...");
-        //this.read();
+        this.read();
     }
 
     public void read(){
@@ -50,25 +50,30 @@ public class ExtractReader {
         String equipmentCellContent = "";
         String clientCellContent = "";
 
+        int testCountRows = 0;
+
         while (rowIterator.hasNext()){
+            testCountRows++;
             currentRow = rowIterator.next();
             cellIterator = currentRow.cellIterator();
             while (cellIterator.hasNext()){
                 currentCell = cellIterator.next();
                 switch (countCell){
-                    case 11:
-                        yearCellContent = currentCell.getStringCellValue();
+                    case 0:
+                        yearCellContent = ""+currentCell.getNumericCellValue();
                         break;
-                    case 18:
+                    case 2:
                         equipmentCellContent = currentCell.getStringCellValue();
                         break;
-                    case 21:
+                    case 3:
                         clientCellContent  = currentCell.getStringCellValue();
                         break;
                 }
+                countCell++;
                 this.manageCellsContent(yearCellContent, equipmentCellContent, clientCellContent);
             }
         }
+        System.out.println(testCountRows);
     }
 
     public void manageCellsContent(String yearCellContent, String equipmentCellContent, String clientCellContent){
