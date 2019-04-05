@@ -36,7 +36,7 @@ public class ExtractReader {
             System.out.println("io exception");
         }
         this.read();
-        System.out.println("year 1 : " + yearList.get(0) + "\n" + "year 2 : " + yearList.get(1) + "\n" + "year 3 : " + yearList.get(2) + "\n");
+        System.out.println(yearList.get(0) + "\n" + yearList.get(1) + "\n" + yearList.get(2) + "\n");
     }
 
     public void read(){
@@ -114,6 +114,17 @@ public class ExtractReader {
                 }
                 else{
                     yearList.add(new Annee(currentYear));
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                }
+            }
+            else{
+                if (yearList.get(0).getAnneeInt() == currentYear) {
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                }
+                else if (yearList.get(1).getAnneeInt() == currentYear) {
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                }
+                else if (yearList.get(2).getAnneeInt() == currentYear) {
                     yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
                 }
             }

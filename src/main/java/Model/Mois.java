@@ -9,6 +9,7 @@ public class Mois {
     private FamilleEquipement videoSurveillance;
     private FamilleEquipement sono;
     private FamilleEquipement interphones;
+    private int overallOTsDEBUG;
 
     public Mois() {
         this.armoireForte = new FamilleEquipement();
@@ -17,6 +18,7 @@ public class Mois {
         this.videoSurveillance = new FamilleEquipement();
         this.sono = new FamilleEquipement();
         this.interphones = new FamilleEquipement();
+        overallOTsDEBUG = 0;
     }
 
     public void manageEquipement(String parEquipment, String parClient){
@@ -50,6 +52,12 @@ public class Mois {
                     interphones.manageOT(parClient);
         }
 
+        if(!parClient.equals("NA")) overallOTsDEBUG ++;
+
+    }
+
+    public int getOverallOTsDEBUG() {
+        return overallOTsDEBUG;
     }
 
     public FamilleEquipement getArmoireForte() {
@@ -103,6 +111,11 @@ public class Mois {
     public int getOverallOts(){
         return armoireForte.getNbTotalOT() + centralesAlarmes.getNbTotalOT() + teleSono.getNbTotalOT()
                 + videoSurveillance.getNbTotalOT() + sono.getNbTotalOT() + interphones.getNbTotalOT();
+    }
+
+    public int getOverallOTsLignesSpe(){
+        return armoireForte.getNbOTLignesSpe() + centralesAlarmes.getNbOTLignesSpe() + teleSono.getNbOTLignesSpe()
+                + videoSurveillance.getNbOTLignesSpe() + sono.getNbOTLignesSpe() + interphones.getNbOTLignesSpe();
     }
 
     @Override
