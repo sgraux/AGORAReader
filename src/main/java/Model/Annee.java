@@ -12,6 +12,7 @@ public class Annee {
         }
     }
 
+    //TODO: généralisé pour tous les BM
     public int[] getSumOTsLinesArmoire(String parEquipment){
         int[] tabOTsLines = new int[15];
         for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
