@@ -12,6 +12,22 @@ public class Annee {
         }
     }
 
+    public int[] getSumOTsLinesArmoire(String parEquipment){
+        int[] tabOTsLines = new int[15];
+        for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
+
+        int[] OTsLinesArmoireForte;
+
+        for(int i = 0; i < 12; i++) {
+            OTsLinesArmoireForte = this.mois[i].getArmoireForte().getOTsLines();
+            for (int j = 0; j < 15; j++) {
+                tabOTsLines[j] += OTsLinesArmoireForte[j];
+            }
+        }
+
+        return tabOTsLines;
+    }
+
     public int getSumOverallOTs(){
         int sum = 0;
         for(int i = 0; i < 12; i++){

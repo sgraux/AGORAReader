@@ -85,6 +85,14 @@ public class FamilleEquipement {
 
     }
 
+    public int[] getOTsLines(){
+        int[] tabOTsLines = new int[15];
+        for(int i = 0; i < nbOTMetro.length; i++)
+            tabOTsLines[i] = nbOTMetro[i];
+        tabOTsLines[13] = nbOTRERA;
+        tabOTsLines[14] = nbOTRERB;
+        return tabOTsLines;
+    }
 
     public int getNbOTLignesSpe(){
         return nbOTLignesSpe;
