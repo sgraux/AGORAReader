@@ -1,6 +1,7 @@
 package Model;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
@@ -15,162 +16,189 @@ import java.util.ArrayList;
 
 public class ChartEngine extends Application {
 
-        private ExtractReader reader;
-        ArrayList<Annee> listYears;
-        private String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
-        private  String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13","RER A", "RER B"};
+    private ExtractReader reader;
+    ArrayList<Annee> listYears;
+    private String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
+    private String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
 
-        public static void main(String[] args) {
-            launch(args);
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        reader = new ExtractReader("C:\\Users\\Sean\\Documents\\STAGE - RATP\\Sheet1CUT.xlsx");
+        listYears = reader.giveYear();
+        this.generateAllCharts(stage);
+        System.out.print("--- PNGs DONE --- \n");
+        PDFCreator creator = new PDFCreator();
+        creator.generatePDF();
+        System.out.print("--- PDF DONE --- \n");
+        System.out.print("--- STOP ---");
+        Platform.exit();
+    }
+
+    public void generateAllCharts(Stage stage){
+        this.cleanCharts();
+        this.barChat(stage);
+        this.generateBarChartRepartitionLines(stage);
+    }
+
+    public void barChat(Stage stage) {
+
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        int OTsMonthPerYear;
+
+        BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
+
+        barChart.setTitle("Proportion OT");
+
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 12; i++) {
+            OTsMonthPerYear = listYears.get(0).getMoisIndex(i).getOverallOTsLignesSpe();
+            if (OTsMonthPerYear > 0) series2017.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
         }
 
-        @Override
-        public void start(Stage stage) throws Exception {
-
-            reader = new ExtractReader("C:\\Users\\Sean\\Documents\\STAGE - RATP\\Sheet1CUT.xlsx");
-            listYears = reader.giveYear();
-            this.barChat(stage);
-            this.lineChart(stage);
-            this.generateBarChartArmoire(stage);
-
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 12; i++) {
+            OTsMonthPerYear = listYears.get(1).getMoisIndex(i).getOverallOTsLignesSpe();
+            if (OTsMonthPerYear > 0) series2018.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
         }
 
-        public void barChat(Stage stage){
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
 
-            final CategoryAxis xAxis = new CategoryAxis();
-            final NumberAxis yAxis = new NumberAxis();
-            int OTsMonthPerYear;
-
-            BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
-
-            barChart.setTitle("Proportion OT");
-
-            XYChart.Series series2017 = new XYChart.Series();
-            series2017.setName("2017");
-            for (int i = 0; i < 12; i++) {
-                OTsMonthPerYear = listYears.get(0).getMoisIndex(i).getOverallOTsLignesSpe();
-                if(OTsMonthPerYear > 0) series2017.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
-            }
-
-            XYChart.Series series2018 = new XYChart.Series();
-            series2018.setName("2018");
-            for (int i = 0; i < 12; i++) {
-                OTsMonthPerYear = listYears.get(1).getMoisIndex(i).getOverallOTsLignesSpe();
-                if(OTsMonthPerYear > 0) series2018.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
-            }
-
-            XYChart.Series series2019 = new XYChart.Series();
-            series2019.setName("2019");
-
-            for (int i = 0; i < 12; i++) {
-                OTsMonthPerYear = listYears.get(2).getMoisIndex(i).getOverallOTsLignesSpe();
-                if(OTsMonthPerYear > 0) series2019.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
-            }
-
-            Scene scene = new Scene(barChart, 1200, 800);
-            barChart.setAnimated(false);
-            barChart.getData().add(series2017);
-            barChart.getData().add(series2018);
-            barChart.getData().add(series2019);
-            saveAsPng(scene, "C:\\Users\\Sean\\Documents\\STAGE - RATP\\Test Chart JavaFX\\barChart.png");
-            stage.setScene(scene);
-            stage.show();
-
+        for (int i = 0; i < 12; i++) {
+            OTsMonthPerYear = listYears.get(2).getMoisIndex(i).getOverallOTsLignesSpe();
+            if (OTsMonthPerYear > 0) series2019.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
         }
 
-        public void lineChart(Stage stage){
+        Scene scene = new Scene(barChart, 1200, 800);
+        barChart.setAnimated(false);
+        barChart.getData().add(series2017);
+        barChart.getData().add(series2018);
+        barChart.getData().add(series2019);
+        saveAsPng(scene, "src/Charts/1 - ProportionOts.png");
+        stage.setScene(scene);
+        //stage.show();
 
-            int OTsMonthPerYear;
-            final NumberAxis xAxis = new NumberAxis();
-            final NumberAxis yAxis = new NumberAxis();
+    }
 
-            LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
+    public void lineChart(Stage stage) {
 
-            lineChart.setTitle("Proportion OT");
+        int OTsMonthPerYear;
+        final NumberAxis xAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis();
 
-            XYChart.Series series2017 = new XYChart.Series();
-            series2017.setName("2017");
-            for (int i = 0; i < 12; i++) {
-                OTsMonthPerYear = listYears.get(0).getMoisIndex(i).getOverallOTsLignesSpe();
-                if(OTsMonthPerYear > 0) series2017.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
-            }
+        LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
 
-            XYChart.Series series2018 = new XYChart.Series();
-            series2018.setName("2018");
-            for (int i = 0; i < 12; i++) {
-                OTsMonthPerYear = listYears.get(1).getMoisIndex(i).getOverallOTsLignesSpe();
-                if(OTsMonthPerYear > 0) series2018.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
-            }
+        lineChart.setTitle("Proportion OT");
 
-            XYChart.Series series2019 = new XYChart.Series();
-            series2019.setName("2019");
-
-            for (int i = 0; i < 12; i++) {
-                OTsMonthPerYear = listYears.get(2).getMoisIndex(i).getOverallOTsLignesSpe();
-                if(OTsMonthPerYear > 0) series2019.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
-            }
-
-            Scene scene = new Scene(lineChart, 1200, 800);
-            lineChart.setAnimated(false);
-            lineChart.getData().add(series2017);
-            lineChart.getData().add(series2018);
-            lineChart.getData().add(series2019);
-            saveAsPng(scene, "C:\\Users\\Sean\\Documents\\STAGE - RATP\\Test Chart JavaFX\\lineChart.png");
-            stage.setScene(scene);
-            stage.show();
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 12; i++) {
+            OTsMonthPerYear = listYears.get(0).getMoisIndex(i).getOverallOTsLignesSpe();
+            if (OTsMonthPerYear > 0) series2017.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
         }
 
-        public void generateBarChartRepartitionLines(Stage stage){
-
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 12; i++) {
+            OTsMonthPerYear = listYears.get(1).getMoisIndex(i).getOverallOTsLignesSpe();
+            if (OTsMonthPerYear > 0) series2018.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
         }
 
-        public void generateBarChartArmoire(Stage stage){
-            final CategoryAxis xAxis = new CategoryAxis();
-            final NumberAxis yAxis = new NumberAxis();
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
 
-            int[] OTsLinesArmoire2017 = listYears.get(0).getSumOTsLinesArmoire("armoire");
-            int[] OTsLinesArmoire2018 = listYears.get(1).getSumOTsLinesArmoire("armoire");
-            int[] OTsLinesArmoire2019 = listYears.get(2).getSumOTsLinesArmoire("armoire");
-
-            BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
-
-            barChart.setTitle("Répartition Armoire Forte");
-
-            XYChart.Series series2017 = new XYChart.Series();
-            series2017.setName("2017");
-            for (int i = 0; i < 15; i++) {
-                series2017.getData().add(new XYChart.Data(tabLines[i], OTsLinesArmoire2017[i]));
-            }
-            XYChart.Series series2018 = new XYChart.Series();
-            series2018.setName("2018");
-            for (int i = 0; i < 15; i++) {
-                series2018.getData().add(new XYChart.Data(tabLines[i], OTsLinesArmoire2018[i]));
-            }
-            XYChart.Series series2019 = new XYChart.Series();
-            series2019.setName("2019");
-            for (int i = 0; i < 15; i++) {
-                series2019.getData().add(new XYChart.Data(tabLines[i], OTsLinesArmoire2019[i]));
-            }
-
-
-            Scene scene = new Scene(barChart, 1200, 800);
-            barChart.setAnimated(false);
-            barChart.getData().add(series2017);
-            barChart.getData().add(series2018);
-            barChart.getData().add(series2019);
-            saveAsPng(scene, "C:\\Users\\Sean\\Documents\\STAGE - RATP\\Test Chart JavaFX\\barChartArmoire.png");
-            stage.setScene(scene);
-            stage.show();
+        for (int i = 0; i < 12; i++) {
+            OTsMonthPerYear = listYears.get(2).getMoisIndex(i).getOverallOTsLignesSpe();
+            if (OTsMonthPerYear > 0) series2019.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
         }
 
-        public void saveAsPng(Scene scene, String path) {
-            WritableImage image = scene.snapshot(null);
-            File file = new File(path);
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            } catch (IOException e) {
-                e.printStackTrace();
+        Scene scene = new Scene(lineChart, 1200, 800);
+        lineChart.setAnimated(false);
+        lineChart.getData().add(series2017);
+        lineChart.getData().add(series2018);
+        lineChart.getData().add(series2019);
+        saveAsPng(scene, "C:\\Users\\Sean\\Documents\\STAGE - RATP\\Test Chart JavaFX\\lineChart.png");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void generateBarChartRepartitionLines(Stage stage) {
+
+        this.generateBarChartRepartitionEquipement(stage, "armoire");
+        this.generateBarChartRepartitionEquipement(stage, "centrale");
+        this.generateBarChartRepartitionEquipement(stage, "telesono");
+        this.generateBarChartRepartitionEquipement(stage, "video");
+        this.generateBarChartRepartitionEquipement(stage, "sono");
+        this.generateBarChartRepartitionEquipement(stage, "interphones");
+
+    }
+
+    public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement){
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+
+        int[] OTsLines2017 = listYears.get(0).getSumOTsLines(parEquipement);
+        int[] OTsLines2018 = listYears.get(1).getSumOTsLines(parEquipement);
+        int[] OTsLines2019 = listYears.get(2).getSumOTsLines(parEquipement);
+
+        BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
+
+        barChart.setTitle("Répartition " + parEquipement);
+
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 15; i++) {
+            series2017.getData().add(new XYChart.Data(tabLines[i], OTsLines2017[i]));
+        }
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 15; i++) {
+            series2018.getData().add(new XYChart.Data(tabLines[i], OTsLines2018[i]));
+        }
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
+        for (int i = 0; i < 15; i++) {
+            series2019.getData().add(new XYChart.Data(tabLines[i], OTsLines2019[i]));
+        }
+
+
+        Scene scene = new Scene(barChart, 1200, 800);
+        barChart.setAnimated(false);
+        barChart.getData().add(series2017);
+        barChart.getData().add(series2018);
+        barChart.getData().add(series2019);
+        saveAsPng(scene, "src/Charts/" + parEquipement + ".png");
+        stage.setScene(scene);
+        //stage.show();
+    }
+
+    public void saveAsPng(Scene scene, String path) {
+        WritableImage image = scene.snapshot(null);
+        File file = new File(path);
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cleanCharts(){
+        File chartsDirectory = new File("src/Charts");
+        File[] directoryListing = chartsDirectory.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                child.delete();
             }
         }
+
+    }
 
 }

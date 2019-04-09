@@ -12,20 +12,31 @@ public class Annee {
         }
     }
 
-    //TODO: généralisé pour tous les BM
-    public int[] getSumOTsLinesArmoire(String parEquipment){
+    //TODO: généraliser pour tous les BM
+    public int[] getSumOTsLines(String parEquipement){
         int[] tabOTsLines = new int[15];
         for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
 
-        int[] OTsLinesArmoireForte;
+        int[] OTsLinesEquipement = new int[15];
 
         for(int i = 0; i < 12; i++) {
-            OTsLinesArmoireForte = this.mois[i].getArmoireForte().getOTsLines();
+            if(parEquipement.equals("armoire"))
+                OTsLinesEquipement = this.mois[i].getArmoireForte().getOTsLines();
+            else if(parEquipement.equals("centrale"))
+                OTsLinesEquipement = this.mois[i].getCentralesAlarmes().getOTsLines();
+            else if(parEquipement.equals("telesono"))
+                OTsLinesEquipement = this.mois[i].getTeleSono().getOTsLines();
+            else if(parEquipement.equals("video"))
+                OTsLinesEquipement = this.mois[i].getVideoSurveillance().getOTsLines();
+            else if(parEquipement.equals("sono"))
+                OTsLinesEquipement = this.mois[i].getSono().getOTsLines();
+            else if(parEquipement.equals("interphones"))
+                OTsLinesEquipement = this.mois[i].getInterphones().getOTsLines();
+
             for (int j = 0; j < 15; j++) {
-                tabOTsLines[j] += OTsLinesArmoireForte[j];
+                tabOTsLines[j] += OTsLinesEquipement[j];
             }
         }
-
         return tabOTsLines;
     }
 

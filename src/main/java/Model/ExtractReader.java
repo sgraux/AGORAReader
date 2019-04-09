@@ -25,7 +25,7 @@ public class ExtractReader {
         try {
             System.out.println("--- START ----");
             FileInputStream tempInputStream = new FileInputStream(tempFile);
-            System.out.println("input stream done");
+            //System.out.println("input stream done");
             System.out.println("--- READING ----");
             extract = new XSSFWorkbook(tempInputStream);
         }
@@ -36,7 +36,7 @@ public class ExtractReader {
             System.out.println("io exception");
         }
         this.read();
-        System.out.println(yearList.get(0) + "\n" + yearList.get(1) + "\n" + yearList.get(2) + "\n");
+        //System.out.println(yearList.get(0) + "\n" + yearList.get(1) + "\n" + yearList.get(2) + "\n");
     }
 
     public void read(){
@@ -82,7 +82,7 @@ public class ExtractReader {
             this.manageCellsContent(yearCellContent, timeFinishCellContent, equipmentCellContent, clientCellContent);
             countCell = 0;
         }
-        System.out.println(testCountRows);
+        //System.out.println(testCountRows);
     }
 
     public void manageCellsContent(Double yearCellContent, String timeFinish, String equipmentCellContent, String clientCellContent){
@@ -148,7 +148,6 @@ public class ExtractReader {
         tab[1] = Integer.parseInt(formatYear.format(parsedDate));
         return tab;
 
-        //String parsedDate = new SimpleDateFormat("dd/MM/yyyy").format(date);
 
     }
 

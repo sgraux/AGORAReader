@@ -19,7 +19,7 @@ public class FamilleEquipement {
         nbOTLignesSpe = 0;
     }
 
-    public void manageOT(String parClient) { //TODO: switch case
+    public void manageOT(String parClient) {
         if(parClient.equals("RER A")) {
             nbOTRERA++;
             nbOTLignesSpe++;
