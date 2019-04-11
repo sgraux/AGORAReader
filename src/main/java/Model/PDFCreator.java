@@ -1,34 +1,36 @@
 package Model;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Graphics2D;
+import java.util.Date;
 
+/**Genere le PDF qui presente tous les graphes.
+ * @author Sean Graux
+ * @version 1.0
+ */
 public class PDFCreator {
 
     private final String pathToPNGs = "src/Charts";
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+            Font.BOLD);
 
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs+"/rapport.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/Extract.pdf"));
         document.open();
-        float scaler;// = 0;
-        Image img;// = Image.getInstance(pathToPNGs+"/armoire.png");
+        addTitle(document);
+        float scaler;
+        Image img;
 
-        File chartsDirectory = new File("src/Charts");
+        File chartsDirectory = new File(pathToPNGs);
         File[] directoryListing = chartsDirectory.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                if(child.getName().contains(".png")) {
+                if (child.getName().contains(".png")) {
                     img = Image.getInstance(pathToPNGs + "/" + child.getName());
                     scaler = ((document.getPageSize().getWidth() - document.leftMargin()
                             - document.rightMargin() - 0) / img.getWidth()) * 100;
@@ -38,5 +40,19 @@ public class PDFCreator {
             }
         }
         document.close();
+    }
+
+    private static void addTitle(Document document)
+            throws DocumentException {
+        Paragraph title = new Paragraph("Extraction OT ITV " + new Date(), catFont);
+        title.setAlignment(Element.ALIGN_CENTER);
+        addEmptyLine(title, 3);
+        document.add(title);
+    }
+
+    private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
     }
 }

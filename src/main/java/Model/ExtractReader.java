@@ -1,6 +1,5 @@
 package Model;
 
-import jdk.nashorn.internal.parser.Token;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -13,6 +12,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**Lit un fichier .xlsx extrait de la GMAO.
+ * Il doit contenir (dans cet ordre) les colonnes [Date Declaration, Date Termine, Famille BM, Client].
+ * @author Sean Graux
+ * @version 1.0
+ */
 public class ExtractReader {
 
     private XSSFWorkbook extract;
@@ -25,7 +29,6 @@ public class ExtractReader {
         try {
             System.out.println("--- START ----");
             FileInputStream tempInputStream = new FileInputStream(tempFile);
-            //System.out.println("input stream done");
             System.out.println("--- READING ----");
             extract = new XSSFWorkbook(tempInputStream);
         }
@@ -36,7 +39,6 @@ public class ExtractReader {
             System.out.println("io exception");
         }
         this.read();
-        //System.out.println(yearList.get(0) + "\n" + yearList.get(1) + "\n" + yearList.get(2) + "\n");
     }
 
     public void read(){
@@ -54,7 +56,7 @@ public class ExtractReader {
         String clientCellContent = "";
 
 
-        int testCountRows = 0;
+        int testCountRows = 0;//DEBUG
 
         while (rowIterator.hasNext()){
             testCountRows++;
@@ -147,8 +149,6 @@ public class ExtractReader {
         tab[0] = Integer.parseInt(formatMonth.format(parsedDate));
         tab[1] = Integer.parseInt(formatYear.format(parsedDate));
         return tab;
-
-
     }
 
     public ArrayList<Annee> giveYear(){

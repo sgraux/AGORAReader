@@ -1,10 +1,13 @@
 package Model;
 
+/**[Modele de donnees] Gere un mois et tous les OT des equipements surveilles
+ * @author Sean Graux
+ * @version 1.0
+ */
 public class Mois {
 
     private FamilleEquipement armoireForte;
     private FamilleEquipement centralesAlarmes;
-    //private Model.FamilleEquipement superviseur;
     private FamilleEquipement teleSono;
     private FamilleEquipement videoSurveillance;
     private FamilleEquipement sono;
@@ -19,6 +22,23 @@ public class Mois {
         this.sono = new FamilleEquipement();
         this.interphones = new FamilleEquipement();
         overallOTsDEBUG = 0;
+    }
+
+    public FamilleEquipement getEquipement(String parEquipement){
+        if(parEquipement.equals("armoire"))
+            return getArmoireForte();
+        else if(parEquipement.equals("centrale"))
+            return getCentralesAlarmes();
+        else if(parEquipement.equals("telesono"))
+            return getTeleSono();
+        else if(parEquipement.equals("video"))
+            return getVideoSurveillance();
+        else if(parEquipement.equals("sono"))
+            return getSono();
+        else if(parEquipement.equals("interphones"))
+            return getInterphones();
+        else
+            return null;
     }
 
     public void manageEquipement(String parEquipment, String parClient){

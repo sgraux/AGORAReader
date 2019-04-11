@@ -6,7 +6,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -14,6 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**Genere tous les graphes et les enregesitre  dans /src/Charts
+ * @author Sean Graux
+ * @version 1.0
+ */
 public class ChartEngine extends Application {
 
     private ExtractReader reader;
@@ -42,7 +45,8 @@ public class ChartEngine extends Application {
     public void generateAllCharts(Stage stage){
         this.cleanCharts();
         this.barChat(stage);
-        this.generateBarChartRepartitionLines(stage);
+        this.generateBarChartRepartition(stage);
+        this.generateLineChartEvolution(stage);
     }
 
     public void barChat(Stage stage) {
@@ -127,21 +131,20 @@ public class ChartEngine extends Application {
         lineChart.getData().add(series2019);
         saveAsPng(scene, "C:\\Users\\Sean\\Documents\\STAGE - RATP\\Test Chart JavaFX\\lineChart.png");
         stage.setScene(scene);
-        stage.show();
+        //stage.show();
     }
 
-    public void generateBarChartRepartitionLines(Stage stage) {
+    public void generateBarChartRepartition(Stage stage) {
 
-        this.generateBarChartRepartitionEquipement(stage, "armoire");
-        this.generateBarChartRepartitionEquipement(stage, "centrale");
-        this.generateBarChartRepartitionEquipement(stage, "telesono");
-        this.generateBarChartRepartitionEquipement(stage, "video");
-        this.generateBarChartRepartitionEquipement(stage, "sono");
-        this.generateBarChartRepartitionEquipement(stage, "interphones");
-
+        this.generateBarChartRepartitionEquipement(stage, "armoire", 2);
+        this.generateBarChartRepartitionEquipement(stage, "centrale", 3);
+        this.generateBarChartRepartitionEquipement(stage, "telesono", 4);
+        this.generateBarChartRepartitionEquipement(stage, "video", 5);
+        this.generateBarChartRepartitionEquipement(stage, "sono", 6);
+        this.generateBarChartRepartitionEquipement(stage, "interphones", 7);
     }
 
-    public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement){
+    public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
@@ -175,9 +178,54 @@ public class ChartEngine extends Application {
         barChart.getData().add(series2017);
         barChart.getData().add(series2018);
         barChart.getData().add(series2019);
-        saveAsPng(scene, "src/Charts/" + parEquipement + ".png");
+        saveAsPng(scene, "src/Charts/"+ chartNumber+" - barChart_" + parEquipement + ".png");
         stage.setScene(scene);
         //stage.show();
+    }
+
+    public void generateLineChartEvolution(Stage stage){
+        generateLineChartEvolutionEquipement(stage, "armoire", 2);
+        generateLineChartEvolutionEquipement(stage, "centrale", 3);
+        generateLineChartEvolutionEquipement(stage, "telesono", 4);
+        generateLineChartEvolutionEquipement(stage, "video", 5);
+        generateLineChartEvolutionEquipement(stage, "sono", 6);
+        generateLineChartEvolutionEquipement(stage, "interphones", 7);
+    }
+
+    public void generateLineChartEvolutionEquipement(Stage stage, String parEquipement, int chartNumber){
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+
+        LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
+
+        lineChart.setTitle("Proportion OT " + parEquipement);
+
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 12; i++) {
+            series2017.getData().add(new XYChart.Data(tabMois[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
+        }
+
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 12; i++) {
+            series2018.getData().add(new XYChart.Data(tabMois[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
+        }
+
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
+
+        for (int i = 0; i < 12; i++) {
+            series2019.getData().add(new XYChart.Data(tabMois[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
+        }
+
+        Scene scene = new Scene(lineChart, 1200, 800);
+        lineChart.setAnimated(false);
+        lineChart.getData().add(series2017);
+        lineChart.getData().add(series2018);
+        lineChart.getData().add(series2019);
+        saveAsPng(scene, "src/Charts/"+ chartNumber+" - lineChart_" + parEquipement + ".png");
+        stage.setScene(scene);
     }
 
     public void saveAsPng(Scene scene, String path) {

@@ -3,6 +3,10 @@ package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**[Modele de donnees] Gère les OT pour un type d'équipement
+ * @author Sean Graux
+ * @version 1.0
+ */
 public class FamilleEquipement {
 
     private int nbTotalOT; //total OT pour un équipement pendant un mois

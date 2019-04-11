@@ -1,5 +1,9 @@
 package Model;
 
+/**[Modele de donnees] Gere une annee
+ * @author Sean Graux
+ * @version 1.0
+ */
 public class Annee {
 
     private int anneeInt;
@@ -12,7 +16,6 @@ public class Annee {
         }
     }
 
-    //TODO: généraliser pour tous les BM
     public int[] getSumOTsLines(String parEquipement){
         int[] tabOTsLines = new int[15];
         for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
