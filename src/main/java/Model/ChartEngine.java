@@ -2,7 +2,10 @@ package Model;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.image.WritableImage;
@@ -37,16 +40,33 @@ public class ChartEngine extends Application {
         System.out.print("--- PNGs DONE --- \n");
         PDFCreator creator = new PDFCreator();
         creator.generatePDF();
-        System.out.print("--- PDF DONE --- \n");
+        creator.generatePDFSAE();
+        System.out.print("--- PDFs DONE --- \n");
         System.out.print("--- STOP ---");
         Platform.exit();
     }
 
     public void generateAllCharts(Stage stage){
-        this.cleanCharts();
+        this.cleanCharts("src/Charts");
+        this.cleanCharts("src/ChartsSAE");
         this.barChat(stage);
         this.generateBarChartRepartition(stage);
         this.generateLineChartEvolution(stage);
+
+        //TODO: nettoyer ci-dessous
+        this.generateBarChartRepartitionEquipementLignesSAE(stage, "armoire", 2);
+        this.generateBarChartRepartitionEquipementLignesSAE(stage, "centrale", 3);
+        this.generateBarChartRepartitionEquipementLignesSAE(stage, "telesono", 4);
+        this.generateBarChartRepartitionEquipementLignesSAE(stage, "video", 5);
+        this.generateBarChartRepartitionEquipementLignesSAE(stage, "sono", 6);
+        this.generateBarChartRepartitionEquipementLignesSAE(stage, "interphones", 7);
+
+        generateLineChartEvolutionEquipementLignesSAE(stage, "armoire", 2);
+        generateLineChartEvolutionEquipementLignesSAE(stage, "centrale", 3);
+        generateLineChartEvolutionEquipementLignesSAE(stage, "telesono", 4);
+        generateLineChartEvolutionEquipementLignesSAE(stage, "video", 5);
+        generateLineChartEvolutionEquipementLignesSAE(stage, "sono", 6);
+        generateLineChartEvolutionEquipementLignesSAE(stage, "interphones", 7);
     }
 
     public void barChat(Stage stage) {
@@ -183,6 +203,64 @@ public class ChartEngine extends Application {
         //stage.show();
     }
 
+    public void generateBarChartRepartitionEquipementLignesSAE(Stage stage, String parEquipement, int chartNumber){
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+
+        int[] OTsLines2017 = listYears.get(0).getSumOTsLines(parEquipement);
+        int[] OTsLines2018 = listYears.get(1).getSumOTsLines(parEquipement);
+        int[] OTsLines2019 = listYears.get(2).getSumOTsLines(parEquipement);
+
+        BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
+
+        barChart.setTitle("Répartition " + parEquipement);
+
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 15; i++) {
+            if(i == 0 || i == 2 || i ==3 || i == 12)
+                series2017.getData().add(new XYChart.Data(tabLines[i], OTsLines2017[i]));
+        }
+
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 15; i++) {
+            if(i == 0 || i == 2 || i ==3 || i == 12)
+                series2018.getData().add(new XYChart.Data(tabLines[i], OTsLines2018[i]));
+        }
+
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
+        for (int i = 0; i < 15; i++) {
+            if(i == 0 || i == 2 || i ==3 || i == 12)
+                series2019.getData().add(new XYChart.Data(tabLines[i], OTsLines2019[i]));
+        }
+
+
+        Scene scene = new Scene(barChart, 1200, 800);
+        barChart.setAnimated(false);
+        barChart.getData().add(series2017);
+        barChart.getData().add(series2018);
+        barChart.getData().add(series2019);
+
+        for(Node n:barChart.lookupAll(".default-color0.chart-bar")) {
+            n.setStyle("-fx-bar-fill: blue;");
+        }
+        for(Node n:barChart.lookupAll(".default-color0.chart-legend")) {
+            n.setStyle("-fx-bar-fill: blue;");
+        }
+        //second bar color
+        for(Node n:barChart.lookupAll(".default-color1.chart-bar")) {
+            n.setStyle("-fx-bar-fill: red;");
+        }
+
+
+        saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - barChart_SAE_" + parEquipement + ".png");
+        stage.setScene(scene);
+        //stage.show();
+
+    }
+
     public void generateLineChartEvolution(Stage stage){
         generateLineChartEvolutionEquipement(stage, "armoire", 2);
         generateLineChartEvolutionEquipement(stage, "centrale", 3);
@@ -228,6 +306,43 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
+    public void generateLineChartEvolutionEquipementLignesSAE(Stage stage, String parEquipement, int chartNumber){
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+
+        LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
+
+        lineChart.setTitle("Proportion OT " + parEquipement);
+
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 12; i++) {
+            series2017.getData().add(new XYChart.Data(tabMois[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
+        }
+
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 12; i++) {
+            series2018.getData().add(new XYChart.Data(tabMois[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
+        }
+
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
+
+        for (int i = 0; i < 12; i++) {
+            series2019.getData().add(new XYChart.Data(tabMois[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
+        }
+
+        Scene scene = new Scene(lineChart, 1200, 800);
+        lineChart.setAnimated(false);
+        lineChart.getData().add(series2017);
+        lineChart.getData().add(series2018);
+        lineChart.getData().add(series2019);
+        saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_" + parEquipement + ".png");
+        stage.setScene(scene);
+    }
+
+
     public void saveAsPng(Scene scene, String path) {
         WritableImage image = scene.snapshot(null);
         File file = new File(path);
@@ -238,8 +353,8 @@ public class ChartEngine extends Application {
         }
     }
 
-    public void cleanCharts(){
-        File chartsDirectory = new File("src/Charts");
+    public void cleanCharts(String pathToDirectory){
+        File chartsDirectory = new File(pathToDirectory);
         File[] directoryListing = chartsDirectory.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {

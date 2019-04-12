@@ -102,6 +102,10 @@ public class FamilleEquipement {
         return nbOTLignesSpe;
     }
 
+    public int getNbOTLignesSAE(){
+        return nbOTMetro[0] + nbOTMetro[2] + nbOTMetro[3] + nbOTMetro[12];
+    }
+
     public int getNbTotalOT() {
         return nbTotalOT;
     }

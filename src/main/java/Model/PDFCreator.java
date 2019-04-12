@@ -15,6 +15,7 @@ import java.util.Date;
 public class PDFCreator {
 
     private final String pathToPNGs = "src/Charts";
+    private final String pathToPNGsSAE = "src/ChartsSAE";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
 
@@ -22,7 +23,7 @@ public class PDFCreator {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/Extract.pdf"));
         document.open();
-        addTitle(document);
+        addTitle(document, "");
         float scaler;
         Image img;
 
@@ -42,9 +43,33 @@ public class PDFCreator {
         document.close();
     }
 
-    private static void addTitle(Document document)
+    public void generatePDFSAE() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGsSAE + "/ExtractSAE.pdf"));
+        document.open();
+        addTitle(document, "SAE");
+        float scaler;
+        Image img;
+
+        File chartsDirectory = new File(pathToPNGsSAE);
+        File[] directoryListing = chartsDirectory.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                if (child.getName().contains(".png")) {
+                    img = Image.getInstance(pathToPNGsSAE + "/" + child.getName());
+                    scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+                            - document.rightMargin() - 0) / img.getWidth()) * 100;
+                    img.scalePercent(scaler);
+                    document.add(img);
+                }
+            }
+        }
+        document.close();
+    }
+
+    private static void addTitle(Document document, String parString)
             throws DocumentException {
-        Paragraph title = new Paragraph("Extraction OT ITV " + new Date(), catFont);
+        Paragraph title = new Paragraph("Extraction OT "+ parString + " --- " + new Date(), catFont);
         title.setAlignment(Element.ALIGN_CENTER);
         addEmptyLine(title, 3);
         document.add(title);
