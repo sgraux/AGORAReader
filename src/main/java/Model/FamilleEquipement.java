@@ -114,6 +114,10 @@ public class FamilleEquipement {
         this.nbTotalOT = nbTotalOT;
     }
 
+    public int getOTLigneMetro(int parNumeroLigne){
+        return nbOTMetro[parNumeroLigne - 1];
+    }
+
     @Override
     public String toString() {
         return "FamilleEquipement{" +

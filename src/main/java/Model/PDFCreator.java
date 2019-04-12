@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
+import data.Data;
+
 import java.util.Date;
 
 /**Genere le PDF qui presente tous les graphes.

@@ -23,17 +23,17 @@ public class Annee {
         int[] OTsLinesEquipement = new int[15];
 
         for(int i = 0; i < 12; i++) {
-            if(parEquipement.equals("armoire"))
+            if(parEquipement.equals("Armoires Fortes"))
                 OTsLinesEquipement = this.mois[i].getArmoireForte().getOTsLines();
-            else if(parEquipement.equals("centrale"))
+            else if(parEquipement.equals("Centrales d'alarmes"))
                 OTsLinesEquipement = this.mois[i].getCentralesAlarmes().getOTsLines();
-            else if(parEquipement.equals("telesono"))
+            else if(parEquipement.equals("Telesonorisation"))
                 OTsLinesEquipement = this.mois[i].getTeleSono().getOTsLines();
-            else if(parEquipement.equals("video"))
+            else if(parEquipement.equals("Caméras"))
                 OTsLinesEquipement = this.mois[i].getVideoSurveillance().getOTsLines();
-            else if(parEquipement.equals("sono"))
+            else if(parEquipement.equals("Sonorisation"))
                 OTsLinesEquipement = this.mois[i].getSono().getOTsLines();
-            else if(parEquipement.equals("interphones"))
+            else if(parEquipement.equals("Interphones"))
                 OTsLinesEquipement = this.mois[i].getInterphones().getOTsLines();
 
             for (int j = 0; j < 15; j++) {

@@ -25,17 +25,17 @@ public class Mois {
     }
 
     public FamilleEquipement getEquipement(String parEquipement){
-        if(parEquipement.equals("armoire"))
+        if(parEquipement.equals("Armoires Fortes"))
             return getArmoireForte();
-        else if(parEquipement.equals("centrale"))
+        else if(parEquipement.equals("Centrales d'alarmes"))
             return getCentralesAlarmes();
-        else if(parEquipement.equals("telesono"))
+        else if(parEquipement.equals("Telesonorisation"))
             return getTeleSono();
-        else if(parEquipement.equals("video"))
+        else if(parEquipement.equals("Caméras"))
             return getVideoSurveillance();
-        else if(parEquipement.equals("sono"))
+        else if(parEquipement.equals("Sonorisation"))
             return getSono();
-        else if(parEquipement.equals("interphones"))
+        else if(parEquipement.equals("Interphones"))
             return getInterphones();
         else
             return null;

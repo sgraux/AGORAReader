@@ -1,11 +1,9 @@
 package Model;
 
+import data.Data;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.image.WritableImage;
@@ -14,6 +12,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 /**Genere tous les graphes et les enregesitre  dans /src/Charts
@@ -24,6 +23,8 @@ public class ChartEngine extends Application {
 
     private ExtractReader reader;
     ArrayList<Annee> listYears;
+
+    private Data data = new Data();
     private String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
 
@@ -33,6 +34,7 @@ public class ChartEngine extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
 
         reader = new ExtractReader("C:\\Users\\Sean\\Documents\\STAGE - RATP\\Sheet1CUT.xlsx");
         listYears = reader.giveYear();
@@ -46,27 +48,24 @@ public class ChartEngine extends Application {
         Platform.exit();
     }
 
-    public void generateAllCharts(Stage stage){
+    //TODO: changer 2017, 2019 et 2018 par N, N-1 et N-2
+    public void generateAllCharts(Stage stage)throws MalformedURLException{
         this.cleanCharts("src/Charts");
         this.cleanCharts("src/ChartsSAE");
         this.barChat(stage);
-        this.generateBarChartRepartition(stage);
-        this.generateLineChartEvolution(stage);
 
-        //TODO: nettoyer ci-dessous
-        this.generateBarChartRepartitionEquipementLignesSAE(stage, "armoire", 2);
-        this.generateBarChartRepartitionEquipementLignesSAE(stage, "centrale", 3);
-        this.generateBarChartRepartitionEquipementLignesSAE(stage, "telesono", 4);
-        this.generateBarChartRepartitionEquipementLignesSAE(stage, "video", 5);
-        this.generateBarChartRepartitionEquipementLignesSAE(stage, "sono", 6);
-        this.generateBarChartRepartitionEquipementLignesSAE(stage, "interphones", 7);
+        for(int i = 0; i < 6; i++){
+            this.generateBarChartRepartitionEquipement(stage, data.getTabEquip()[i], i+2);
+            this.generateBarChartRepartitionEquipementSAE(stage, data.getTabEquip()[i], i+2);
+            this.generateLineChartEvolutionEquipement(stage, data.getTabEquip()[i], i+2);
+            this.generateLineChartEvolutionEquipementSAE(stage, data.getTabEquip()[i], i+2);
 
-        generateLineChartEvolutionEquipementLignesSAE(stage, "armoire", 2);
-        generateLineChartEvolutionEquipementLignesSAE(stage, "centrale", 3);
-        generateLineChartEvolutionEquipementLignesSAE(stage, "telesono", 4);
-        generateLineChartEvolutionEquipementLignesSAE(stage, "video", 5);
-        generateLineChartEvolutionEquipementLignesSAE(stage, "sono", 6);
-        generateLineChartEvolutionEquipementLignesSAE(stage, "interphones", 7);
+            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 1);
+            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 3);
+            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 4);
+            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 13);
+
+        }
     }
 
     public void barChat(Stage stage) {
@@ -154,16 +153,6 @@ public class ChartEngine extends Application {
         //stage.show();
     }
 
-    public void generateBarChartRepartition(Stage stage) {
-
-        this.generateBarChartRepartitionEquipement(stage, "armoire", 2);
-        this.generateBarChartRepartitionEquipement(stage, "centrale", 3);
-        this.generateBarChartRepartitionEquipement(stage, "telesono", 4);
-        this.generateBarChartRepartitionEquipement(stage, "video", 5);
-        this.generateBarChartRepartitionEquipement(stage, "sono", 6);
-        this.generateBarChartRepartitionEquipement(stage, "interphones", 7);
-    }
-
     public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -174,7 +163,7 @@ public class ChartEngine extends Application {
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
-        barChart.setTitle("Répartition " + parEquipement);
+        barChart.setTitle("Répartition " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series series2017 = new XYChart.Series();
         series2017.setName("2017");
@@ -203,7 +192,7 @@ public class ChartEngine extends Application {
         //stage.show();
     }
 
-    public void generateBarChartRepartitionEquipementLignesSAE(Stage stage, String parEquipement, int chartNumber){
+    public void generateBarChartRepartitionEquipementSAE(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
@@ -213,7 +202,7 @@ public class ChartEngine extends Application {
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
-        barChart.setTitle("Répartition " + parEquipement);
+        barChart.setTitle("Répartition " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series series2017 = new XYChart.Series();
         series2017.setName("2017");
@@ -243,7 +232,7 @@ public class ChartEngine extends Application {
         barChart.getData().add(series2018);
         barChart.getData().add(series2019);
 
-        for(Node n:barChart.lookupAll(".default-color0.chart-bar")) {
+        /*for(Node n:barChart.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: blue;");
         }
         for(Node n:barChart.lookupAll(".default-color0.chart-legend")) {
@@ -252,7 +241,7 @@ public class ChartEngine extends Application {
         //second bar color
         for(Node n:barChart.lookupAll(".default-color1.chart-bar")) {
             n.setStyle("-fx-bar-fill: red;");
-        }
+        }*/
 
 
         saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - barChart_SAE_" + parEquipement + ".png");
@@ -261,22 +250,13 @@ public class ChartEngine extends Application {
 
     }
 
-    public void generateLineChartEvolution(Stage stage){
-        generateLineChartEvolutionEquipement(stage, "armoire", 2);
-        generateLineChartEvolutionEquipement(stage, "centrale", 3);
-        generateLineChartEvolutionEquipement(stage, "telesono", 4);
-        generateLineChartEvolutionEquipement(stage, "video", 5);
-        generateLineChartEvolutionEquipement(stage, "sono", 6);
-        generateLineChartEvolutionEquipement(stage, "interphones", 7);
-    }
-
     public void generateLineChartEvolutionEquipement(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Proportion OT " + parEquipement);
+        lineChart.setTitle("Evolution OT " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series series2017 = new XYChart.Series();
         series2017.setName("2017");
@@ -306,13 +286,13 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
-    public void generateLineChartEvolutionEquipementLignesSAE(Stage stage, String parEquipement, int chartNumber){
+    public void generateLineChartEvolutionEquipementSAE(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Proportion OT " + parEquipement);
+        lineChart.setTitle("Evolution GLOBALE OT " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series series2017 = new XYChart.Series();
         series2017.setName("2017");
@@ -342,6 +322,43 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
+    public void generateLineChartEvolutionEquipementLigneSAE(Stage stage, String parEquipement, int chartNumber, int parLigne) throws MalformedURLException {
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+
+        LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
+
+        lineChart.setTitle("Evolution OT " + parEquipement +" Métro " +parLigne+ "\nCodes : " + data.getCodesEquipement(parEquipement));
+
+        XYChart.Series series2017 = new XYChart.Series();
+        series2017.setName("2017");
+        for (int i = 0; i < 12; i++) {
+            series2017.getData().add(new XYChart.Data(tabMois[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+        }
+
+        XYChart.Series series2018 = new XYChart.Series();
+        series2018.setName("2018");
+        for (int i = 0; i < 12; i++) {
+            series2018.getData().add(new XYChart.Data(tabMois[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+        }
+
+        XYChart.Series series2019 = new XYChart.Series();
+        series2019.setName("2019");
+
+        for (int i = 0; i < 12; i++) {
+            series2019.getData().add(new XYChart.Data(tabMois[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+        }
+
+        Scene scene = new Scene(lineChart, 1200, 800);
+        scene.getStylesheets().add((new File("Model/lineChart.css")).toURI().toURL().toExternalForm());
+        lineChart.setAnimated(false);
+        lineChart.getData().add(series2017);
+        lineChart.getData().add(series2018);
+        lineChart.getData().add(series2019);
+        lineChart.applyCss();
+        saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_M"+parLigne+"_" + parEquipement + ".png");
+        stage.setScene(scene);
+    }
 
     public void saveAsPng(Scene scene, String path) {
         WritableImage image = scene.snapshot(null);
