@@ -1,12 +1,21 @@
 package Model;
 
+import com.sun.security.ntlm.Client;
 import data.Data;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -25,6 +34,7 @@ public class ChartEngine extends Application {
     ArrayList<Annee> listYears;
 
     private Data data = new Data();
+    //TODO: clean tabMois et tabLines
     private String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
 
@@ -292,7 +302,7 @@ public class ChartEngine extends Application {
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Evolution GLOBALE OT " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
+        lineChart.setTitle("Evolution OT " + parEquipement + " --- GLOBALE" + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series series2017 = new XYChart.Series();
         series2017.setName("2017");
@@ -328,7 +338,7 @@ public class ChartEngine extends Application {
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Evolution OT " + parEquipement +" Métro " +parLigne+ "\nCodes : " + data.getCodesEquipement(parEquipement));
+        lineChart.setTitle("Evolution OT " + parEquipement +" --- Métro " +parLigne+ "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series series2017 = new XYChart.Series();
         series2017.setName("2017");
@@ -350,14 +360,61 @@ public class ChartEngine extends Application {
         }
 
         Scene scene = new Scene(lineChart, 1200, 800);
-        scene.getStylesheets().add((new File("Model/lineChart.css")).toURI().toURL().toExternalForm());
+
         lineChart.setAnimated(false);
         lineChart.getData().add(series2017);
         lineChart.getData().add(series2018);
         lineChart.getData().add(series2019);
-        lineChart.applyCss();
-        saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_M"+parLigne+"_" + parEquipement + ".png");
+
         stage.setScene(scene);
+
+        //xAxis.setStyle("-fx-font-size: 30px;");
+        /*for(Node n:lineChart.lookupAll(".axis")) {
+            n.setStyle("-fx-font-size: 30px;");
+        }*/
+
+        xAxis.tickLabelFontProperty().set(Font.font(20));
+        xAxis.setTickLabelRotation(-45);
+        yAxis.tickLabelFontProperty().set(Font.font(20));
+
+        lineChart.setCreateSymbols(false);
+        //Node node = lineChart.lookup(".default-color0.chart-line-symbol") ;
+        //node.setStyle("-fx-background-color: blue");
+
+        /*Node node = lineChart.lookup(".default-color0.chart-series-line");
+        node.setStyle("-fx-stroke: blue;");
+
+        node = lineChart.lookup(".default-color1.chart-series-line");
+        node.setStyle("-fx-stroke: red;");
+
+        node = lineChart.lookup(".default-color2.chart-series-line");
+        node.setStyle("-fx-stroke: green;");*/
+
+        if(parLigne == 1){
+            //jaune
+            lineChart.setStyle("-fx-background-color: #ffff1a;"); /*"-fx-background-color: #ffff1a;"*/
+            //lineChart.setStyle("-fx-background-position: top left;");
+            //lineChart.setStyle("-fx-background-size: 800 800;");
+            //lineChart.setBackground(new Background(new BackgroundFill(new ImagePattern(new Image(getClass().getClassLoader().getResource("data/metro1.jpg").toString())), CornerRadii.EMPTY, Insets.EMPTY)));
+        }
+        else if(parLigne == 3){
+            lineChart.setStyle("-fx-background-color: #b3b300;");
+        }
+        else if(parLigne == 4){
+            //violet
+            lineChart.setStyle("-fx-background-color: #e600ac;");
+        }
+        else if(parLigne == 13) {
+            //bleu
+            lineChart.setStyle("-fx-background-color: #99ffff;");
+        }
+
+        /*for(Node n:lineChart.lookupAll(".chart-plot-background")) {
+            n.setStyle("-fx-background-color: transparent;");
+        }*/
+        //lineChart.setStyle(".chart-plot-background { -fx-background-image: url(data/metro1.jpg); }");
+
+        saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_M"+parLigne+"_" + parEquipement + ".png");
     }
 
     public void saveAsPng(Scene scene, String path) {
