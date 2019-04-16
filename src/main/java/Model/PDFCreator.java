@@ -20,7 +20,7 @@ public class PDFCreator {
     private final String pathToPNGsSAE = "src/ChartsSAE";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
-
+    //TODO: create tab with top incidents
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/Extract.pdf"));

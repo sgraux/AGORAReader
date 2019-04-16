@@ -9,13 +9,17 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -48,7 +52,13 @@ public class ChartEngine extends Application {
 
         reader = new ExtractReader("C:\\Users\\Sean\\Documents\\STAGE - RATP\\Sheet1CUT.xlsx");
         listYears = reader.giveYear();
-        this.generateAllCharts(stage);
+
+        String[] temp = listYears.get(0).getTopPanneEquipLigne(13);
+
+        Scene scene = new Scene(new Pane(new Text("... READING ...")),800, 800);
+        stage.setScene(scene);
+        stage.show();
+        this.generateAllCharts(new Stage());
         System.out.print("--- PNGs DONE --- \n");
         PDFCreator creator = new PDFCreator();
         creator.generatePDF();
@@ -391,8 +401,8 @@ public class ChartEngine extends Application {
         node.setStyle("-fx-stroke: green;");*/
 
         if(parLigne == 1){
-            //jaune
-            lineChart.setStyle("-fx-background-color: #ffff1a;"); /*"-fx-background-color: #ffff1a;"*/
+            //jaune //TODO: ajuster couleurs et ajouter image si possible
+            lineChart.setStyle("-fx-background-color: #ffff4d;"); /*"-fx-background-color: #ffff1a;"*/
             //lineChart.setStyle("-fx-background-position: top left;");
             //lineChart.setStyle("-fx-background-size: 800 800;");
             //lineChart.setBackground(new Background(new BackgroundFill(new ImagePattern(new Image(getClass().getClassLoader().getResource("data/metro1.jpg").toString())), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -402,7 +412,7 @@ public class ChartEngine extends Application {
         }
         else if(parLigne == 4){
             //violet
-            lineChart.setStyle("-fx-background-color: #e600ac;");
+            lineChart.setStyle("-fx-background-color: #d966ff;");
         }
         else if(parLigne == 13) {
             //bleu

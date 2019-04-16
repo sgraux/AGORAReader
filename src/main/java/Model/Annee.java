@@ -1,5 +1,7 @@
 package Model;
 
+import data.Data;
+
 /**[Modele de donnees] Gere une annee
  * @author Sean Graux
  * @version 1.0
@@ -8,6 +10,7 @@ public class Annee {
 
     private int anneeInt;
     private Mois[] mois = new Mois[12];
+    private Data data = new Data();
 
     public Annee(int parAnneeInt){
         anneeInt = parAnneeInt;
@@ -41,6 +44,59 @@ public class Annee {
             }
         }
         return tabOTsLines;
+    }
+
+    public String[] getTopPanneEquipLigne(int parLigne){
+        String[] top5PanneEquip = new String[5];
+        int[] sommeOTEquipLigne = new int[data.getTabEquip().length];
+        int[] temp;
+        int[] indicesTop = new int[5];
+        int current;
+        for(int i = 0; i < mois.length; i++){
+            temp = mois[i].getOTEquipLigne(parLigne);
+            for(int j = 0; j < temp.length; j ++){
+                sommeOTEquipLigne[j] += temp[j];
+            }
+        }
+        for(int i = 0; i < indicesTop.length; i++){
+            indicesTop[i] = 0;
+        }
+
+        for(int i = 0; i < sommeOTEquipLigne.length; i++){
+            current = sommeOTEquipLigne[i];
+
+            if(current >= sommeOTEquipLigne[indicesTop[0]]){
+                indicesTop[4] = indicesTop[3];
+                indicesTop[3] = indicesTop[2];
+                indicesTop[2] = indicesTop[1];
+                indicesTop[1] = indicesTop[0];
+                indicesTop[0] = i;
+            }
+            else if(current >= sommeOTEquipLigne[indicesTop[1]]){
+                indicesTop[4] = indicesTop[3];
+                indicesTop[3] = indicesTop[2];
+                indicesTop[2] = indicesTop[1];
+                indicesTop[1] = i;
+            }
+            else if(current >= sommeOTEquipLigne[indicesTop[2]]){
+                indicesTop[4] = indicesTop[3];
+                indicesTop[3] = indicesTop[2];
+                indicesTop[2] = i;
+            }
+            else if(current >= sommeOTEquipLigne[indicesTop[3]]){
+                indicesTop[4] = indicesTop[3];
+                indicesTop[3] = i;
+            }
+            else if(current >= sommeOTEquipLigne[indicesTop[4]]){
+                indicesTop[4] = i;
+            }
+        }
+
+        for(int i = 0; i < top5PanneEquip.length; i++){
+            top5PanneEquip[i] = data.getTabEquip()[indicesTop[i]] + " --- Nombre OTs: " + sommeOTEquipLigne[indicesTop[i]];
+        }
+
+        return top5PanneEquip;
     }
 
     public int getSumOverallOTs(){

@@ -1,5 +1,7 @@
 package Model;
 
+import data.Data;
+
 /**[Modele de donnees] Gere un mois et tous les OT des equipements surveilles
  * @author Sean Graux
  * @version 1.0
@@ -39,6 +41,16 @@ public class Mois {
             return getInterphones();
         else
             return null;
+    }
+
+    public int[] getOTEquipLigne(int parLigneMetro){//TODO: top pannes equip/ligne
+        Data data = new Data();
+        int[] nbOtEquip = new int[data.getTabEquip().length];
+
+        for(int i = 0; i < data.getTabEquip().length; i++){
+            nbOtEquip[i] = this.getEquipement(data.getTabEquip()[i]).getOTLigneMetro(parLigneMetro);
+        }
+        return nbOtEquip;
     }
 
     public void manageEquipement(String parEquipment, String parClient){
