@@ -93,7 +93,7 @@ public class Annee {
         }
 
         for(int i = 0; i < top5PanneEquip.length; i++){
-            top5PanneEquip[i] = data.getTabEquip()[indicesTop[i]] + " --- Nombre OTs: " + sommeOTEquipLigne[indicesTop[i]];
+            top5PanneEquip[i] = data.getTabEquip()[indicesTop[i]] + "-"+ sommeOTEquipLigne[indicesTop[i]];
         }
 
         return top5PanneEquip;

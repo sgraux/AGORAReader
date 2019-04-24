@@ -15,6 +15,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import data.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**Genere le PDF qui presente tous les graphes.
@@ -27,7 +28,9 @@ public class PDFCreator {
     private final String pathToPNGsSAE = "src/ChartsSAE";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
-    //TODO: create tab with top incidents
+    private static ArrayList<Annee> listeAnnee;
+
+
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/Extract.pdf"));
@@ -52,6 +55,7 @@ public class PDFCreator {
         document.close();
     }
 
+    //genère pdf avec png pour symphonie SAE
     public void generatePDFSAE() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGsSAE + "/ExtractSAE.pdf"));
@@ -93,54 +97,14 @@ public class PDFCreator {
 
     public static PdfPTable createTable() throws DocumentException {
 
-        // create 6 column table
+        //TODO: clean commentaries
         PdfPTable table = new PdfPTable(9);
 
-        // set the width of the table to 100% of page
         table.setWidthPercentage(100);
 
-        // set relative columns width
-        //table.setWidths(new float[]{0.6f, 1.4f, 0.8f,0.8f,1.8f,2.6f});
-
-        // ----------------Table Header "Title"----------------
-        // font
-
-        //-----------------Table Cells Label/Value------------------
-
-        //TODO: add real values
-        addHeader(table, "N-2");
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 9; j++){
-                table.addCell(createValueCell("value", j));
-            }
-        }
-        addHeader(table, "N-1");
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 9; j++){
-                table.addCell(createValueCell("value", j));
-            }
-        }
-        addHeader(table, "N");
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 9; j++){
-                table.addCell(createValueCell("value", j));
-            }
-        }
-        // 1st Row
-        /*table.addCell(createLabelCell("Label 1"));
-        table.addCell(createValueCell("Value 1"));
-        table.addCell(createLabelCell("Label 2"));
-        table.addCell(createValueCell("Value 2"));
-        table.addCell(createLabelCell("Label 3"));
-        table.addCell(createValueCell("Value 3"));
-
-        // 2nd Row
-        table.addCell(createLabelCell("Label 4"));
-        table.addCell(createValueCell("Value 4"));
-        table.addCell(createLabelCell("Label 5"));
-        table.addCell(createValueCell("Value 5"));
-        table.addCell(createLabelCell("Label 6"));
-        table.addCell(createValueCell("Value 6"));*/
+        addTabTopPanneEquip(listeAnnee.get(2), table);
+        addTabTopPanneEquip(listeAnnee.get(1), table);
+        addTabTopPanneEquip(listeAnnee.get(0), table);
 
         return table;
     }
@@ -180,7 +144,22 @@ public class PDFCreator {
         parTable.addCell(cellM13);
     }
 
-    // create cells
+    public static void addTabTopPanneEquip(Annee parAnnee, PdfPTable parTable){
+        String[][] tabPannes = {parAnnee.getTopPanneEquipLigne(1),parAnnee.getTopPanneEquipLigne(3), parAnnee.getTopPanneEquipLigne(4), parAnnee.getTopPanneEquipLigne(13)};
+        String[] temp;
+
+        addHeader(parTable, ""+parAnnee.getAnneeInt());
+
+        for(int i = 0; i < 5; i++){
+            parTable.addCell(createValueCell("#"+ (i+1),0));
+            for(int j = 0; j < 4; j++){
+                temp = tabPannes[j][i].split("-");
+                parTable.addCell(createValueCell(temp[0], j+1));
+                parTable.addCell(createValueCell(temp[1], j+1));
+            }
+        }
+    }
+
     private static PdfPCell createLabelCell(String text){
         // font
         Font font = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.DARK_GRAY);
@@ -193,7 +172,6 @@ public class PDFCreator {
         return cell;
     }
 
-    // create cells
     private static PdfPCell createValueCell(String text, int parNumber){
         // font
         Font font = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
@@ -204,5 +182,9 @@ public class PDFCreator {
         // set style
         Style.valueCellStyle(cell, parNumber);
         return cell;
+    }
+
+    public static void setListeAnne(ArrayList<Annee> parListe){
+        listeAnnee = parListe;
     }
 }

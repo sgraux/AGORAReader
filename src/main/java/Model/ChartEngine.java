@@ -61,6 +61,7 @@ public class ChartEngine extends Application {
         this.generateAllCharts(new Stage());
         System.out.print("--- PNGs DONE --- \n");
         PDFCreator creator = new PDFCreator();
+        creator.setListeAnne(listYears);
         creator.generatePDF();
         creator.generatePDFSAE();
         System.out.print("--- PDFs DONE --- \n");
@@ -401,7 +402,7 @@ public class ChartEngine extends Application {
         node.setStyle("-fx-stroke: green;");*/
 
         if(parLigne == 1){
-            //jaune //TODO: ajuster couleurs et ajouter image si possible
+            //jaune
             lineChart.setStyle("-fx-background-color: #ffff4d;"); /*"-fx-background-color: #ffff1a;"*/
             //lineChart.setStyle("-fx-background-position: top left;");
             //lineChart.setStyle("-fx-background-size: 800 800;");

@@ -43,7 +43,7 @@ public class Mois {
             return null;
     }
 
-    public int[] getOTEquipLigne(int parLigneMetro){//TODO: top pannes equip/ligne
+    public int[] getOTEquipLigne(int parLigneMetro){
         Data data = new Data();
         int[] nbOtEquip = new int[data.getTabEquip().length];
 

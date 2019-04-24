@@ -73,16 +73,16 @@ public class Style {
         // height
         cell.setMinimumHeight(18f);
 
-        if(parNumber == 1 || parNumber == 2){
+        if(parNumber == 1){
             cell.setBackgroundColor(new BaseColor(255,255,100));
         }
-        else if(parNumber == 3 || parNumber == 4){
+        else if(parNumber == 2){
             cell.setBackgroundColor(new BaseColor(200,200,0));
         }
-        else if(parNumber == 5 || parNumber == 6){
+        else if(parNumber == 3){
             cell.setBackgroundColor(new BaseColor(230,130,255));
         }
-        else if(parNumber == 7 || parNumber == 8){
+        else if(parNumber == 4){
             cell.setBackgroundColor(new BaseColor(175,255,255));
         }
         else
