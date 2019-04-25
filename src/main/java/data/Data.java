@@ -70,4 +70,6 @@ public class Data {
     public String[] getTabEquip() {
         return tabEquip;
     }
+
+
 }

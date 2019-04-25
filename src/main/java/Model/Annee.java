@@ -6,7 +6,7 @@ import data.Data;
  * @author Sean Graux
  * @version 1.0
  */
-public class Annee {
+public class Annee implements Comparable<Annee>{
 
     private int anneeInt;
     private Mois[] mois = new Mois[12];
@@ -149,5 +149,9 @@ public class Annee {
                 + "Octobre : " + mois[9].getOverallOts() +  " --- "     + mois[9].getOverallOTsLignesSpe() +"\n"
                 + "Novembre : " + mois[10].getOverallOts() +  " --- "   + mois[10].getOverallOTsLignesSpe() +"\n"
                 + "Décembre : " + mois[11].getOverallOts() +  " --- "   + mois[11].getOverallOTsLignesSpe() +"\n";
+    }
+
+    public int compareTo(Annee parAnnee) {
+        return this.getAnneeInt() - parAnnee.getAnneeInt();
     }
 }

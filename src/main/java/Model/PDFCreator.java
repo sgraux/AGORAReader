@@ -97,7 +97,6 @@ public class PDFCreator {
 
     public static PdfPTable createTable() throws DocumentException {
 
-        //TODO: clean commentaries
         PdfPTable table = new PdfPTable(9);
 
         table.setWidthPercentage(100);
@@ -111,7 +110,7 @@ public class PDFCreator {
 
     public static void addHeader(PdfPTable parTable, String parAnnee){
         Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
-        // create header cell
+
         PdfPCell cellHeader = new PdfPCell(new Phrase("TOP PANNES EQUIPEMENT ANNEE " + parAnnee,font));
         PdfPCell cellTop = new PdfPCell(new Phrase("Top #",font));
         PdfPCell cellM1 = new PdfPCell(new Phrase("Metro 1",font));
@@ -119,7 +118,6 @@ public class PDFCreator {
         PdfPCell cellM4 = new PdfPCell(new Phrase("Metro 4",font));
         PdfPCell cellM13 = new PdfPCell(new Phrase("Metro 13",font));
 
-        // set Column span "1 cell = 6 cells width"
         cellHeader.setColspan(9);
         cellTop.setColspan(1);
         cellM1.setColspan(2);
@@ -127,7 +125,6 @@ public class PDFCreator {
         cellM4.setColspan(2);
         cellM13.setColspan(2);
 
-        // set style
         Style.headerCellStyle(cellHeader, 0);
         Style.headerCellStyle(cellTop, 0);
         Style.headerCellStyle(cellM1, 1);
@@ -135,7 +132,6 @@ public class PDFCreator {
         Style.headerCellStyle(cellM4, 4);
         Style.headerCellStyle(cellM13, 13);
 
-        // add to table
         parTable.addCell(cellHeader);
         parTable.addCell(cellTop);
         parTable.addCell(cellM1);
@@ -161,6 +157,7 @@ public class PDFCreator {
     }
 
     private static PdfPCell createLabelCell(String text){
+
         // font
         Font font = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.DARK_GRAY);
 

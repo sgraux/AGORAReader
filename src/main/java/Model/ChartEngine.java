@@ -1,23 +1,13 @@
 package Model;
 
-import com.sun.security.ntlm.Client;
 import data.Data;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -38,9 +28,6 @@ public class ChartEngine extends Application {
     ArrayList<Annee> listYears;
 
     private Data data = new Data();
-    //TODO: clean tabMois et tabLines
-    private String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
-    private String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
 
     public static void main(String[] args) {
         launch(args);
@@ -49,19 +36,20 @@ public class ChartEngine extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-
+        //TODO: add correct way to find input extract file
         reader = new ExtractReader("C:\\Users\\Sean\\Documents\\STAGE - RATP\\Sheet1CUT.xlsx");
         listYears = reader.giveYear();
 
-        String[] temp = listYears.get(0).getTopPanneEquipLigne(13);
-
-        Scene scene = new Scene(new Pane(new Text("... READING ...")),800, 800);
-        stage.setScene(scene);
-        stage.show();
+        //TODO: add graphic interface to display running information
+        //Scene scene = new Scene(new Pane(new Text("... READING ...")),800, 800);
+        //stage.setScene(scene);
+        //stage.show();
         this.generateAllCharts(new Stage());
         System.out.print("--- PNGs DONE --- \n");
+
         PDFCreator creator = new PDFCreator();
         creator.setListeAnne(listYears);
+
         creator.generatePDF();
         creator.generatePDFSAE();
         System.out.print("--- PDFs DONE --- \n");
@@ -69,7 +57,6 @@ public class ChartEngine extends Application {
         Platform.exit();
     }
 
-    //TODO: changer 2017, 2019 et 2018 par N, N-1 et N-2
     public void generateAllCharts(Stage stage)throws MalformedURLException{
         this.cleanCharts("src/Charts");
         this.cleanCharts("src/ChartsSAE");
@@ -99,175 +86,118 @@ public class ChartEngine extends Application {
 
         barChart.setTitle("Proportion OT");
 
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
+        XYChart.Series seriesN2 = new XYChart.Series();
+        seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
             OTsMonthPerYear = listYears.get(0).getMoisIndex(i).getOverallOTsLignesSpe();
-            if (OTsMonthPerYear > 0) series2017.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
+            if (OTsMonthPerYear > 0) seriesN2.getData().add(new XYChart.Data(data.getTabMois()[i], OTsMonthPerYear));
         }
 
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
+        XYChart.Series seriesN1 = new XYChart.Series();
+        seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
             OTsMonthPerYear = listYears.get(1).getMoisIndex(i).getOverallOTsLignesSpe();
-            if (OTsMonthPerYear > 0) series2018.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
+            if (OTsMonthPerYear > 0) seriesN1.getData().add(new XYChart.Data(data.getTabMois()[i], OTsMonthPerYear));
         }
 
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
+        XYChart.Series seriesN = new XYChart.Series();
+        seriesN.setName(listYears.get(2).getAnneeInt()+"");
 
         for (int i = 0; i < 12; i++) {
             OTsMonthPerYear = listYears.get(2).getMoisIndex(i).getOverallOTsLignesSpe();
-            if (OTsMonthPerYear > 0) series2019.getData().add(new XYChart.Data(tabMois[i], OTsMonthPerYear));
+            if (OTsMonthPerYear > 0) seriesN.getData().add(new XYChart.Data(data.getTabMois()[i], OTsMonthPerYear));
         }
 
         Scene scene = new Scene(barChart, 1200, 800);
         barChart.setAnimated(false);
-        barChart.getData().add(series2017);
-        barChart.getData().add(series2018);
-        barChart.getData().add(series2019);
+        barChart.getData().add(seriesN2);
+        barChart.getData().add(seriesN1);
+        barChart.getData().add(seriesN);
         saveAsPng(scene, "src/Charts/1 - ProportionOts.png");
         stage.setScene(scene);
-        //stage.show();
-
-    }
-
-    public void lineChart(Stage stage) {
-
-        int OTsMonthPerYear;
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-
-        LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
-
-        lineChart.setTitle("Proportion OT");
-
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
-        for (int i = 0; i < 12; i++) {
-            OTsMonthPerYear = listYears.get(0).getMoisIndex(i).getOverallOTsLignesSpe();
-            if (OTsMonthPerYear > 0) series2017.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
-        }
-
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
-        for (int i = 0; i < 12; i++) {
-            OTsMonthPerYear = listYears.get(1).getMoisIndex(i).getOverallOTsLignesSpe();
-            if (OTsMonthPerYear > 0) series2018.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
-        }
-
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
-
-        for (int i = 0; i < 12; i++) {
-            OTsMonthPerYear = listYears.get(2).getMoisIndex(i).getOverallOTsLignesSpe();
-            if (OTsMonthPerYear > 0) series2019.getData().add(new XYChart.Data(i + 1, OTsMonthPerYear));
-        }
-
-        Scene scene = new Scene(lineChart, 1200, 800);
-        lineChart.setAnimated(false);
-        lineChart.getData().add(series2017);
-        lineChart.getData().add(series2018);
-        lineChart.getData().add(series2019);
-        saveAsPng(scene, "C:\\Users\\Sean\\Documents\\STAGE - RATP\\Test Chart JavaFX\\lineChart.png");
-        stage.setScene(scene);
-        //stage.show();
     }
 
     public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
-        int[] OTsLines2017 = listYears.get(0).getSumOTsLines(parEquipement);
-        int[] OTsLines2018 = listYears.get(1).getSumOTsLines(parEquipement);
-        int[] OTsLines2019 = listYears.get(2).getSumOTsLines(parEquipement);
+        int[] OTsLinesN2 = listYears.get(0).getSumOTsLines(parEquipement);
+        int[] OTsLinesN1 = listYears.get(1).getSumOTsLines(parEquipement);
+        int[] OTsLinesN = listYears.get(2).getSumOTsLines(parEquipement);
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
         barChart.setTitle("Répartition " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
+        XYChart.Series seriesN2 = new XYChart.Series();
+        seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 15; i++) {
-            series2017.getData().add(new XYChart.Data(tabLines[i], OTsLines2017[i]));
+            seriesN2.getData().add(new XYChart.Data(data.getTabLines()[i], OTsLinesN2[i]));
         }
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
+        XYChart.Series seriesN1 = new XYChart.Series();
+        seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 15; i++) {
-            series2018.getData().add(new XYChart.Data(tabLines[i], OTsLines2018[i]));
+            seriesN1.getData().add(new XYChart.Data(data.getTabLines()[i], OTsLinesN1[i]));
         }
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
+        XYChart.Series seriesN = new XYChart.Series();
+        seriesN.setName(listYears.get(2).getAnneeInt()+"");
         for (int i = 0; i < 15; i++) {
-            series2019.getData().add(new XYChart.Data(tabLines[i], OTsLines2019[i]));
+            seriesN.getData().add(new XYChart.Data(data.getTabLines()[i], OTsLinesN[i]));
         }
 
 
         Scene scene = new Scene(barChart, 1200, 800);
         barChart.setAnimated(false);
-        barChart.getData().add(series2017);
-        barChart.getData().add(series2018);
-        barChart.getData().add(series2019);
+        barChart.getData().add(seriesN2);
+        barChart.getData().add(seriesN1);
+        barChart.getData().add(seriesN);
         saveAsPng(scene, "src/Charts/"+ chartNumber+" - barChart_" + parEquipement + ".png");
         stage.setScene(scene);
-        //stage.show();
     }
 
     public void generateBarChartRepartitionEquipementSAE(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
-        int[] OTsLines2017 = listYears.get(0).getSumOTsLines(parEquipement);
-        int[] OTsLines2018 = listYears.get(1).getSumOTsLines(parEquipement);
-        int[] OTsLines2019 = listYears.get(2).getSumOTsLines(parEquipement);
+        int[] OTsLinesN2 = listYears.get(0).getSumOTsLines(parEquipement);
+        int[] OTsLinesN1 = listYears.get(1).getSumOTsLines(parEquipement);
+        int[] OTsLinesN = listYears.get(2).getSumOTsLines(parEquipement);
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
         barChart.setTitle("Répartition " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
+        XYChart.Series seriesN2 = new XYChart.Series();
+        seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 15; i++) {
             if(i == 0 || i == 2 || i ==3 || i == 12)
-                series2017.getData().add(new XYChart.Data(tabLines[i], OTsLines2017[i]));
+                seriesN2.getData().add(new XYChart.Data(data.getTabLines()[i], OTsLinesN2[i]));
         }
 
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
+        XYChart.Series seriesN1 = new XYChart.Series();
+        seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 15; i++) {
             if(i == 0 || i == 2 || i ==3 || i == 12)
-                series2018.getData().add(new XYChart.Data(tabLines[i], OTsLines2018[i]));
+                seriesN1.getData().add(new XYChart.Data(data.getTabLines()[i], OTsLinesN1[i]));
         }
 
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
+        XYChart.Series seriesN = new XYChart.Series();
+        seriesN.setName(listYears.get(2).getAnneeInt()+"");
         for (int i = 0; i < 15; i++) {
             if(i == 0 || i == 2 || i ==3 || i == 12)
-                series2019.getData().add(new XYChart.Data(tabLines[i], OTsLines2019[i]));
+                seriesN.getData().add(new XYChart.Data(data.getTabLines()[i], OTsLinesN[i]));
         }
 
 
         Scene scene = new Scene(barChart, 1200, 800);
         barChart.setAnimated(false);
-        barChart.getData().add(series2017);
-        barChart.getData().add(series2018);
-        barChart.getData().add(series2019);
-
-        /*for(Node n:barChart.lookupAll(".default-color0.chart-bar")) {
-            n.setStyle("-fx-bar-fill: blue;");
-        }
-        for(Node n:barChart.lookupAll(".default-color0.chart-legend")) {
-            n.setStyle("-fx-bar-fill: blue;");
-        }
-        //second bar color
-        for(Node n:barChart.lookupAll(".default-color1.chart-bar")) {
-            n.setStyle("-fx-bar-fill: red;");
-        }*/
+        barChart.getData().add(seriesN2);
+        barChart.getData().add(seriesN1);
+        barChart.getData().add(seriesN);
 
 
         saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - barChart_SAE_" + parEquipement + ".png");
         stage.setScene(scene);
-        //stage.show();
 
     }
 
@@ -279,30 +209,30 @@ public class ChartEngine extends Application {
 
         lineChart.setTitle("Evolution OT " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
+        XYChart.Series seriesN2 = new XYChart.Series();
+        seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            series2017.getData().add(new XYChart.Data(tabMois[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
+            seriesN2.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
         }
 
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
+        XYChart.Series seriesN1 = new XYChart.Series();
+        seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            series2018.getData().add(new XYChart.Data(tabMois[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
+            seriesN1.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
         }
 
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
+        XYChart.Series seriesN = new XYChart.Series();
+        seriesN.setName(listYears.get(2).getAnneeInt()+"");
 
         for (int i = 0; i < 12; i++) {
-            series2019.getData().add(new XYChart.Data(tabMois[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
+            seriesN.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSpe()));
         }
 
         Scene scene = new Scene(lineChart, 1200, 800);
         lineChart.setAnimated(false);
-        lineChart.getData().add(series2017);
-        lineChart.getData().add(series2018);
-        lineChart.getData().add(series2019);
+        lineChart.getData().add(seriesN2);
+        lineChart.getData().add(seriesN1);
+        lineChart.getData().add(seriesN);
         saveAsPng(scene, "src/Charts/"+ chartNumber+" - lineChart_" + parEquipement + ".png");
         stage.setScene(scene);
     }
@@ -315,30 +245,30 @@ public class ChartEngine extends Application {
 
         lineChart.setTitle("Evolution OT " + parEquipement + " --- GLOBALE" + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
+        XYChart.Series seriesN2 = new XYChart.Series();
+        seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            series2017.getData().add(new XYChart.Data(tabMois[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
+            seriesN2.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
         }
 
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
+        XYChart.Series seriesN1 = new XYChart.Series();
+        seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            series2018.getData().add(new XYChart.Data(tabMois[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
+            seriesN1.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
         }
 
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
+        XYChart.Series seriesN = new XYChart.Series();
+        seriesN.setName(listYears.get(2).getAnneeInt()+"");
 
         for (int i = 0; i < 12; i++) {
-            series2019.getData().add(new XYChart.Data(tabMois[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
+            seriesN.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getNbOTLignesSAE()));
         }
 
         Scene scene = new Scene(lineChart, 1200, 800);
         lineChart.setAnimated(false);
-        lineChart.getData().add(series2017);
-        lineChart.getData().add(series2018);
-        lineChart.getData().add(series2019);
+        lineChart.getData().add(seriesN2);
+        lineChart.getData().add(seriesN1);
+        lineChart.getData().add(seriesN);
         saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_" + parEquipement + ".png");
         stage.setScene(scene);
     }
@@ -351,55 +281,39 @@ public class ChartEngine extends Application {
 
         lineChart.setTitle("Evolution OT " + parEquipement +" --- Métro " +parLigne+ "\nCodes : " + data.getCodesEquipement(parEquipement));
 
-        XYChart.Series series2017 = new XYChart.Series();
-        series2017.setName("2017");
+        XYChart.Series seriesN2 = new XYChart.Series();
+        seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            series2017.getData().add(new XYChart.Data(tabMois[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+            seriesN2.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
         }
 
-        XYChart.Series series2018 = new XYChart.Series();
-        series2018.setName("2018");
+        XYChart.Series seriesN1 = new XYChart.Series();
+        seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            series2018.getData().add(new XYChart.Data(tabMois[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+            seriesN1.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
         }
 
-        XYChart.Series series2019 = new XYChart.Series();
-        series2019.setName("2019");
+        XYChart.Series seriesN = new XYChart.Series();
+        seriesN.setName(listYears.get(2).getAnneeInt()+"");
 
         for (int i = 0; i < 12; i++) {
-            series2019.getData().add(new XYChart.Data(tabMois[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+            seriesN.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
         }
 
         Scene scene = new Scene(lineChart, 1200, 800);
 
         lineChart.setAnimated(false);
-        lineChart.getData().add(series2017);
-        lineChart.getData().add(series2018);
-        lineChart.getData().add(series2019);
+        lineChart.getData().add(seriesN2);//année N-2
+        lineChart.getData().add(seriesN1);//année N-1
+        lineChart.getData().add(seriesN);//année N en cours
 
         stage.setScene(scene);
-
-        //xAxis.setStyle("-fx-font-size: 30px;");
-        /*for(Node n:lineChart.lookupAll(".axis")) {
-            n.setStyle("-fx-font-size: 30px;");
-        }*/
 
         xAxis.tickLabelFontProperty().set(Font.font(20));
         xAxis.setTickLabelRotation(-45);
         yAxis.tickLabelFontProperty().set(Font.font(20));
 
         lineChart.setCreateSymbols(false);
-        //Node node = lineChart.lookup(".default-color0.chart-line-symbol") ;
-        //node.setStyle("-fx-background-color: blue");
-
-        /*Node node = lineChart.lookup(".default-color0.chart-series-line");
-        node.setStyle("-fx-stroke: blue;");
-
-        node = lineChart.lookup(".default-color1.chart-series-line");
-        node.setStyle("-fx-stroke: red;");
-
-        node = lineChart.lookup(".default-color2.chart-series-line");
-        node.setStyle("-fx-stroke: green;");*/
 
         if(parLigne == 1){
             //jaune
@@ -420,10 +334,6 @@ public class ChartEngine extends Application {
             lineChart.setStyle("-fx-background-color: #99ffff;");
         }
 
-        /*for(Node n:lineChart.lookupAll(".chart-plot-background")) {
-            n.setStyle("-fx-background-color: transparent;");
-        }*/
-        //lineChart.setStyle(".chart-plot-background { -fx-background-image: url(data/metro1.jpg); }");
 
         saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_M"+parLigne+"_" + parEquipement + ".png");
     }

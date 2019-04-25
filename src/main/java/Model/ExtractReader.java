@@ -85,6 +85,7 @@ public class ExtractReader {
             countCell = 0;
         }
         //System.out.println(testCountRows);
+        Collections.sort(yearList);
     }
 
     public void manageCellsContent(Double yearCellContent, String timeFinish, String equipmentCellContent, String clientCellContent){
