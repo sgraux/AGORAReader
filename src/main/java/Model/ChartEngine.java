@@ -41,45 +41,54 @@ public class ChartEngine extends Application {
         listYears = reader.giveYear();
 
         //TODO: add graphic interface to display running information
-        //Scene scene = new Scene(new Pane(new Text("... READING ...")),800, 800);
-        //stage.setScene(scene);
-        //stage.show();
+        System.out.print("--- GENERATE CHARTS --- \n");
         this.generateAllCharts(new Stage());
         System.out.print("--- PNGs DONE --- \n");
 
         PDFCreator creator = new PDFCreator();
-        creator.setListeAnne(listYears);
+        PDFCreator.setListeAnne(listYears);
 
         creator.generatePDF();
         creator.generatePDFSAE();
+
         System.out.print("--- PDFs DONE --- \n");
         System.out.print("--- STOP ---");
         Platform.exit();
     }
 
+    //TODO: merge fcts to limitate for loops
+    //TODO: add setStyle fct for X and Y
     public void generateAllCharts(Stage stage)throws MalformedURLException{
         this.cleanCharts("src/Charts");
-        this.cleanCharts("src/ChartsSAE");
         this.barChat(stage);
+        String[] tabEquip;
 
         for(int i = 0; i < 6; i++){
-            this.generateBarChartRepartitionEquipement(stage, data.getTabEquip()[i], i+2);
-            this.generateBarChartRepartitionEquipementSAE(stage, data.getTabEquip()[i], i+2);
-            this.generateLineChartEvolutionEquipement(stage, data.getTabEquip()[i], i+2);
-            this.generateLineChartEvolutionEquipementSAE(stage, data.getTabEquip()[i], i+2);
 
-            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 1);
-            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 3);
-            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 4);
-            this.generateLineChartEvolutionEquipementLigneSAE(stage, data.getTabEquip()[i], i+2, 13);
+            tabEquip = data.getTabEquip();
+            this.generateBarChartRepartitionEquipement(stage, tabEquip[i], i+2);
+            //this.generateBarChartRepartitionEquipementSAE(stage, tabEquip[i], i+2);
+            this.generateLineChartEvolutionEquipement(stage, tabEquip[i], i+2);
+            //this.generateLineChartEvolutionEquipementSAE(stage, tabEquip[i], i+2);
 
+            for(String currentLine : data.getTabLines()){
+                this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, false);
+                /*if(currentLine.equals("M01"))
+                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);
+                else if(currentLine.equals("M03"))
+                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);
+                else if(currentLine.equals("M04"))
+                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);
+                else if(currentLine.equals("M13"))
+                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);*/
+            }
         }
     }
 
     public void barChat(Stage stage) {
 
-        final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
         int OTsMonthPerYear;
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
@@ -110,16 +119,24 @@ public class ChartEngine extends Application {
 
         Scene scene = new Scene(barChart, 1200, 800);
         barChart.setAnimated(false);
+
+        xAxis.tickLabelFontProperty().set(Font.font(20));
+        xAxis.setTickLabelRotation(-45);
+        yAxis.tickLabelFontProperty().set(Font.font(20));
+
         barChart.getData().add(seriesN2);
         barChart.getData().add(seriesN1);
         barChart.getData().add(seriesN);
-        saveAsPng(scene, "src/Charts/1 - ProportionOts.png");
+        saveAsPng(scene, "src/Charts/1 - ProportionOts_GLOBAL.png");
         stage.setScene(scene);
+
+
     }
 
+    //TODO: merge RepartitionEquipement et RapartitionEquipementSAE
     public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement, int chartNumber){
-        final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
 
         int[] OTsLinesN2 = listYears.get(0).getSumOTsLines(parEquipement);
         int[] OTsLinesN1 = listYears.get(1).getSumOTsLines(parEquipement);
@@ -127,7 +144,7 @@ public class ChartEngine extends Application {
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
-        barChart.setTitle("Répartition " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
+        barChart.setTitle("Répartition OT " + parEquipement + " --- TOUTES LIGNES\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series seriesN2 = new XYChart.Series();
         seriesN2.setName(listYears.get(0).getAnneeInt()+"");
@@ -148,10 +165,15 @@ public class ChartEngine extends Application {
 
         Scene scene = new Scene(barChart, 1200, 800);
         barChart.setAnimated(false);
+
+        xAxis.tickLabelFontProperty().set(Font.font(20));
+        xAxis.setTickLabelRotation(-45);
+        yAxis.tickLabelFontProperty().set(Font.font(20));
+
         barChart.getData().add(seriesN2);
         barChart.getData().add(seriesN1);
         barChart.getData().add(seriesN);
-        saveAsPng(scene, "src/Charts/"+ chartNumber+" - barChart_" + parEquipement + ".png");
+        saveAsPng(scene, "src/Charts/"+ chartNumber+" - barChart_" + parEquipement + "_GLOBAL.png");
         stage.setScene(scene);
     }
 
@@ -191,6 +213,11 @@ public class ChartEngine extends Application {
 
         Scene scene = new Scene(barChart, 1200, 800);
         barChart.setAnimated(false);
+
+        xAxis.tickLabelFontProperty().set(Font.font(20));
+        xAxis.setTickLabelRotation(-45);
+        yAxis.tickLabelFontProperty().set(Font.font(20));
+
         barChart.getData().add(seriesN2);
         barChart.getData().add(seriesN1);
         barChart.getData().add(seriesN);
@@ -199,15 +226,17 @@ public class ChartEngine extends Application {
         saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - barChart_SAE_" + parEquipement + ".png");
         stage.setScene(scene);
 
+
     }
 
+    //TODO: think about merging EvoEquip et EvoEquipSAE by adding list of SAE lines in Data
     public void generateLineChartEvolutionEquipement(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Evolution OT " + parEquipement + "\nCodes : " + data.getCodesEquipement(parEquipement));
+        lineChart.setTitle("Evolution OT " + parEquipement + " --- TOUTES LIGNES\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series seriesN2 = new XYChart.Series();
         seriesN2.setName(listYears.get(0).getAnneeInt()+"");
@@ -229,11 +258,14 @@ public class ChartEngine extends Application {
         }
 
         Scene scene = new Scene(lineChart, 1200, 800);
+        xAxis.tickLabelFontProperty().set(Font.font(20));
+        xAxis.setTickLabelRotation(-45);
+        yAxis.tickLabelFontProperty().set(Font.font(20));
         lineChart.setAnimated(false);
         lineChart.getData().add(seriesN2);
         lineChart.getData().add(seriesN1);
         lineChart.getData().add(seriesN);
-        saveAsPng(scene, "src/Charts/"+ chartNumber+" - lineChart_" + parEquipement + ".png");
+        saveAsPng(scene, "src/Charts/"+ chartNumber+" - lineChart_" + parEquipement + "_GLOBAL.png");
         stage.setScene(scene);
     }
 
@@ -243,7 +275,7 @@ public class ChartEngine extends Application {
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Evolution OT " + parEquipement + " --- GLOBALE" + "\nCodes : " + data.getCodesEquipement(parEquipement));
+        lineChart.setTitle("Evolution OT " + parEquipement + "\nLignes : M01, M03, M04, M13" + "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series seriesN2 = new XYChart.Series();
         seriesN2.setName(listYears.get(0).getAnneeInt()+"");
@@ -266,6 +298,11 @@ public class ChartEngine extends Application {
 
         Scene scene = new Scene(lineChart, 1200, 800);
         lineChart.setAnimated(false);
+
+        xAxis.tickLabelFontProperty().set(Font.font(20));
+        xAxis.setTickLabelRotation(-45);
+        yAxis.tickLabelFontProperty().set(Font.font(20));
+
         lineChart.getData().add(seriesN2);
         lineChart.getData().add(seriesN1);
         lineChart.getData().add(seriesN);
@@ -273,31 +310,31 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
-    public void generateLineChartEvolutionEquipementLigneSAE(Stage stage, String parEquipement, int chartNumber, int parLigne) throws MalformedURLException {
+    public void generateLineChartEvolutionEquipementLigne(Stage stage, String parEquipement, int chartNumber, String parLigne, boolean estSymphonieSAE) throws MalformedURLException {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
 
         LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Evolution OT " + parEquipement +" --- Métro " +parLigne+ "\nCodes : " + data.getCodesEquipement(parEquipement));
+        lineChart.setTitle("Evolution OT " + parEquipement +"\nLigne : " +parLigne+ "\nCodes : " + data.getCodesEquipement(parEquipement));
 
         XYChart.Series seriesN2 = new XYChart.Series();
         seriesN2.setName(listYears.get(0).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            seriesN2.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+            seriesN2.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(0).getMoisIndex(i).getEquipement(parEquipement).getOTsLigne(parLigne)));
         }
 
         XYChart.Series seriesN1 = new XYChart.Series();
         seriesN1.setName(listYears.get(1).getAnneeInt()+"");
         for (int i = 0; i < 12; i++) {
-            seriesN1.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+            seriesN1.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(1).getMoisIndex(i).getEquipement(parEquipement).getOTsLigne(parLigne)));
         }
 
         XYChart.Series seriesN = new XYChart.Series();
         seriesN.setName(listYears.get(2).getAnneeInt()+"");
 
         for (int i = 0; i < 12; i++) {
-            seriesN.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getOTLigneMetro(parLigne)));
+            seriesN.getData().add(new XYChart.Data(data.getTabMois()[i], listYears.get(2).getMoisIndex(i).getEquipement(parEquipement).getOTsLigne(parLigne)));
         }
 
         Scene scene = new Scene(lineChart, 1200, 800);
@@ -315,27 +352,53 @@ public class ChartEngine extends Application {
 
         lineChart.setCreateSymbols(false);
 
-        if(parLigne == 1){
+        if(parLigne.equals("M01")){
             //jaune
             lineChart.setStyle("-fx-background-color: #ffff4d;"); /*"-fx-background-color: #ffff1a;"*/
-            //lineChart.setStyle("-fx-background-position: top left;");
-            //lineChart.setStyle("-fx-background-size: 800 800;");
-            //lineChart.setBackground(new Background(new BackgroundFill(new ImagePattern(new Image(getClass().getClassLoader().getResource("data/metro1.jpg").toString())), CornerRadii.EMPTY, Insets.EMPTY)));
         }
-        else if(parLigne == 3){
+        else if(parLigne.equals("M02")){
+            lineChart.setStyle("-fx-background-color: #66b3ff;");
+        }
+        else if(parLigne.equals("M03")){
             lineChart.setStyle("-fx-background-color: #b3b300;");
         }
-        else if(parLigne == 4){
+        else if(parLigne.equals("M04")){
             //violet
             lineChart.setStyle("-fx-background-color: #d966ff;");
         }
-        else if(parLigne == 13) {
+        else if(parLigne.equals("M05")){
+            lineChart.setStyle("-fx-background-color: #ff8533;");
+        }
+        else if(parLigne.equals("M06")){
+            lineChart.setStyle("-fx-background-color: #47d147;");
+        }
+        else if(parLigne.equals("M07")){
+            lineChart.setStyle("-fx-background-color: #ffb3b3;");
+        }
+        else if(parLigne.equals("M08")){
+            lineChart.setStyle("-fx-background-color: #eb99ff;");
+        }
+        else if(parLigne.equals("M09")){
+            lineChart.setStyle("-fx-background-color: #cccc00;");
+        }
+        else if(parLigne.equals("M10")){
+            lineChart.setStyle("-fx-background-color: #ffbf00;");
+        }
+        else if(parLigne.equals("M11")){
+            lineChart.setStyle("-fx-background-color: #cc9966;");
+        }
+        else if(parLigne.equals("M12")){
+            lineChart.setStyle("-fx-background-color: #00e600;");
+        }
+        else if(parLigne.equals("M13")) {
             //bleu
             lineChart.setStyle("-fx-background-color: #99ffff;");
         }
 
-
-        saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_M"+parLigne+"_" + parEquipement + ".png");
+        if(estSymphonieSAE)
+            saveAsPng(scene, "src/ChartsSAE/"+ chartNumber+" - lineChart_SAE_"+parLigne+"_" + parEquipement + ".png");
+        else
+            saveAsPng(scene, "src/Charts/"+ chartNumber+" - lineChart_"+parLigne+"_" + parEquipement + "_DETAIL.png");
     }
 
     public void saveAsPng(Scene scene, String path) {

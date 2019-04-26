@@ -1,5 +1,7 @@
 package Model;
 
+import data.Data;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -112,6 +114,26 @@ public class FamilleEquipement {
 
     public void setNbTotalOT(int nbTotalOT) {
         this.nbTotalOT = nbTotalOT;
+    }
+
+    public int getOTsLigne(String parLigne){//TODO: clean elses
+        if(parLigne.equals("RER A")) return nbOTRERA;
+        else if(parLigne.equals("RER B")) return nbOTRERB;
+        else if(parLigne.equals("M01")) return nbOTMetro[0];
+        else if(parLigne.equals("M02")) return nbOTMetro[1];
+        else if(parLigne.equals("M03")) return nbOTMetro[2];
+        else if(parLigne.equals("M04")) return nbOTMetro[3];
+        else if(parLigne.equals("M05")) return nbOTMetro[4];
+        else if(parLigne.equals("M06")) return nbOTMetro[5];
+        else if(parLigne.equals("M07")) return nbOTMetro[6];
+        else if(parLigne.equals("M08")) return nbOTMetro[7];
+        else if(parLigne.equals("M09")) return nbOTMetro[8];
+        else if(parLigne.equals("M10")) return nbOTMetro[9];
+        else if(parLigne.equals("M11")) return nbOTMetro[10];
+        else if(parLigne.equals("M12")) return nbOTMetro[11];
+        else if(parLigne.equals("M13")) return nbOTMetro[12];
+        else return 0;
+
     }
 
     public int getOTLigneMetro(int parNumeroLigne){

@@ -36,6 +36,12 @@ public class PDFCreator {
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/Extract.pdf"));
         document.open();
         addTitle(document, "");
+
+        Document documentGlobal = new Document();
+        PdfWriter.getInstance(documentGlobal, new FileOutputStream(pathToPNGs + "/ExtractGlobal.pdf"));
+        documentGlobal.open();
+        addTitle(documentGlobal, "");
+
         float scaler;
         Image img;
 
@@ -49,32 +55,36 @@ public class PDFCreator {
                             - document.rightMargin() - 0) / img.getWidth()) * 100;
                     img.scalePercent(scaler);
                     document.add(img);
+                    if(child.getName().contains("GLOBAL")) documentGlobal.add(img);
                 }
             }
         }
         document.close();
+        documentGlobal.close();
     }
 
     //genère pdf avec png pour symphonie SAE
     public void generatePDFSAE() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGsSAE + "/ExtractSAE.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/ExtractSAE.pdf"));
         document.open();
         addTitle(document, "SAE");
         document.add(this.createTable());
         float scaler;
         Image img;
 
-        File chartsDirectory = new File(pathToPNGsSAE);
+        File chartsDirectory = new File(pathToPNGs);
         File[] directoryListing = chartsDirectory.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
                 if (child.getName().contains(".png")) {
-                    img = Image.getInstance(pathToPNGsSAE + "/" + child.getName());
-                    scaler = ((document.getPageSize().getWidth() - document.leftMargin()
-                            - document.rightMargin() - 0) / img.getWidth()) * 100;
-                    img.scalePercent(scaler);
-                    document.add(img);
+                    if(child.getName().contains("M01") || child.getName().contains("M03") || child.getName().contains("M04") || child.getName().contains("M13")) {
+                        img = Image.getInstance(pathToPNGs + "/" + child.getName());
+                        scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+                                - document.rightMargin() - 0) / img.getWidth()) * 100;
+                        img.scalePercent(scaler);
+                        document.add(img);
+                    }
                 }
             }
         }
