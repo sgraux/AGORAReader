@@ -30,6 +30,7 @@ public class PDFCreator {
     private static ArrayList<Annee> listeAnnee;
 
 
+    //Génère les pdfs Total et Résumé
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/ExtractTotal.pdf"));
@@ -48,13 +49,13 @@ public class PDFCreator {
         File[] directoryListing = chartsDirectory.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                if (child.getName().contains(".png")) {
+                if (child.getName().contains(".png")) {//Ajoute tout dans Total
                     img = Image.getInstance(pathToPNGs + "/" + child.getName());
                     scaler = ((document.getPageSize().getWidth() - document.leftMargin()
                             - document.rightMargin() - 0) / img.getWidth()) * 100;
                     img.scalePercent(scaler);
                     document.add(img);
-                    if(child.getName().contains("GLOBAL")) documentGlobal.add(img);
+                    if(child.getName().contains("GLOBAL")) documentGlobal.add(img); //Ajoute uniquement les overall dans Résumé
                 }
             }
         }
