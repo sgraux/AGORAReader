@@ -25,7 +25,6 @@ import java.util.Date;
 public class PDFCreator {
 
     private final String pathToPNGs = "src/Charts";
-    private final String pathToPNGsSAE = "src/ChartsSAE";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
     private static ArrayList<Annee> listeAnnee;
@@ -33,12 +32,12 @@ public class PDFCreator {
 
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/Extract.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/ExtractTotal.pdf"));
         document.open();
         addTitle(document, "");
 
         Document documentGlobal = new Document();
-        PdfWriter.getInstance(documentGlobal, new FileOutputStream(pathToPNGs + "/ExtractGlobal.pdf"));
+        PdfWriter.getInstance(documentGlobal, new FileOutputStream(pathToPNGs + "/ExtractRésumé.pdf"));
         documentGlobal.open();
         addTitle(documentGlobal, "");
 

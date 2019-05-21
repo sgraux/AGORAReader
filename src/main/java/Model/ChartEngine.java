@@ -37,7 +37,7 @@ public class ChartEngine extends Application {
     public void start(Stage stage) throws Exception {
 
         //TODO: add correct way to find input extract file
-        reader = new ExtractReader("C:\\Users\\Sean\\Documents\\STAGE - RATP\\Sheet1CUT.xlsx");
+        reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\Final Extract 16.05.2019.xlsx");
         listYears = reader.giveYear();
 
         //TODO: add graphic interface to display running information
