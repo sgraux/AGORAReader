@@ -2,6 +2,8 @@ package Model;
 
 import data.Data;
 
+import java.util.ArrayList;
+
 /**[Modele de donnees] Gere une annee
  * @author Sean Graux
  * @version 1.0
@@ -9,13 +11,49 @@ import data.Data;
 public class Annee implements Comparable<Annee>{
 
     private int anneeInt;
-    private Mois[] mois = new Mois[12];
+    //private Semaine[] tabSemainesAnnee = new Semaine[52];
+    private ArrayList<OT> listOTs = new ArrayList<OT>();
     private Data data = new Data();
 
     public Annee(int parAnneeInt){
         anneeInt = parAnneeInt;
-        for(int i = 0; i < 12; i++){
-            mois[i] = new Mois();
+        /*for(int i = 0; i < 12; i++){
+            tabSemainesAnnee[i] = new Semaine();
+        }*/
+    }
+
+    public void iterateOTs(){
+        int[] tabArmoireLines = new int[15];
+        for(int i = 0; i < tabArmoireLines.length; i++)//set everything to 0
+            tabArmoireLines[i] = 0;
+
+        int[] tabCentraleLines = tabArmoireLines;//set everything to 0 without for
+        int[] tabTelesonoLines = tabArmoireLines;
+        int[] tabCamérasLines = tabArmoireLines;
+        int[] tabSonoLines = tabArmoireLines;
+        int[] tabInterphoneLines = tabArmoireLines;
+
+        for(OT currentOT : listOTs){
+
+            ///////////////////////// SUM OTS LINES /////////////////////////////
+            if(currentOT.getFamilleBM().equals("Armoires Fortes")){
+                tabArmoireLines[currentOT.getIdClient()] ++;
+            }
+            else if(currentOT.getFamilleBM().equals("Centrales d'alarmes")){
+                tabCentraleLines[currentOT.getIdClient()] ++;
+            }
+            else if(currentOT.getFamilleBM().equals("Telesonorisation")){
+                tabTelesonoLines[currentOT.getIdClient()] ++;
+            }
+            else if(currentOT.getFamilleBM().equals("Caméras")){
+                tabCamérasLines[currentOT.getIdClient()] ++;
+            }
+            else if(currentOT.getFamilleBM().equals("Sonorisation")){
+                tabSonoLines[currentOT.getIdClient()] ++;
+            }
+            else if(currentOT.getFamilleBM().equals("Interphones")){
+                tabInterphoneLines[currentOT.getIdClient()] ++;
+            }
         }
     }
 
@@ -45,6 +83,7 @@ public class Annee implements Comparable<Annee>{
         }
         return tabOTsLines;
     }
+
 
     public String[] getTopPanneEquipLigne(int parLigne){
         String[] top5PanneEquip = new String[5];
@@ -99,6 +138,7 @@ public class Annee implements Comparable<Annee>{
         return top5PanneEquip;
     }
 
+    /*
     public int getSumOverallOTs(){
         int sum = 0;
         for(int i = 0; i < 12; i++){
@@ -115,9 +155,11 @@ public class Annee implements Comparable<Annee>{
         return sum;
     }
 
+
     public Mois getMoisIndex(int parIndex){
         return mois[parIndex];
     }
+    */
 
     public int getAnneeInt() {
         return anneeInt;
@@ -127,15 +169,15 @@ public class Annee implements Comparable<Annee>{
         this.anneeInt = anneeInt;
     }
 
-    public Mois[] getMois() {
+    /*public Mois[] getMois() {
         return mois;
-    }
+    }*/
 
-    public void setMois(Mois[] mois) {
+    /*public void setMois(Mois[] mois) {
         this.mois = mois;
-    }
+    }*/
 
-    public String toString(){
+    /*public String toString(){
         return "----- " + anneeInt + " -----\n"
                 +"Janvier : " + mois[0].getOverallOts() + " --- "       + mois[0].getOverallOTsLignesSpe() +"\n"
                 + "Février : " + mois[1].getOverallOts() +  " --- "     + mois[1].getOverallOTsLignesSpe() +"\n"
@@ -149,7 +191,7 @@ public class Annee implements Comparable<Annee>{
                 + "Octobre : " + mois[9].getOverallOts() +  " --- "     + mois[9].getOverallOTsLignesSpe() +"\n"
                 + "Novembre : " + mois[10].getOverallOts() +  " --- "   + mois[10].getOverallOTsLignesSpe() +"\n"
                 + "Décembre : " + mois[11].getOverallOts() +  " --- "   + mois[11].getOverallOTsLignesSpe() +"\n";
-    }
+    }*/
 
     public int compareTo(Annee parAnnee) {
         return this.getAnneeInt() - parAnnee.getAnneeInt();

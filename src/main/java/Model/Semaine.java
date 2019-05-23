@@ -2,11 +2,11 @@ package Model;
 
 import data.Data;
 
-/**[Modele de donnees] Gere un mois et tous les OT des equipements surveilles
- * @author Sean Graux
- * @version 1.0
- */
-public class Mois {
+public class Semaine {
+
+    private int numeroSemaine;
+    private int numeroMois;
+    //private Jour[] tabJours = new Jour[7];
 
     private FamilleEquipement armoireForte;
     private FamilleEquipement centralesAlarmes;
@@ -16,7 +16,10 @@ public class Mois {
     private FamilleEquipement interphones;
     private int overallOTsDEBUG;
 
-    public Mois() {
+    public Semaine(int parNumeroSemaine, int parNumeroMois) {
+
+        numeroSemaine = parNumeroSemaine;
+        numeroMois = parNumeroMois;
         this.armoireForte = new FamilleEquipement();
         this.centralesAlarmes = new FamilleEquipement();
         this.teleSono = new FamilleEquipement();

@@ -116,7 +116,7 @@ public class FamilleEquipement {
         this.nbTotalOT = nbTotalOT;
     }
 
-    public int getOTsLigne(String parLigne){//TODO: clean elses
+    public int getOTsLigne(String parLigne){
         if(parLigne.equals("RER A")) return nbOTRERA;
         else if(parLigne.equals("RER B")) return nbOTRERB;
         else if(parLigne.equals("M01")) return nbOTMetro[0];

@@ -11,6 +11,36 @@ public class Data {
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
     private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones"};
 
+
+    public int getIDLigne(String parLigne){
+        for(int i = 0; i < tabLines.length; i++){
+            if(tabLines[i].equals(parLigne)) return i;
+        }
+        return -1;
+    }
+
+    public String whichEquip(String parCode){
+        if(parCode.equals("ARFO")) return "Armoires Fortes";
+        else{
+            for(String s : centrales){
+                if(parCode.equals(s)) return "Centrales d'alarmes";
+            }
+            for(String s : telesono){
+                if(parCode.equals(s)) return "Telesonorisation";
+            }
+            for(String s : video){
+                if(parCode.equals(s)) return "Caméras";
+            }
+            for(String s : son){
+                if(parCode.equals(s)) return "Sonorisation";
+            }
+            for(String s : phones){
+                if(parCode.equals(s)) return "Interphones";
+            }
+        }
+        return "NA";
+    }
+
     public String getCodesEquipement(String parEquipement){
         if(parEquipement.equals("Centrales d'alarmes"))
             return tabToString(centrales);

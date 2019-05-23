@@ -91,44 +91,45 @@ public class ExtractReader {
     public void manageCellsContent(Double yearCellContent, String timeFinish, String equipmentCellContent, String clientCellContent){
 
         int[] tabDate = parseDate(yearCellContent);
+        Date date = DateUtil.getJavaDate(yearCellContent);
         int currentYear = tabDate[1];
         int currentMonth = tabDate[0];
 
         if(yearList.isEmpty()){
             yearList.add(new Annee(currentYear));
-            yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+            yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
         }
         else{
             if(yearList.size() == 1) {
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
             }
             else if(yearList.size() == 2){
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
             }
             else{
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
                 else if (yearList.get(2).getAnneeInt() == currentYear) {
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
                 }
             }
         }

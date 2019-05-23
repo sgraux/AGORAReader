@@ -36,6 +36,8 @@ public class ChartEngine extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        long startTime = System.currentTimeMillis();
+
         //TODO: add correct way to find input extract file
         reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\Final Extract 16.05.2019.xlsx");
         listYears = reader.giveYear();
@@ -52,8 +54,12 @@ public class ChartEngine extends Application {
         creator.generatePDFSAE();
 
         System.out.print("--- PDFs DONE --- \n");
-        System.out.print("--- STOP ---");
+        System.out.println("--- STOP ---");
         Platform.exit();
+
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        System.out.println("EXECUTION IN : "+ (elapsedTime/1000) + "sec");
     }
 
     //TODO: merge fcts to limitate for loops
