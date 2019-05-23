@@ -15,3 +15,5 @@ hs_err_pid*
 /src/Charts/*
 /Doc/*
 /src/ChartsSAE/*
+
+target/classes/META-INF/XLSExtractToChart\.kotlin_module
