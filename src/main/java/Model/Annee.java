@@ -4,60 +4,86 @@ import data.Data;
 
 import java.util.ArrayList;
 
-/**[Modele de donnees] Gere une annee
+/**
+ * [Modele de donnees] Gere une annee
+ *
  * @author Sean Graux
  * @version 1.0
  */
-public class Annee implements Comparable<Annee>{
+public class Annee implements Comparable<Annee> {
 
     private int anneeInt;
     //private Semaine[] tabSemainesAnnee = new Semaine[52];
     private ArrayList<OT> listOTs = new ArrayList<OT>();
     private Data data = new Data();
 
-    public Annee(int parAnneeInt){
+    private int[][][] tabEquipLignesMois = new int[6][15][12];
+    private int[][] moisFamilleBM = new int[12][6];
+
+    public Annee(int parAnneeInt) {
         anneeInt = parAnneeInt;
         /*for(int i = 0; i < 12; i++){
             tabSemainesAnnee[i] = new Semaine();
         }*/
     }
 
-    public void iterateOTs(){
-        int[] tabArmoireLines = new int[15];
-        for(int i = 0; i < tabArmoireLines.length; i++)//set everything to 0
-            tabArmoireLines[i] = 0;
+    public void iterateOTs() {
 
-        int[] tabCentraleLines = tabArmoireLines;//set everything to 0 without for
-        int[] tabTelesonoLines = tabArmoireLines;
-        int[] tabCamérasLines = tabArmoireLines;
-        int[] tabSonoLines = tabArmoireLines;
-        int[] tabInterphoneLines = tabArmoireLines;
+        int[][][] tabEquipLignesMois = new int[6][15][12];
 
-        for(OT currentOT : listOTs){
+        int[][] moisEquip = new int[12][6];
 
-            ///////////////////////// SUM OTS LINES /////////////////////////////
-            if(currentOT.getFamilleBM().equals("Armoires Fortes")){
-                tabArmoireLines[currentOT.getIdClient()] ++;
-            }
-            else if(currentOT.getFamilleBM().equals("Centrales d'alarmes")){
-                tabCentraleLines[currentOT.getIdClient()] ++;
-            }
-            else if(currentOT.getFamilleBM().equals("Telesonorisation")){
-                tabTelesonoLines[currentOT.getIdClient()] ++;
-            }
-            else if(currentOT.getFamilleBM().equals("Caméras")){
-                tabCamérasLines[currentOT.getIdClient()] ++;
-            }
-            else if(currentOT.getFamilleBM().equals("Sonorisation")){
-                tabSonoLines[currentOT.getIdClient()] ++;
-            }
-            else if(currentOT.getFamilleBM().equals("Interphones")){
-                tabInterphoneLines[currentOT.getIdClient()] ++;
+        for (int i = 0; i < 6; i++) {//set everything to 0
+            for(int j = 0; j < 15; j++ ) {
+                for(int h = 0; h < 12; h++) {
+                    tabEquipLignesMois[i][j][h] = 0;
+                }
             }
         }
+
+        for(int i = 0; i < 12; i++){
+            for(int j = 0; j < 6; j++){
+                moisEquip[i][j] = 0;
+            }
+        }
+
+
+
+        for (OT currentOT : listOTs) {
+            ///////////////////////// SUM OTS LINES /////////////////////////////
+            if (currentOT.getIdClient() != -1) {
+                if (currentOT.getFamilleBM().equals("Armoires Fortes")) {
+                    tabEquipLignesMois[0][currentOT.getIdClient()][currentOT.getMois()-1]++;
+                    moisEquip[currentOT.getMois()-1][0] ++;
+                }
+                else if (currentOT.getFamilleBM().equals("Centrales d'alarmes")) {
+                    tabEquipLignesMois[1][currentOT.getIdClient()][currentOT.getMois()-1]++;
+                    moisEquip[currentOT.getMois()-1][1] ++;
+                }
+                else if (currentOT.getFamilleBM().equals("Telesonorisation")) {
+                    tabEquipLignesMois[2][currentOT.getIdClient()][currentOT.getMois()-1]++;
+                    moisEquip[currentOT.getMois()-1][2] ++;
+                }
+                else if (currentOT.getFamilleBM().equals("Caméras")) {
+                    tabEquipLignesMois[3][currentOT.getIdClient()][currentOT.getMois()-1]++;
+                    moisEquip[currentOT.getMois()-1][3] ++;
+                }
+                else if (currentOT.getFamilleBM().equals("Sonorisation")) {
+                    tabEquipLignesMois[4][currentOT.getIdClient()][currentOT.getMois()-1]++;
+                    moisEquip[currentOT.getMois()-1][4] ++;
+                }
+                else if (currentOT.getFamilleBM().equals("Interphones")) {
+                    tabEquipLignesMois[5][currentOT.getIdClient()][currentOT.getMois()-1]++;
+                    moisEquip[currentOT.getMois()-1][5] ++;
+                }
+            }
+        }
+
+        this.tabEquipLignesMois = tabEquipLignesMois;
+        this.moisFamilleBM = moisEquip;
     }
 
-    public int[] getSumOTsLines(String parEquipement){
+    /*public int[] getSumOTsLines(String parEquipement){
         int[] tabOTsLines = new int[15];
         for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
 
@@ -136,7 +162,7 @@ public class Annee implements Comparable<Annee>{
         }
 
         return top5PanneEquip;
-    }
+    }*/
 
     /*
     public int getSumOverallOTs(){
@@ -193,7 +219,49 @@ public class Annee implements Comparable<Annee>{
                 + "Décembre : " + mois[11].getOverallOts() +  " --- "   + mois[11].getOverallOTsLignesSpe() +"\n";
     }*/
 
+    public int[] getSumOTsLines(int numFamilleEquip) {
+        int sommeH = 0; //somme des mois
+        int[] sommeOtLigne = new int[15];
+
+        for(int j = 0; j < 15; j ++){
+            for(int h = 0; h < 12; h ++){
+                sommeH += tabEquipLignesMois[numFamilleEquip][j][h];
+            }
+            sommeOtLigne[j] = sommeH;
+            sommeH = 0;
+        }
+        return sommeOtLigne;
+    }
+
     public int compareTo(Annee parAnnee) {
         return this.getAnneeInt() - parAnnee.getAnneeInt();
+    }
+
+    public ArrayList<OT> getListOTs() {
+        return listOTs;
+    }
+
+    public void setListOTs(ArrayList<OT> listOTs) {
+        this.listOTs = listOTs;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public int[][] getMoisFamilleBM() {
+        return moisFamilleBM;
+    }
+
+    public void setMoisFamilleBM(int[][] moisFamilleBM) {
+        this.moisFamilleBM = moisFamilleBM;
+    }
+
+    public int getTabMoisFamilleIndex(int indexI, int indexJ){
+        return moisFamilleBM[indexI][indexJ];
     }
 }

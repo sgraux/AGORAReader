@@ -69,7 +69,7 @@ public class PDFCreator {
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/ExtractSAE.pdf"));
         document.open();
         addTitle(document, "SAE");
-        document.add(this.createTable());
+        //document.add(this.createTable());
         float scaler;
         Image img;
 
@@ -105,7 +105,7 @@ public class PDFCreator {
         }
     }
 
-    public static PdfPTable createTable() throws DocumentException {
+   /* public static PdfPTable createTable() throws DocumentException {
 
         PdfPTable table = new PdfPTable(9);
 
@@ -116,7 +116,7 @@ public class PDFCreator {
         addTabTopPanneEquip(listeAnnee.get(0), table);
 
         return table;
-    }
+    }*/
 
     public static void addHeader(PdfPTable parTable, String parAnnee){
         Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
@@ -150,7 +150,7 @@ public class PDFCreator {
         parTable.addCell(cellM13);
     }
 
-    public static void addTabTopPanneEquip(Annee parAnnee, PdfPTable parTable){
+    /*public static void addTabTopPanneEquip(Annee parAnnee, PdfPTable parTable){
         String[][] tabPannes = {parAnnee.getTopPanneEquipLigne(1),parAnnee.getTopPanneEquipLigne(3), parAnnee.getTopPanneEquipLigne(4), parAnnee.getTopPanneEquipLigne(13)};
         String[] temp;
 
@@ -164,7 +164,7 @@ public class PDFCreator {
                 parTable.addCell(createValueCell(temp[1], j+1));
             }
         }
-    }
+    }*/
 
     private static PdfPCell createLabelCell(String text){
 

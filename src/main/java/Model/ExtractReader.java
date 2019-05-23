@@ -86,6 +86,10 @@ public class ExtractReader {
         }
         //System.out.println(testCountRows);
         Collections.sort(yearList);
+        for(Annee annee : yearList){
+            Collections.sort(annee.getListOTs());
+            annee.iterateOTs();
+        }
     }
 
     public void manageCellsContent(Double yearCellContent, String timeFinish, String equipmentCellContent, String clientCellContent){
@@ -97,39 +101,39 @@ public class ExtractReader {
 
         if(yearList.isEmpty()){
             yearList.add(new Annee(currentYear));
-            yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+            yearList.get(0).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
         }
         else{
             if(yearList.size() == 1) {
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(0).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(1).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
             }
             else if(yearList.size() == 2){
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(0).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(1).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(2).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
             }
             else{
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(0).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(1).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
                 else if (yearList.get(2).getAnneeInt() == currentYear) {
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageSemaine(equipmentCellContent, parseClient(clientCellContent), date);
+                    yearList.get(2).getListOTs().add(new OT(date, currentYear, currentMonth, equipmentCellContent, "lieuTemp", parseClient(clientCellContent)));
                 }
             }
         }
