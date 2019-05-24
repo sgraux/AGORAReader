@@ -63,7 +63,7 @@ public class ChartEngine extends Application {
         this.barChat(stage);
         String[] tabEquip;
 
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < data.getTabEquip().length; i++){
 
             tabEquip = data.getTabEquip();
             this.generateBarChartRepartitionEquipement(stage, tabEquip[i], i+2);

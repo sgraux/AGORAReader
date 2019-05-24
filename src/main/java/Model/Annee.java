@@ -38,6 +38,18 @@ public class Annee implements Comparable<Annee>{
                 OTsLinesEquipement = this.mois[i].getSono().getOTsLines();
             else if(parEquipement.equals("Interphones"))
                 OTsLinesEquipement = this.mois[i].getInterphones().getOTsLines();
+            else if(parEquipement.equals("Superviseur"))
+                OTsLinesEquipement = this.mois[i].getSuperviseur().getOTsLines();
+            else if(parEquipement.equals("Trottoir roulant"))
+                OTsLinesEquipement = this.mois[i].getTrottoirRoulant().getOTsLines();
+            else if(parEquipement.equals("Escalier mécanique"))
+                OTsLinesEquipement = this.mois[i].getEscalierMecanique().getOTsLines();
+            else if(parEquipement.equals("Ascenseur"))
+                OTsLinesEquipement = this.mois[i].getAscenseur().getOTsLines();
+            else if(parEquipement.equals("Grilles"))
+                OTsLinesEquipement = this.mois[i].getGrilles().getOTsLines();
+            else if(parEquipement.equals("Fermeture automatique"))
+                OTsLinesEquipement = this.mois[i].getFermetureAutomatique().getOTsLines();
 
             for (int j = 0; j < 15; j++) {
                 tabOTsLines[j] += OTsLinesEquipement[j];

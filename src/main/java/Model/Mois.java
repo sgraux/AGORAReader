@@ -14,6 +14,14 @@ public class Mois {
     private FamilleEquipement videoSurveillance;
     private FamilleEquipement sono;
     private FamilleEquipement interphones;
+    private FamilleEquipement superviseur;
+    private FamilleEquipement trottoirRoulant;
+    private FamilleEquipement escalierMecanique;
+    private FamilleEquipement ascenseur;
+    private FamilleEquipement grilles;
+    private FamilleEquipement fermetureAutomatique;
+    private Data data = new Data();
+
     private int overallOTsDEBUG;
 
     public Mois() {
@@ -23,6 +31,12 @@ public class Mois {
         this.videoSurveillance = new FamilleEquipement();
         this.sono = new FamilleEquipement();
         this.interphones = new FamilleEquipement();
+        this.superviseur = new FamilleEquipement();
+        this.trottoirRoulant = new FamilleEquipement();
+        this.escalierMecanique = new FamilleEquipement();
+        this.ascenseur = new FamilleEquipement();
+        this.grilles = new FamilleEquipement();
+        this.fermetureAutomatique = new FamilleEquipement();
         overallOTsDEBUG = 0;
     }
 
@@ -39,6 +53,18 @@ public class Mois {
             return getSono();
         else if(parEquipement.equals("Interphones"))
             return getInterphones();
+        else if(parEquipement.equals("Superviseur"))
+            return getSuperviseur();
+        else if(parEquipement.equals("Trottoir roulant"))
+            return getTrottoirRoulant();
+        else if(parEquipement.equals("Escalier mécanique"))
+            return getEscalierMecanique();
+        else if(parEquipement.equals("Ascenseur"))
+            return getAscenseur();
+        else if(parEquipement.equals("Grilles"))
+            return getGrilles();
+        else if(parEquipement.equals("Fermeture automatique"))
+            return getFermetureAutomatique();
         else
             return null;
     }
@@ -54,14 +80,21 @@ public class Mois {
     }
 
     public void manageEquipement(String parEquipment, String parClient){
-        String[] centrales = {"CEAS", "PEAS", "DEAS","PEAL"};
+        String[] centrales = {"CEAS", "PEAS", "DEAS","PEAL"}; //TODO: change that with data class
         String[] telesono = {"ARTS", "MITS", "RTIP", "RTCL", "TSONO"};
         String[] video = {"ARVS", "CAVS", "RAVS", "MOVS"};
         String[] son = {"SONO", "SONOR", "PUPI", "PUSO", "HPSO"};
         String[] phones = {"IVOY", "IVDO", "PUIN", "BUIN", "CAIN", "BMIN", "MPIN"};
+        String[] superviseur = {"MISC", "SCESU"};
+        String[] escalier = data.getEscalierMecanique();
+        String[] ascenseur = data.getAscenseur();
+        String[] grilles = data.getGrilles();
+        String[] fermeture = data.getFermeture();
 
         if(parEquipment.equals("ARFO"))
             armoireForte.manageOT(parClient);
+        else if(parEquipment.equals("PALE"))
+            trottoirRoulant.manageOT(parClient);
         else{
             for(int i = 0; i < centrales.length; i++)
                 if (centrales[i].equals(parEquipment))
@@ -82,6 +115,26 @@ public class Mois {
             for(int i = 0; i < phones.length; i++)
                 if (phones[i].equals(parEquipment))
                     interphones.manageOT(parClient);
+
+            for(int i = 0; i < superviseur.length; i++)
+                if (superviseur[i].equals(parEquipment))
+                    this.superviseur.manageOT(parClient);
+
+            for(int i = 0; i < escalier.length; i++)
+                if (escalier[i].equals(parEquipment))
+                    this.escalierMecanique.manageOT(parClient);
+
+            for(int i = 0; i < ascenseur.length; i++)
+                if (ascenseur[i].equals(parEquipment))
+                    this.ascenseur.manageOT(parClient);
+
+            for(int i = 0; i < grilles.length; i++)
+                if (grilles[i].equals(parEquipment))
+                    this.grilles.manageOT(parClient);
+
+            for(int i = 0; i < fermeture.length; i++)
+                if (fermeture[i].equals(parEquipment))
+                    this.fermetureAutomatique.manageOT(parClient);
         }
 
         if(!parClient.equals("NA")) overallOTsDEBUG ++;
@@ -140,14 +193,51 @@ public class Mois {
         this.interphones = interphones;
     }
 
+    public FamilleEquipement getSuperviseur() {
+        return superviseur;
+    }
+
+    public void setSuperviseur(FamilleEquipement superviseur) {
+        this.superviseur = superviseur;
+    }
+
+    public void setOverallOTsDEBUG(int overallOTsDEBUG) {
+        this.overallOTsDEBUG = overallOTsDEBUG;
+    }
+
+    public FamilleEquipement getTrottoirRoulant() {
+        return trottoirRoulant;
+    }
+
+    public FamilleEquipement getEscalierMecanique() {
+        return escalierMecanique;
+    }
+
+    public FamilleEquipement getAscenseur() {
+        return ascenseur;
+    }
+
+    public FamilleEquipement getGrilles() {
+        return grilles;
+    }
+
+    public FamilleEquipement getFermetureAutomatique() {
+        return fermetureAutomatique;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
     public int getOverallOts(){
         return armoireForte.getNbTotalOT() + centralesAlarmes.getNbTotalOT() + teleSono.getNbTotalOT()
-                + videoSurveillance.getNbTotalOT() + sono.getNbTotalOT() + interphones.getNbTotalOT();
+                + videoSurveillance.getNbTotalOT() + sono.getNbTotalOT() + interphones.getNbTotalOT()
+                + superviseur.getNbTotalOT();
     }
 
     public int getOverallOTsLignesSpe(){
         return armoireForte.getNbOTLignesSpe() + centralesAlarmes.getNbOTLignesSpe() + teleSono.getNbOTLignesSpe()
-                + videoSurveillance.getNbOTLignesSpe() + sono.getNbOTLignesSpe() + interphones.getNbOTLignesSpe();
+                + videoSurveillance.getNbOTLignesSpe() + sono.getNbOTLignesSpe() + interphones.getNbOTLignesSpe() + superviseur.getNbOTLignesSpe();
     }
 
     @Override
