@@ -77,7 +77,7 @@ public class PDFCreator {
         if (directoryListing != null) {
             for (File child : directoryListing) {
                 if (child.getName().contains(".png")) {
-                    if(child.getName().contains("M01") || child.getName().contains("M03") || child.getName().contains("M04") || child.getName().contains("M13")) {
+                    if(child.getName().contains("M01") || child.getName().contains("M03") || child.getName().contains("M04") || child.getName().contains("M13") || child.getName().contains("SAE")) {
                         img = Image.getInstance(pathToPNGs + "/" + child.getName());
                         scaler = ((document.getPageSize().getWidth() - document.leftMargin()
                                 - document.rightMargin() - 0) / img.getWidth()) * 100;
