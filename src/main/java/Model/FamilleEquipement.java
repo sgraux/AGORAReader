@@ -108,6 +108,15 @@ public class FamilleEquipement {
         return nbOTMetro[0] + nbOTMetro[2] + nbOTMetro[3] + nbOTMetro[12];
     }
 
+    public int getMaxOT(){
+        int max = 0;
+        for(int i = 0; i < nbOTMetro.length; i++){
+            if(nbOTMetro[i] > max)
+                max = nbOTMetro[i];
+        }
+        return max;
+    }
+
     public int getNbTotalOT() {
         return nbTotalOT;
     }

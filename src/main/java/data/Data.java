@@ -15,6 +15,7 @@ public class Data {
 
     private final String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
+    private final String[] tabLinesSAE = {"M01", "M03", "M04", "M13"};
     private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Trottoir roulant", "Escalier mécanique", "Ascenseur", "Grilles", "Fermeture automatique"};
 
     public String getCodesEquipement(String parEquipement) {
@@ -109,5 +110,7 @@ public class Data {
         return tabEquip;
     }
 
-
+    public String[] getTabLinesSAE() {
+        return tabLinesSAE;
+    }
 }

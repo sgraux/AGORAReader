@@ -66,14 +66,14 @@ public class ChartEngine extends Application {
         for(int i = 0; i < data.getTabEquip().length; i++){
 
             tabEquip = data.getTabEquip();
-            this.generateBarChartRepartitionEquipement(stage, tabEquip[i], i+2);
+           // this.generateBarChartRepartitionEquipement(stage, tabEquip[i], i+2);
             this.generateBarChartRepartitionEquipementSAE(stage, tabEquip[i], i+2);
-            this.generateLineChartEvolutionEquipement(stage, tabEquip[i], i+2);
+            //this.generateLineChartEvolutionEquipement(stage, tabEquip[i], i+2);
             //this.generateBarChartEvolutionEquipement(stage, tabEquip[i], i+2);
             //this.generateLineChartEvolutionEquipementSAE(stage, tabEquip[i], i+2);
             this.generateBarChartEvolutionEquipementSAE(stage, tabEquip[i], i+2);
 
-            for(String currentLine : data.getTabLines()){
+            for(String currentLine : data.getTabLinesSAE()){
                 //this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, false);
                 this.generateBarChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, false);
                 /*if(currentLine.equals("M01"))
@@ -139,7 +139,7 @@ public class ChartEngine extends Application {
     //TODO: merge RepartitionEquipement et RapartitionEquipementSAE
     public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement, int chartNumber){
         CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis(0, compareMaxAnnee(listYears.get(0).getMaxOTEquip(parEquipement),listYears.get(1).getMaxOTEquip(parEquipement),listYears.get(2).getMaxOTEquip(parEquipement)),5);
 
         int[] OTsLinesN2 = listYears.get(0).getSumOTsLines(parEquipement);
         int[] OTsLinesN1 = listYears.get(1).getSumOTsLines(parEquipement);
@@ -486,7 +486,7 @@ public class ChartEngine extends Application {
 
     public void generateBarChartEvolutionEquipementLigne(Stage stage, String parEquipement, int chartNumber, String parLigne, boolean estSymphonieSAE) throws MalformedURLException {
         final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis(0, compareMaxAnnee(listYears.get(0).getMaxOTEquip(parEquipement),listYears.get(1).getMaxOTEquip(parEquipement),listYears.get(2).getMaxOTEquip(parEquipement))+5,5);
 
         BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
@@ -592,6 +592,17 @@ public class ChartEngine extends Application {
             }
         }
 
+    }
+
+    public int compareMaxAnnee(int maxN2, int maxN1, int maxN){
+        int max = maxN2;
+        if(maxN1 > max){
+            max = maxN1;
+        }
+        if(maxN > max){
+            max = maxN;
+        }
+        return max;
     }
 
 }

@@ -127,6 +127,17 @@ public class Annee implements Comparable<Annee>{
         return sum;
     }
 
+    public int getMaxOTEquip(String parEquipement){
+        int max = 0;
+        int maxOT = 0;
+        for(int i = 0; i < 12; i++){
+            maxOT = mois[i].getEquipement(parEquipement).getMaxOT();
+            if( maxOT > max)
+                max = maxOT;
+        }
+        return max;
+    }
+
     public Mois getMoisIndex(int parIndex){
         return mois[parIndex];
     }
