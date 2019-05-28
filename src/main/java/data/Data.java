@@ -18,6 +18,17 @@ public class Data {
 
     private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
 
+    public int getIndexFamille(String parFamille){
+        int i = 0;
+        int index = -1;
+        while(i < tabEquip.length && index < 0){
+            if(parFamille.equals(tabEquip[i]))
+                index = i;
+            i++;
+        }
+        return index;
+    }
+
     public String getCodesEquipement(String parEquipement) {
         if (parEquipement.equals("Centrales d'alarmes"))
             return tabToString(centrales);

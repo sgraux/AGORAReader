@@ -2,6 +2,7 @@ package Model;
 
 import data.Data;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**[Modele de donnees] Gere un mois et tous les OT des equipements surveilles
@@ -22,6 +23,7 @@ public class Mois {
     private FamilleEquipement ascenseur;
     private FamilleEquipement grillesEtFermeture;
 
+    private Hashtable<String, FamilleEquipement> hashEquipements = new Hashtable<String, FamilleEquipement>();
     private Hashtable<String, Integer> hashLieu = new Hashtable<String, Integer>();
 
     private Data data = new Data();
@@ -29,6 +31,9 @@ public class Mois {
     private int overallOTsDEBUG;
 
     public Mois() {
+        for(String currentFamille : data.getTabEquip()){
+            hashEquipements.put(currentFamille, new FamilleEquipement());
+        }
         this.armoireForte = new FamilleEquipement();
         this.centralesAlarmes = new FamilleEquipement();
         this.teleSono = new FamilleEquipement();
@@ -65,6 +70,7 @@ public class Mois {
             return getAscenseur();
         else
             return null;
+        //return hashEquipements.get(parEquipement);
     }
 
     public int[] getOTEquipLigne(int parLigneMetro){
@@ -116,15 +122,15 @@ public class Mois {
                     this.superviseur.manageOT(parClient);
 
             for(int i = 0; i < escalier.length; i++)
-                if (escalier[i].equals(parEquipment) && parDescOT.contains("DISTANCE"))
+                if (escalier[i].equals(parEquipment) && parDescOT.contains("COMMANDE"))
                     this.escalierMecaniqueEtTrottoir.manageOT(parClient);
 
             for(int i = 0; i < ascenseur.length; i++)
-                if (ascenseur[i].equals(parEquipment) && parDescOT.contains("DISTANCE"))
+                if (ascenseur[i].equals(parEquipment) && parDescOT.contains("COMMANDE"))
                     this.ascenseur.manageOT(parClient);
 
             for(int i = 0; i < grilles.length; i++)
-                if (grilles[i].equals(parEquipment) && parDescOT.contains("DISTANCE"))
+                if (grilles[i].equals(parEquipment) && parDescOT.contains("COMMANDE"))
                     this.grillesEtFermeture.manageOT(parClient);
         }
 
