@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**Genere tous les graphes et les enregesitre  dans /src/Charts
  * @author Sean Graux
@@ -37,13 +38,16 @@ public class ChartEngine extends Application {
     public void start(Stage stage) throws Exception {
 
         //TODO: add correct way to find input extract file
+        double start = System.currentTimeMillis();
         reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\AGORA_28.05.2019.xlsx");
+        double endRead = System.currentTimeMillis();
         listYears = reader.giveYear();
 
         //TODO: add graphic interface to display running information
         System.out.print("--- GENERATE CHARTS --- \n");
         this.generateAllCharts(new Stage());
         System.out.print("--- PNGs DONE --- \n");
+        double endPngs = System.currentTimeMillis();
 
         PDFCreator creator = new PDFCreator();
         PDFCreator.setListeAnne(listYears);
@@ -52,8 +56,27 @@ public class ChartEngine extends Application {
         creator.generatePDFSAE();
 
         System.out.print("--- PDFs DONE --- \n");
-        System.out.print("--- STOP ---");
+        double endPdfs = System.currentTimeMillis();
+        System.out.println("--- STOP ---");
         Platform.exit();
+
+        double end = System.currentTimeMillis();
+        System.out.println("TEMPS LECTURE = " + (endRead - start)/1000 + "sec\n"
+                        + "TEMPS PNGS = " + (endPngs - endRead)/1000 + "sec\n"
+                        + "TEMPS PDFS = " + (endPdfs - endPngs)/1000 + "sec\n"
+                        + "TEMPS EXEC = " + (end - start)/1000 + "sec\n");
+
+        /*for(Annee currentAnnee : listYears){
+            System.out.println("--- " +currentAnnee.getAnneeInt() + " ---");
+            for(int i = 0; i < 12; i ++){
+                String[] temp = currentAnnee.getMoisIndex(i).getMaxLieu();
+                System.out.println(data.getTabMois()[i] + ":" + temp[0] + " - " + temp[1]);
+            }
+        }*/
+        Hashtable<String, Integer> hash = listYears.get(0).getMoisIndex(0).getHashLieu();
+        for(String currentKey : hash.keySet()){
+            System.out.println(currentKey + " - " + hash.get(currentKey));
+        }
     }
 
     //TODO: merge fcts to limitate for loops

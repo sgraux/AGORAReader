@@ -34,7 +34,7 @@ public class Annee implements Comparable<Annee>{
         return tabOTsLines;
     }
 
-    public String[] getTopPanneEquipLigne(int parLigne){
+    public String[] getTopPanneEquipLigne(String parLigne){
         String[] top5PanneEquip = new String[5];
         int[] sommeOTEquipLigne = new int[data.getTabEquip().length];
         int[] temp;

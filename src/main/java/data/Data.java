@@ -2,6 +2,7 @@ package data;
 
 public class Data {
 
+    private final String[] armoires = {"ARFO"};
     private final String[] centrales = {"CEAS", "PEAS", "DEAS", "PEAL"};
     private final String[] telesono = {"ARTS", "MITS", "RTIP", "RTCL", "TSONO", "PUTS"};
     private final String[] video = {"ARVS", "CAVS", "RAVS", "MOVS"};
@@ -11,6 +12,8 @@ public class Data {
     private final String[] escalierMecaniqueEtTrottoir = {"CNI", "FUJ", "KON", "O.K", "OTI", "SCH", "SPEC", "THY", "PALE"};
     private final String[] ascenseur = {"A000","A001", "A002", "A003", "A004", "A005", "A007"};
     private final String[] grillesEtFermeture = {"BL", "BR", "CI", "GC", "GLE", "GR", "GVP", "PB", "PBH", "PTEBV", "PTEC", "PTLBV", "PTLC", "RM", "VR", "VRA", "GS"};
+
+    private final String[][] tabFamille = {armoires, centrales, telesono, video, son,phones, superviseur, escalierMecaniqueEtTrottoir, ascenseur, grillesEtFermeture};
 
     private final String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
@@ -27,6 +30,26 @@ public class Data {
             i++;
         }
         return index;
+    }
+
+    public boolean validateClient(String parClient){
+        boolean res = false;
+        for(String curentLine : tabLines){
+            if(parClient.equals(curentLine))
+                res = true;
+        }
+        return res;
+    }
+
+    public String getFamilleFromCodeTEMP(String parCodeEquipement){
+        String famille = "";
+        for(int i = 0; i < tabEquip.length; i++){
+            for(int j = 0; j < tabFamille[i].length; j++){
+                if(tabFamille[i][j].equals(parCodeEquipement))
+                    famille = tabEquip[i];
+            }
+        }
+        return famille;
     }
 
     public String getCodesEquipement(String parEquipement) {

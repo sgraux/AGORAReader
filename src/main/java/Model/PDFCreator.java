@@ -28,6 +28,7 @@ public class PDFCreator {
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
     private static ArrayList<Annee> listeAnnee;
+    private static Data data = new Data();
 
 
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
@@ -150,7 +151,10 @@ public class PDFCreator {
     }
 
     public static void addTabTopPanneEquip(Annee parAnnee, PdfPTable parTable){
-        String[][] tabPannes = {parAnnee.getTopPanneEquipLigne(1),parAnnee.getTopPanneEquipLigne(3), parAnnee.getTopPanneEquipLigne(4), parAnnee.getTopPanneEquipLigne(13)};
+        String[][] tabPannes = new String[data.getTabLinesSAE().length][5];//{parAnnee.getTopPanneEquipLigne(1),parAnnee.getTopPanneEquipLigne(3), parAnnee.getTopPanneEquipLigne(4), parAnnee.getTopPanneEquipLigne(13)};
+        for(int i = 0; i < data.getTabLinesSAE().length; i++){
+            tabPannes[i] = parAnnee.getTopPanneEquipLigne(data.getTabLinesSAE()[i]);
+        }
         String[] temp;
 
         addHeader(parTable, ""+parAnnee.getAnneeInt());
