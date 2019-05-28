@@ -2,12 +2,15 @@ package Model;
 
 import data.Data;
 
+import java.util.Hashtable;
+
 /**[Modele de donnees] Gere un mois et tous les OT des equipements surveilles
  * @author Sean Graux
  * @version 1.0
  */
 public class Mois {
 
+    //TODO: put equipment into an arraylist
     private FamilleEquipement armoireForte;
     private FamilleEquipement centralesAlarmes;
     private FamilleEquipement teleSono;
@@ -15,11 +18,12 @@ public class Mois {
     private FamilleEquipement sono;
     private FamilleEquipement interphones;
     private FamilleEquipement superviseur;
-    private FamilleEquipement trottoirRoulant;
-    private FamilleEquipement escalierMecanique;
+    private FamilleEquipement escalierMecaniqueEtTrottoir;
     private FamilleEquipement ascenseur;
-    private FamilleEquipement grilles;
-    private FamilleEquipement fermetureAutomatique;
+    private FamilleEquipement grillesEtFermeture;
+
+    private Hashtable<String, Integer> hashLieu = new Hashtable<String, Integer>();
+
     private Data data = new Data();
 
     private int overallOTsDEBUG;
@@ -32,11 +36,9 @@ public class Mois {
         this.sono = new FamilleEquipement();
         this.interphones = new FamilleEquipement();
         this.superviseur = new FamilleEquipement();
-        this.trottoirRoulant = new FamilleEquipement();
-        this.escalierMecanique = new FamilleEquipement();
+        this.escalierMecaniqueEtTrottoir = new FamilleEquipement();
         this.ascenseur = new FamilleEquipement();
-        this.grilles = new FamilleEquipement();
-        this.fermetureAutomatique = new FamilleEquipement();
+        this.grillesEtFermeture = new FamilleEquipement();
         overallOTsDEBUG = 0;
     }
 
@@ -55,16 +57,12 @@ public class Mois {
             return getInterphones();
         else if(parEquipement.equals("Superviseur"))
             return getSuperviseur();
-        else if(parEquipement.equals("Trottoir roulant"))
-            return getTrottoirRoulant();
-        else if(parEquipement.equals("Escalier mécanique"))
-            return getEscalierMecanique();
-        else if(parEquipement.equals("Ascenseur"))
+        else if(parEquipement.equals("Commande à distance escalier mécanique et trottoir roulant"))
+            return getEscalierMecaniqueEtTrottoir();
+        else if(parEquipement.equals("Commande à distance grilles et fermeture automatique"))
+            return getGrillesEtFermeture();
+        else if(parEquipement.equals("Commande à distance ascenseur"))
             return getAscenseur();
-        else if(parEquipement.equals("Grilles"))
-            return getGrilles();
-        else if(parEquipement.equals("Fermeture automatique"))
-            return getFermetureAutomatique();
         else
             return null;
     }
@@ -79,9 +77,9 @@ public class Mois {
         return nbOtEquip;
     }
 
-    public void manageEquipement(String parEquipment, String parClient){
+    public void manageEquipement(String parEquipment, String parClient, String parLieu, String parDescOT){
         String[] centrales = {"CEAS", "PEAS", "DEAS","PEAL"}; //TODO: change that with data class
-        String[] telesono = {"ARTS", "MITS", "RTIP", "RTCL", "TSONO"};
+        String[] telesono = {"ARTS", "MITS", "RTIP", "RTCL", "TSONO"}; //TODO: use data.getEquipement
         String[] video = {"ARVS", "CAVS", "RAVS", "MOVS"};
         String[] son = {"SONO", "SONOR", "PUPI", "PUSO", "HPSO"};
         String[] phones = {"IVOY", "IVDO", "PUIN", "BUIN", "CAIN", "BMIN", "MPIN"};
@@ -89,12 +87,9 @@ public class Mois {
         String[] escalier = data.getEscalierMecanique();
         String[] ascenseur = data.getAscenseur();
         String[] grilles = data.getGrilles();
-        String[] fermeture = data.getFermeture();
 
         if(parEquipment.equals("ARFO"))
             armoireForte.manageOT(parClient);
-        else if(parEquipment.equals("PALE"))
-            trottoirRoulant.manageOT(parClient);
         else{
             for(int i = 0; i < centrales.length; i++)
                 if (centrales[i].equals(parEquipment))
@@ -121,28 +116,41 @@ public class Mois {
                     this.superviseur.manageOT(parClient);
 
             for(int i = 0; i < escalier.length; i++)
-                if (escalier[i].equals(parEquipment))
-                    this.escalierMecanique.manageOT(parClient);
+                if (escalier[i].equals(parEquipment) && parDescOT.contains("DISTANCE"))
+                    this.escalierMecaniqueEtTrottoir.manageOT(parClient);
 
             for(int i = 0; i < ascenseur.length; i++)
-                if (ascenseur[i].equals(parEquipment))
+                if (ascenseur[i].equals(parEquipment) && parDescOT.contains("DISTANCE"))
                     this.ascenseur.manageOT(parClient);
 
             for(int i = 0; i < grilles.length; i++)
-                if (grilles[i].equals(parEquipment))
-                    this.grilles.manageOT(parClient);
-
-            for(int i = 0; i < fermeture.length; i++)
-                if (fermeture[i].equals(parEquipment))
-                    this.fermetureAutomatique.manageOT(parClient);
+                if (grilles[i].equals(parEquipment) && parDescOT.contains("DISTANCE"))
+                    this.grillesEtFermeture.manageOT(parClient);
         }
 
         if(!parClient.equals("NA")) overallOTsDEBUG ++;
+
+        if(hashLieu.get(parLieu) != null)
+            hashLieu.put(parLieu, hashLieu.get(parLieu)+1);
+        else
+            hashLieu.put(parLieu, 1);
 
     }
 
     public int getOverallOTsDEBUG() {
         return overallOTsDEBUG;
+    }
+
+    public String getMaxLieu(){
+        int max = 0;
+        String nomMax = "";
+        for(String key : hashLieu.keySet()) {
+            if (hashLieu.get(key) > max){
+                max = hashLieu.get(key);
+            nomMax = key;
+            }
+        }
+        return nomMax;
     }
 
     public FamilleEquipement getArmoireForte() {
@@ -205,24 +213,16 @@ public class Mois {
         this.overallOTsDEBUG = overallOTsDEBUG;
     }
 
-    public FamilleEquipement getTrottoirRoulant() {
-        return trottoirRoulant;
-    }
-
-    public FamilleEquipement getEscalierMecanique() {
-        return escalierMecanique;
+    public FamilleEquipement getEscalierMecaniqueEtTrottoir() {
+        return escalierMecaniqueEtTrottoir;
     }
 
     public FamilleEquipement getAscenseur() {
         return ascenseur;
     }
 
-    public FamilleEquipement getGrilles() {
-        return grilles;
-    }
-
-    public FamilleEquipement getFermetureAutomatique() {
-        return fermetureAutomatique;
+    public FamilleEquipement getGrillesEtFermeture() {
+        return grillesEtFermeture;
     }
 
     public Data getData() {

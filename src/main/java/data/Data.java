@@ -8,15 +8,15 @@ public class Data {
     private final String[] son = {"SONO", "SONOR", "PUPI", "PUSO", "HPSO", "ARSO"};
     private final String[] phones = {"IVOY", "IVDO", "PUIN", "BUIN", "CAIN", "BMIN", "MPIN"};
     private final String[] superviseur = {"MISC", "SCESU"};
-    private final String[] escalierMecanique = {"CNI", "FUJ", "KON", "O.K", "OTI", "SCH", "SPEC", "THY"};
+    private final String[] escalierMecaniqueEtTrottoir = {"CNI", "FUJ", "KON", "O.K", "OTI", "SCH", "SPEC", "THY", "PALE"};
     private final String[] ascenseur = {"A000","A001", "A002", "A003", "A004", "A005", "A007"};
-    private final String[] grilles = {"BL", "BR", "CI", "GC", "GLE", "GR", "GVP", "PB", "PBH", "PTEBV", "PTEC", "PTLBV", "PTLC", "RM", "VR", "VRA"};
-    private final String[] fermeture = {"GS", "GR"};
+    private final String[] grillesEtFermeture = {"BL", "BR", "CI", "GC", "GLE", "GR", "GVP", "PB", "PBH", "PTEBV", "PTEC", "PTLBV", "PTLC", "RM", "VR", "VRA", "GS"};
 
     private final String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
     private final String[] tabLinesSAE = {"M01", "M03", "M04", "M13"};
-    private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Trottoir roulant", "Escalier mécanique", "Ascenseur", "Grilles", "Fermeture automatique"};
+
+    private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
 
     public String getCodesEquipement(String parEquipement) {
         if (parEquipement.equals("Centrales d'alarmes"))
@@ -33,16 +33,12 @@ public class Data {
             return "ARFO";
         else if (parEquipement.equals("Superviseur"))
             return tabToString(superviseur);
-        else if (parEquipement.equals("Trottoir roulant"))
-            return "PALE";
-        else if (parEquipement.equals("Escalier mécanique"))
-            return tabToString(escalierMecanique);
-        else if (parEquipement.equals("Ascenseur"))
+        else if (parEquipement.equals("Commande à distance escalier mécanique et trottoir roulant"))
+            return tabToString(escalierMecaniqueEtTrottoir);
+        else if (parEquipement.equals("Commande à distance ascenseur"))
             return tabToString(ascenseur);
-        else if (parEquipement.equals("Grilles"))
-            return tabToString(grilles);
-        else if (parEquipement.equals("Fermeture automatique"))
-            return tabToString(fermeture);
+        else if (parEquipement.equals("Commande à distance grilles et fermeture automatique"))
+            return tabToString(grillesEtFermeture);
         return null;
     }
 
@@ -83,7 +79,7 @@ public class Data {
     }
 
     public String[] getEscalierMecanique() {
-        return escalierMecanique;
+        return escalierMecaniqueEtTrottoir;
     }
 
     public String[] getAscenseur() {
@@ -91,11 +87,7 @@ public class Data {
     }
 
     public String[] getGrilles() {
-        return grilles;
-    }
-
-    public String[] getFermeture() {
-        return fermeture;
+        return grillesEtFermeture;
     }
 
     public String[] getTabMois() {

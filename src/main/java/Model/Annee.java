@@ -23,34 +23,10 @@ public class Annee implements Comparable<Annee>{
         int[] tabOTsLines = new int[15];
         for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
 
-        int[] OTsLinesEquipement = new int[15];
+        int[] OTsLinesEquipement;
 
         for(int i = 0; i < 12; i++) {
-            if(parEquipement.equals("Armoires Fortes"))
-                OTsLinesEquipement = this.mois[i].getArmoireForte().getOTsLines();
-            else if(parEquipement.equals("Centrales d'alarmes"))
-                OTsLinesEquipement = this.mois[i].getCentralesAlarmes().getOTsLines();
-            else if(parEquipement.equals("Telesonorisation"))
-                OTsLinesEquipement = this.mois[i].getTeleSono().getOTsLines();
-            else if(parEquipement.equals("Caméras"))
-                OTsLinesEquipement = this.mois[i].getVideoSurveillance().getOTsLines();
-            else if(parEquipement.equals("Sonorisation"))
-                OTsLinesEquipement = this.mois[i].getSono().getOTsLines();
-            else if(parEquipement.equals("Interphones"))
-                OTsLinesEquipement = this.mois[i].getInterphones().getOTsLines();
-            else if(parEquipement.equals("Superviseur"))
-                OTsLinesEquipement = this.mois[i].getSuperviseur().getOTsLines();
-            else if(parEquipement.equals("Trottoir roulant"))
-                OTsLinesEquipement = this.mois[i].getTrottoirRoulant().getOTsLines();
-            else if(parEquipement.equals("Escalier mécanique"))
-                OTsLinesEquipement = this.mois[i].getEscalierMecanique().getOTsLines();
-            else if(parEquipement.equals("Ascenseur"))
-                OTsLinesEquipement = this.mois[i].getAscenseur().getOTsLines();
-            else if(parEquipement.equals("Grilles"))
-                OTsLinesEquipement = this.mois[i].getGrilles().getOTsLines();
-            else if(parEquipement.equals("Fermeture automatique"))
-                OTsLinesEquipement = this.mois[i].getFermetureAutomatique().getOTsLines();
-
+            OTsLinesEquipement = this.mois[i].getEquipement(parEquipement).getOTsLines();
             for (int j = 0; j < 15; j++) {
                 tabOTsLines[j] += OTsLinesEquipement[j];
             }

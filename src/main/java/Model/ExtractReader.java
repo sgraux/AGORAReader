@@ -51,10 +51,10 @@ public class ExtractReader {
         int countCell = 0;
 
         double yearCellContent = 0.0;
-        String timeFinishCellContent = "";
         String equipmentCellContent = "";
         String clientCellContent = "";
-
+        String lieuCellContent = "";
+        String descOTCellContent = "";
 
         int testCountRows = 0;//DEBUG
 
@@ -70,25 +70,28 @@ public class ExtractReader {
                         yearCellContent = currentCell.getNumericCellValue();
                         break;
                     case 1:
-                        timeFinishCellContent = ""+currentCell.getNumericCellValue();
-                        break;
-                    case 2:
                         equipmentCellContent = currentCell.getStringCellValue();
                         break;
-                    case 3:
+                    case 2:
                         clientCellContent  = currentCell.getStringCellValue();
+                        break;
+                    case 3:
+                        lieuCellContent = currentCell.getStringCellValue();
+                        break;
+                    case 4:
+                        descOTCellContent = currentCell.getStringCellValue();
                         break;
                 }
                 countCell++;
             }
-            this.manageCellsContent(yearCellContent, timeFinishCellContent, equipmentCellContent, clientCellContent);
+            this.manageCellsContent(yearCellContent, equipmentCellContent, clientCellContent, lieuCellContent, descOTCellContent);
             countCell = 0;
         }
         //System.out.println(testCountRows);
         Collections.sort(yearList);
     }
 
-    public void manageCellsContent(Double yearCellContent, String timeFinish, String equipmentCellContent, String clientCellContent){
+    public void manageCellsContent(Double yearCellContent, String equipmentCellContent, String clientCellContent, String lieuCellContent, String descOTCellContent){
 
         int[] tabDate = parseDate(yearCellContent);
         int currentYear = tabDate[1];
@@ -96,47 +99,47 @@ public class ExtractReader {
 
         if(yearList.isEmpty()){
             yearList.add(new Annee(currentYear));
-            yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+            yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
         }
         else{
             if(yearList.size() == 1) {
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
             }
             else if(yearList.size() == 2){
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
             }
             else{
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
                 else if (yearList.get(2).getAnneeInt() == currentYear) {
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parseClient(clientCellContent));
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
                 }
             }
         }
     }
 
-    public String parseClient(String clientToParse){
+    public String parse(String stringToParse){
 
-        String[] splited = clientToParse.split("-");
+        String[] splited = stringToParse.split("-");
         if (splited.length > 1) return splited[1];
         else return "NA";
 
