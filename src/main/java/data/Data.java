@@ -14,6 +14,7 @@ public class Data {
     private final String[] grillesEtFermeture = {"BL", "BR", "CI", "GC", "GLE", "GR", "GVP", "PB", "PBH", "PTEBV", "PTEC", "PTLBV", "PTLC", "RM", "VR", "VRA", "GS"};
 
     private final String[][] tabFamille = {armoires, centrales, telesono, video, son,phones, superviseur, escalierMecaniqueEtTrottoir, ascenseur, grillesEtFermeture};
+    private final String[] tabFamilleCommandeADistance = {"Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
 
     private final String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};

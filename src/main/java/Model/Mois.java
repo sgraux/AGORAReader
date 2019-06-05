@@ -41,7 +41,7 @@ public class Mois {
     public void manageEquipement(String parCodeEquipement, String parClient, String parLieu, String parDescOT){
         String famille = data.getFamilleFromCodeTEMP(parCodeEquipement);
         if(!famille.equals("")) {
-            if (famille.contains("escalier") || famille.contains("ascenseur") || famille.contains("grilles")) {
+            if (famille.contains("Commande")) {
                 if (parDescOT.contains("COMMANDE"))
                     hashEquipements.get(famille).manageOT(parClient);
 
@@ -61,14 +61,36 @@ public class Mois {
         return overallOTsDEBUG;
     }
 
-    public String[] getMaxLieu(){//todo top 3 lieux
+    public String[] getMaxLieu(){
         int max = 0;
+        String[][] tabMax = new String[3][2];
         String[] res = {"",""};
         for(String key : hashLieu.keySet()) {
             if (hashLieu.get(key) > max){
                 max = hashLieu.get(key);
             res[0] = key;
             res[1] = hashLieu.get(key).toString();
+            }
+            if(hashLieu.get(key) > Integer.parseInt(tabMax[0][0])){
+                tabMax[2][0] = tabMax[1][0];
+                tabMax[2][1] = tabMax[1][1];
+
+                tabMax[1][0] = tabMax[0][0];
+                tabMax[1][1] = tabMax[0][1];
+
+                tabMax[0][0] = key;
+                tabMax[0][1] = hashLieu.get(key).toString();
+            }
+            else if(hashLieu.get(key) > Integer.parseInt(tabMax[1][0])){
+                tabMax[2][0] = tabMax[1][0];
+                tabMax[2][1] = tabMax[1][1];
+
+                tabMax[1][0] = key;
+                tabMax[1][1] = hashLieu.get(key).toString();
+            }
+            else if(hashLieu.get(key) > Integer.parseInt(tabMax[2][0])){
+                tabMax[2][0] = key;
+                tabMax[2][1] = hashLieu.get(key).toString();
             }
         }
         return res;

@@ -30,7 +30,6 @@ public class FamilleEquipement {
             nbOTLignesSpe ++;
         }
         nbTotalOT++;
-
     }
 
     public int[] getOTsLines(){//TODO:change name
@@ -72,7 +71,7 @@ public class FamilleEquipement {
         this.nbTotalOT = nbTotalOT;
     }
 
-    public int getOTsLigne(String parLigne){//TODO: clean elses
+    public int getOTsLigne(String parLigne){
         return hashLignes.get(parLigne);
     }
 

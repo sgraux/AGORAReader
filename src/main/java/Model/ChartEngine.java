@@ -73,10 +73,11 @@ public class ChartEngine extends Application {
                 System.out.println(data.getTabMois()[i] + ":" + temp[0] + " - " + temp[1]);
             }
         }*/
-        Hashtable<String, Integer> hash = listYears.get(0).getMoisIndex(0).getHashLieu();
+
+        /*Hashtable<String, Integer> hash = listYears.get(0).getMoisIndex(0).getHashLieu();
         for(String currentKey : hash.keySet()){
             System.out.println(currentKey + " - " + hash.get(currentKey));
-        }
+        }*/
     }
 
     //TODO: merge fcts to limitate for loops
