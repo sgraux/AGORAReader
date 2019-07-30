@@ -39,7 +39,7 @@ public class ChartEngine extends Application {
 
         //TODO: add correct way to find input extract file
         double start = System.currentTimeMillis();
-        reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\AGORA_28.05.2019.xlsx");
+        reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\AGORA_08_07_2019.xlsx");
         double endRead = System.currentTimeMillis();
         listYears = reader.giveYear();
 
@@ -52,8 +52,9 @@ public class ChartEngine extends Application {
         PDFCreator creator = new PDFCreator();
         PDFCreator.setListeAnne(listYears);
 
-        creator.generatePDF();
+        //creator.generatePDF();
         creator.generatePDFSAE();
+        creator.generatePDFTopLieu();
 
         System.out.print("--- PDFs DONE --- \n");
         double endPdfs = System.currentTimeMillis();

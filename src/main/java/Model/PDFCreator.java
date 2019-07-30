@@ -91,6 +91,16 @@ public class PDFCreator {
         document.close();
     }
 
+    public void generatePDFTopLieu() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/TopLieu.pdf"));
+        document.open();
+        addTitle(document, "");
+
+        document.add(this.createTableTopLieu());
+        document.close();
+    }
+
     private static void addTitle(Document document, String parString)
             throws DocumentException {
         Paragraph title = new Paragraph("Extraction OT "+ parString + " --- " + new Date(), catFont);
@@ -169,6 +179,78 @@ public class PDFCreator {
         }
     }
 
+    public static PdfPTable createTableTopLieu() throws DocumentException{
+        PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(100);
+
+        addHeaderTopLieuxGen(table);
+        addTopLieuxAnnee(listeAnnee.get(2), table);
+        addTopLieuxAnnee(listeAnnee.get(1), table);
+        addTopLieuxAnnee(listeAnnee.get(0), table);
+
+        return table;
+    }
+
+    private static void addHeaderTopLieuxGen(PdfPTable table){
+        Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+
+        PdfPCell cellTitle = new PdfPCell(new Phrase("TOP LIEUX",font));
+        PdfPCell cellAnnee = new PdfPCell(new Phrase("Année",font));
+        PdfPCell cellMois = new PdfPCell(new Phrase("Mois",font));
+        PdfPCell cellTop = new PdfPCell(new Phrase("Top #",font));
+        PdfPCell cellM1 = new PdfPCell(new Phrase("General",font));
+        /*PdfPCell cellM3 = new PdfPCell(new Phrase("Metro 3",font));
+        PdfPCell cellM4 = new PdfPCell(new Phrase("Metro 4",font));
+        PdfPCell cellM13 = new PdfPCell(new Phrase("Metro 13",font));*/
+
+        cellTitle.setColspan(5);
+        cellAnnee.setColspan(1);
+        cellMois.setColspan(1);
+        cellTop.setColspan(1);
+        cellM1.setColspan(2);
+        /*cellM3.setColspan(2);
+        cellM4.setColspan(2);
+        cellM13.setColspan(2);*/
+
+        Style.headerCellStyle(cellTitle, 0);
+        Style.headerCellStyle(cellAnnee, 0);
+        Style.headerCellStyle(cellMois, 0);
+        Style.headerCellStyle(cellTop, 0);
+        Style.headerCellStyle(cellM1, 1);
+        /*Style.headerCellStyle(cellM3, 3);
+        Style.headerCellStyle(cellM4, 4);
+        Style.headerCellStyle(cellM13, 13);*/
+
+        table.addCell(cellTitle);
+        table.addCell(cellAnnee);
+        table.addCell(cellMois);
+        table.addCell(cellTop);
+        table.addCell(cellM1);
+        /*table.addCell(cellM3);
+        table.addCell(cellM4);
+        table.addCell(cellM13);*/
+    }
+
+    private static void addTopLieuxAnnee(Annee parAnnee, PdfPTable parTable){
+        Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+        PdfPCell cellN = new PdfPCell(new Phrase("Année " + parAnnee.getAnneeInt(),font));
+        cellN.setRowspan(36);
+        cellN.setVerticalAlignment(Element.ALIGN_CENTER);
+        Style.headerCellStyle(cellN, 0);
+        parTable.addCell(cellN);
+
+        String[][][] tabTop = parAnnee.getMaxLieuAnnee();
+
+        for(int month = 0; month < 12; month++){
+            parTable.addCell(createMonthCell(data.getTabMois()[month]));
+            for(int top = 0; top < 3; top++){
+                parTable.addCell(new PdfPCell(new Phrase("#" + (top+1),font)));
+                parTable.addCell(new PdfPCell(new Phrase(tabTop[month][top][0],font)));
+                parTable.addCell(new PdfPCell(new Phrase(tabTop[month][top][1],font)));
+            }
+        }
+    }
+
     private static PdfPCell createLabelCell(String text){
 
         // font
@@ -192,6 +274,16 @@ public class PDFCreator {
         // set style
         Style.valueCellStyle(cell, parNumber);
         return cell;
+    }
+
+    private static PdfPCell createMonthCell(String parMois){
+        Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+        PdfPCell cellMois = new PdfPCell(new Phrase(parMois,font));
+        cellMois.setRowspan(3);
+        cellMois.setVerticalAlignment(Element.ALIGN_CENTER);
+        Style.headerCellStyle(cellMois, 0);
+
+        return cellMois;
     }
 
     public static void setListeAnne(ArrayList<Annee> parListe){

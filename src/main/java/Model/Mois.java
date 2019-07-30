@@ -39,7 +39,7 @@ public class Mois {
     }
 
     public void manageEquipement(String parCodeEquipement, String parClient, String parLieu, String parDescOT){
-        String famille = data.getFamilleFromCodeTEMP(parCodeEquipement);
+        String famille = data.getFamilleFromCodeTEMP(parCodeEquipement);//TODO: add top lieux lines
         if(!famille.equals("")) {
             if (famille.contains("Commande")) {
                 if (parDescOT.contains("COMMANDE"))
@@ -61,9 +61,15 @@ public class Mois {
         return overallOTsDEBUG;
     }
 
-    public String[] getMaxLieu(){
+    public String[][] getMaxLieu(){
         int max = 0;
         String[][] tabMax = new String[3][2];
+        for(int i = 0; i < 3; i++) {
+            tabMax[i][0] = "NA";
+            for (int j = 1; j < 2; j++)
+                tabMax[i][j] = "" + 0;
+        }
+
         String[] res = {"",""};
         for(String key : hashLieu.keySet()) {
             if (hashLieu.get(key) > max){
@@ -71,7 +77,8 @@ public class Mois {
             res[0] = key;
             res[1] = hashLieu.get(key).toString();
             }
-            if(hashLieu.get(key) > Integer.parseInt(tabMax[0][0])){
+            //System.out.println("key : " + key + " - value : " + hashLieu.get(key));
+            if(hashLieu.get(key) > Integer.parseInt(tabMax[0][1])){
                 tabMax[2][0] = tabMax[1][0];
                 tabMax[2][1] = tabMax[1][1];
 
@@ -81,19 +88,19 @@ public class Mois {
                 tabMax[0][0] = key;
                 tabMax[0][1] = hashLieu.get(key).toString();
             }
-            else if(hashLieu.get(key) > Integer.parseInt(tabMax[1][0])){
+            else if(hashLieu.get(key) > Integer.parseInt(tabMax[1][1])){
                 tabMax[2][0] = tabMax[1][0];
                 tabMax[2][1] = tabMax[1][1];
 
                 tabMax[1][0] = key;
                 tabMax[1][1] = hashLieu.get(key).toString();
             }
-            else if(hashLieu.get(key) > Integer.parseInt(tabMax[2][0])){
+            else if(hashLieu.get(key) > Integer.parseInt(tabMax[2][1])){
                 tabMax[2][0] = key;
                 tabMax[2][1] = hashLieu.get(key).toString();
             }
         }
-        return res;
+        return tabMax;
     }
 
     public Data getData() {
