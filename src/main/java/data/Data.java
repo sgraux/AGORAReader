@@ -12,15 +12,16 @@ public class Data {
     private final String[] escalierMecaniqueEtTrottoir = {"CNI", "FUJ", "KON", "O.K", "OTI", "SCH", "SPEC", "THY", "PALE"};
     private final String[] ascenseur = {"A000","A001", "A002", "A003", "A004", "A005", "A007"};
     private final String[] grillesEtFermeture = {"BL", "BR", "CI", "GC", "GLE", "GR", "GVP", "PB", "PBH", "PTEBV", "PTEC", "PTLBV", "PTLC", "RM", "VR", "VRA", "GS"};
+    private final String[] PISI = {"PISI"};
 
-    private final String[][] tabFamille = {armoires, centrales, telesono, video, son,phones, superviseur, escalierMecaniqueEtTrottoir, ascenseur, grillesEtFermeture};
+    private final String[][] tabFamille = {armoires, centrales, telesono, video, son,phones, superviseur, escalierMecaniqueEtTrottoir, ascenseur, grillesEtFermeture, PISI};
     private final String[] tabFamilleCommandeADistance = {"Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
 
     private final String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
     private final String[] tabLinesSAE = {"M01", "M03", "M04", "M13"};
 
-    private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
+    private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique", "PISI"};
 
     public int getIndexFamille(String parFamille){
         int i = 0;
@@ -74,6 +75,8 @@ public class Data {
             return tabToString(ascenseur);
         else if (parEquipement.equals("Commande à distance grilles et fermeture automatique"))
             return tabToString(grillesEtFermeture);
+        else if (parEquipement.equals("PISI"))
+            return tabToString(PISI);
         return null;
     }
 

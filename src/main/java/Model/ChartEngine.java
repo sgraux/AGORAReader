@@ -27,8 +27,12 @@ public class ChartEngine extends Application {
 
     private ExtractReader reader;
     ArrayList<Annee> listYears;
-
     private Data data = new Data();
+    private String mode;
+
+    public ChartEngine(String parMode){
+        mode = parMode;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -38,6 +42,7 @@ public class ChartEngine extends Application {
     public void start(Stage stage) throws Exception {
 
         //TODO: add correct way to find input extract file
+
         double start = System.currentTimeMillis();
         reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\AGORA_08_07_2019.xlsx");
         double endRead = System.currentTimeMillis();
@@ -45,7 +50,15 @@ public class ChartEngine extends Application {
 
         //TODO: add graphic interface to display running information
         System.out.print("--- GENERATE CHARTS --- \n");
-        this.generateAllCharts(new Stage());
+        if(mode.equals("SAE")) {
+            this.generateAllCharts(new Stage());
+        }
+        else if(mode.equals("Global")){
+
+        }
+        else{
+            this.generateChartsSelection(new Stage(), mode);
+        }
         System.out.print("--- PNGs DONE --- \n");
         double endPngs = System.currentTimeMillis();
 
@@ -79,6 +92,16 @@ public class ChartEngine extends Application {
         for(String currentKey : hash.keySet()){
             System.out.println(currentKey + " - " + hash.get(currentKey));
         }*/
+    }
+
+    public void generateChartsSelection(Stage stage, String parSelectionFamille)throws MalformedURLException{
+        this.cleanCharts("src/Charts");
+        this.barChat(stage);
+        //this.generateBarChartRepartitionEquipementSAE(stage, parSelectionFamille, 1);
+        this.generateBarChartEvolutionEquipementSAE(stage, parSelectionFamille, 1);
+        for(String currentLine : data.getTabLinesSAE()){
+            this.generateBarChartEvolutionEquipementLigne(stage, parSelectionFamille, 1, currentLine, false);
+        }
     }
 
     //TODO: merge fcts to limitate for loops
