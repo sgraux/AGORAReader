@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Mainframe extends JFrame {
 
     public Mainframe()throws Exception{
-        this.setTitle("REFTEC READER");
+        this.setTitle("AGORA Analyser");
         this.setSize(500, 300);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

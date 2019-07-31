@@ -29,6 +29,11 @@ public class PDFCreator {
             Font.BOLD);
     private static ArrayList<Annee> listeAnnee;
     private static Data data = new Data();
+    private static String outputPath;
+
+    /*public PDFCreator(String parOutputPath){
+        outputPath = parOutputPath;
+    }*/
 
 
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
@@ -66,7 +71,7 @@ public class PDFCreator {
     //genère pdf avec png pour symphonie SAE
     public void generatePDFSAE() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/ExtractSAE.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(outputPath + "/Stats.pdf"));
         document.open();
         addTitle(document, "SAE");
         document.add(this.createTable());
@@ -288,5 +293,9 @@ public class PDFCreator {
 
     public static void setListeAnne(ArrayList<Annee> parListe){
         listeAnnee = parListe;
+    }
+
+    public static void setOutputPath(String parOutputPath){
+        outputPath = parOutputPath;
     }
 }

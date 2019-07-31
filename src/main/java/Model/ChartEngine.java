@@ -29,9 +29,15 @@ public class ChartEngine extends Application {
     ArrayList<Annee> listYears;
     private Data data = new Data();
     private String mode;
+    private String inputPath;
+    private String outputPath;
 
-    public ChartEngine(String parMode){
+    private boolean isDone;
+
+    public ChartEngine(String parMode, String parInputPath, String parOutputPath){
         mode = parMode;
+        inputPath = parInputPath;
+        outputPath = parOutputPath;
     }
 
     public static void main(String[] args) {
@@ -43,8 +49,9 @@ public class ChartEngine extends Application {
 
         //TODO: add correct way to find input extract file
 
+        isDone = false;
         double start = System.currentTimeMillis();
-        reader = new ExtractReader("C:\\Users\\Sean\\Desktop\\AGORA_08_07_2019.xlsx");
+        reader = new ExtractReader(inputPath);
         double endRead = System.currentTimeMillis();
         listYears = reader.giveYear();
 
@@ -63,6 +70,7 @@ public class ChartEngine extends Application {
         double endPngs = System.currentTimeMillis();
 
         PDFCreator creator = new PDFCreator();
+        PDFCreator.setOutputPath(outputPath);
         PDFCreator.setListeAnne(listYears);
 
         //creator.generatePDF();
@@ -92,6 +100,8 @@ public class ChartEngine extends Application {
         for(String currentKey : hash.keySet()){
             System.out.println(currentKey + " - " + hash.get(currentKey));
         }*/
+
+        isDone = true;
     }
 
     public void generateChartsSelection(Stage stage, String parSelectionFamille)throws MalformedURLException{
@@ -651,6 +661,10 @@ public class ChartEngine extends Application {
             max = maxN;
         }
         return max;
+    }
+
+    public boolean getIsDone(){
+        return isDone;
     }
 
 }

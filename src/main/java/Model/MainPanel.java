@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class MainPanel extends JPanel implements ActionListener {
 
@@ -40,6 +41,8 @@ public class MainPanel extends JPanel implements ActionListener {
     private JButton buttonValidate = new JButton("Valider");
 
     final JFXPanel fxPanel = new JFXPanel();
+
+    ChartEngine engine;
 
     public MainPanel() throws Exception{
         super();
@@ -74,7 +77,7 @@ public class MainPanel extends JPanel implements ActionListener {
     private void initFX(JFXPanel fxPanel) {
         // This method is invoked on the JavaFX thread
         Stage stage = new Stage();
-        ChartEngine engine = new ChartEngine(comboBoxFamille.getSelectedItem().toString());
+        engine = new ChartEngine(comboBoxFamille.getSelectedItem().toString(), absoluteInputPath, absoluteOutputPath);
         try{engine.start(stage);}
         catch (Exception e){}
     }
@@ -124,6 +127,11 @@ public class MainPanel extends JPanel implements ActionListener {
                             initFX(fxPanel);
                         }
                     });
+                    JOptionPane.showMessageDialog(this,
+                            "Exécution en cours",
+                            "Execution",
+                            JOptionPane.INFORMATION_MESSAGE);
+
                     /*else {
                         JOptionPane.showMessageDialog(this.getParent(),
                                 "Erreur rencontrée ! Vérifiez qu'un ancien rapport généré n'est pas ouvert",
