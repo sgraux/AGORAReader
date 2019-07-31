@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,13 +32,15 @@ public class ChartEngine extends Application {
     private String mode;
     private String inputPath;
     private String outputPath;
+    private JOptionPane optionpane;
 
     private boolean isDone;
 
-    public ChartEngine(String parMode, String parInputPath, String parOutputPath){
+    public ChartEngine(String parMode, String parInputPath, String parOutputPath, JOptionPane parOptionpane){
         mode = parMode;
         inputPath = parInputPath;
         outputPath = parOutputPath;
+        optionpane = parOptionpane;
     }
 
     public static void main(String[] args) {
@@ -51,12 +54,14 @@ public class ChartEngine extends Application {
 
         isDone = false;
         double start = System.currentTimeMillis();
+        optionpane.setMessage(optionpane.getMessage()+"\n  - Reading");
         reader = new ExtractReader(inputPath);
         double endRead = System.currentTimeMillis();
         listYears = reader.giveYear();
 
         //TODO: add graphic interface to display running information
         System.out.print("--- GENERATE CHARTS --- \n");
+        optionpane.setMessage(optionpane.getMessage()+"\n - Generate Charts");
         if(mode.equals("SAE")) {
             this.generateAllCharts(new Stage());
         }
@@ -66,9 +71,11 @@ public class ChartEngine extends Application {
         else{
             this.generateChartsSelection(new Stage(), mode);
         }
+        optionpane.setMessage(optionpane.getMessage()+"\n - PNGs done");
         System.out.print("--- PNGs DONE --- \n");
         double endPngs = System.currentTimeMillis();
 
+        optionpane.setMessage(optionpane.getMessage()+"\n - Create PDFs");
         PDFCreator creator = new PDFCreator();
         PDFCreator.setOutputPath(outputPath);
         PDFCreator.setListeAnne(listYears);
@@ -79,6 +86,7 @@ public class ChartEngine extends Application {
 
         System.out.print("--- PDFs DONE --- \n");
         double endPdfs = System.currentTimeMillis();
+        optionpane.setMessage(optionpane.getMessage()+"\n - End");
         System.out.println("--- STOP ---");
         Platform.exit();
 

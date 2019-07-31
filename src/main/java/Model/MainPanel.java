@@ -5,10 +5,8 @@ import Model.PDFCreator;
 import data.Data;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -17,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 public class MainPanel extends JPanel implements ActionListener {
 
@@ -74,11 +71,14 @@ public class MainPanel extends JPanel implements ActionListener {
 
     }
 
-    private void initFX(JFXPanel fxPanel) {
+    private void initFX(JFXPanel fxPanel, JOptionPane optionPane) {
         // This method is invoked on the JavaFX thread
         Stage stage = new Stage();
-        engine = new ChartEngine(comboBoxFamille.getSelectedItem().toString(), absoluteInputPath, absoluteOutputPath);
-        try{engine.start(stage);}
+        engine = new ChartEngine(comboBoxFamille.getSelectedItem().toString(), absoluteInputPath, absoluteOutputPath, optionPane);
+        try{
+            engine.start(stage);
+
+        }
         catch (Exception e){}
     }
 
@@ -122,15 +122,19 @@ public class MainPanel extends JPanel implements ActionListener {
             }
             else {
                 try {
+                    final JOptionPane optionPane = new JOptionPane();
+
+                    optionPane.setMessage("Execution en cours");
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    optionPane.setPreferredSize(new Dimension(200,200));
+                    JDialog dialog = optionPane.createDialog(null, "Execution");
+
                     Platform.runLater(new Runnable() {
                         public void run() {
-                            initFX(fxPanel);
+                            initFX(fxPanel, optionPane);
                         }
                     });
-                    JOptionPane.showMessageDialog(this,
-                            "Exécution en cours",
-                            "Execution",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    dialog.setVisible(true);
 
                     /*else {
                         JOptionPane.showMessageDialog(this.getParent(),
