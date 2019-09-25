@@ -4,7 +4,7 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.pdf.PdfPCell;
 
-public class Style {
+public class Style { //Gère le style des cellules des tableaux
 
     public static void headerCellStyle(PdfPCell cell, int parLigne){
 

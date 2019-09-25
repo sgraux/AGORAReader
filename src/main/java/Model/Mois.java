@@ -9,12 +9,13 @@ import java.util.Hashtable;
  * @author Sean Graux
  * @version 1.0
  */
-public class Mois {
+public class Mois { //Décris un mois
 
+    //Liste de famille d'équipement
     private Hashtable<String, FamilleEquipement> hashEquipements = new Hashtable<String, FamilleEquipement>();
+    //Liste de lieu (station)
     private Hashtable<String, Integer> hashLieu = new Hashtable<String, Integer>();
     private Data data = new Data();
-
     private int overallOTsDEBUG;
 
     public Mois() {
@@ -24,22 +25,9 @@ public class Mois {
         overallOTsDEBUG = 0;
     }
 
-    public FamilleEquipement getEquipement(String parEquipement){
-        return hashEquipements.get(parEquipement);
-    }
-
-    public int[] getOTEquipLigne(String parLigne){
-        Data data = new Data();
-        int[] nbOtEquip = new int[data.getTabEquip().length];
-
-        for(int i = 0; i < data.getTabEquip().length; i++){
-            nbOtEquip[i] = this.getEquipement(data.getTabEquip()[i]).getOTsLigne(parLigne);
-        }
-        return nbOtEquip;
-    }
-
+    //Gère la famille d'équipement
     public void manageEquipement(String parCodeEquipement, String parClient, String parLieu, String parDescOT){
-        String famille = data.getFamilleFromCodeTEMP(parCodeEquipement);//TODO: add top lieux lines
+        String famille = data.getFamilleFromCodeTEMP(parCodeEquipement);
         if(!famille.equals("")) {
             if (famille.contains("Commande")) {
                 if (parDescOT.contains("COMMANDE"))
@@ -54,7 +42,6 @@ public class Mois {
             hashLieu.put(parLieu, hashLieu.get(parLieu)+1);
         else
             hashLieu.put(parLieu, 1);
-
     }
 
     public int getOverallOTsDEBUG() {
@@ -101,6 +88,20 @@ public class Mois {
             }
         }
         return tabMax;
+    }
+
+    public FamilleEquipement getEquipement(String parEquipement){
+        return hashEquipements.get(parEquipement);
+    }
+
+    public int[] getOTEquipLigne(String parLigne){
+        Data data = new Data();
+        int[] nbOtEquip = new int[data.getTabEquip().length];
+
+        for(int i = 0; i < data.getTabEquip().length; i++){
+            nbOtEquip[i] = this.getEquipement(data.getTabEquip()[i]).getOTsLigne(parLigne);
+        }
+        return nbOtEquip;
     }
 
     public Data getData() {

@@ -24,7 +24,7 @@ import java.util.Hashtable;
  * @author Sean Graux
  * @version 1.0
  */
-public class ChartEngine extends Application {
+public class ChartEngine extends Application { //Génère les graphes
 
     private ExtractReader reader;
     ArrayList<Annee> listYears;
@@ -43,75 +43,59 @@ public class ChartEngine extends Application {
         optionpane = parOptionpane;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+    //lance la création des graphes via JavaFX appel PDFCreator pour créer le pdf des résultat
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
 
-        //TODO: add correct way to find input extract file
+        try {
+            isDone = false;
+            double start = System.currentTimeMillis();
+            optionpane.setMessage(optionpane.getMessage() + "\n  - Reading");
+            reader = new ExtractReader(inputPath);
+            double endRead = System.currentTimeMillis();
+            listYears = reader.giveYear();
 
-        isDone = false;
-        double start = System.currentTimeMillis();
-        optionpane.setMessage(optionpane.getMessage()+"\n  - Reading");
-        reader = new ExtractReader(inputPath);
-        double endRead = System.currentTimeMillis();
-        listYears = reader.giveYear();
+            System.out.print("--- GENERATE CHARTS --- \n");
+            optionpane.setMessage(optionpane.getMessage() + "\n - Generate Charts");
+            if (mode.equals("SAE")) {
+                this.generateAllCharts(new Stage());
+            } else if (mode.equals("Global")) {
 
-        //TODO: add graphic interface to display running information
-        System.out.print("--- GENERATE CHARTS --- \n");
-        optionpane.setMessage(optionpane.getMessage()+"\n - Generate Charts");
-        if(mode.equals("SAE")) {
-            this.generateAllCharts(new Stage());
-        }
-        else if(mode.equals("Global")){
-
-        }
-        else{
-            this.generateChartsSelection(new Stage(), mode);
-        }
-        optionpane.setMessage(optionpane.getMessage()+"\n - PNGs done");
-        System.out.print("--- PNGs DONE --- \n");
-        double endPngs = System.currentTimeMillis();
-
-        optionpane.setMessage(optionpane.getMessage()+"\n - Create PDFs");
-        PDFCreator creator = new PDFCreator();
-        PDFCreator.setOutputPath(outputPath);
-        PDFCreator.setListeAnne(listYears);
-
-        //creator.generatePDF();
-        creator.generatePDFSAE();
-        creator.generatePDFTopLieu();
-
-        System.out.print("--- PDFs DONE --- \n");
-        double endPdfs = System.currentTimeMillis();
-        optionpane.setMessage(optionpane.getMessage()+"\n - End");
-        System.out.println("--- STOP ---");
-        Platform.exit();
-
-        double end = System.currentTimeMillis();
-        System.out.println("TEMPS LECTURE = " + (endRead - start)/1000 + "sec\n"
-                        + "TEMPS PNGS = " + (endPngs - endRead)/1000 + "sec\n"
-                        + "TEMPS PDFS = " + (endPdfs - endPngs)/1000 + "sec\n"
-                        + "TEMPS EXEC = " + (end - start)/1000 + "sec\n");
-
-        /*for(Annee currentAnnee : listYears){
-            System.out.println("--- " +currentAnnee.getAnneeInt() + " ---");
-            for(int i = 0; i < 12; i ++){
-                String[] temp = currentAnnee.getMoisIndex(i).getMaxLieu();
-                System.out.println(data.getTabMois()[i] + ":" + temp[0] + " - " + temp[1]);
+            } else {
+                this.generateChartsSelection(new Stage(), mode);
             }
-        }*/
+            optionpane.setMessage(optionpane.getMessage() + "\n - PNGs done");
+            System.out.print("--- PNGs DONE --- \n");
+            double endPngs = System.currentTimeMillis();
 
-        /*Hashtable<String, Integer> hash = listYears.get(0).getMoisIndex(0).getHashLieu();
-        for(String currentKey : hash.keySet()){
-            System.out.println(currentKey + " - " + hash.get(currentKey));
-        }*/
+            optionpane.setMessage(optionpane.getMessage() + "\n - Create PDFs");
+
+            //Appel à PDFCreator pour la création du pdf
+            PDFCreator creator = new PDFCreator();
+            PDFCreator.setOutputPath(outputPath);
+            PDFCreator.setListeAnne(listYears);
+
+            //creator.generatePDF();
+            creator.generatePDFSAE();
+            creator.generatePDFTopLieu();
+
+            System.out.print("--- PDFs DONE --- \n");
+            double endPdfs = System.currentTimeMillis();
+            optionpane.setMessage(optionpane.getMessage() + "\n - End");
+            System.out.println("--- STOP ---");
+            Platform.exit();
+
+            double end = System.currentTimeMillis();
+            System.out.println("TEMPS LECTURE = " + (endRead - start) / 1000 + "sec\n"
+                    + "TEMPS PNGS = " + (endPngs - endRead) / 1000 + "sec\n"
+                    + "TEMPS PDFS = " + (endPdfs - endPngs) / 1000 + "sec\n"
+                    + "TEMPS EXEC = " + (end - start) / 1000 + "sec\n");
+        }catch (Exception e){e.printStackTrace();}
 
         isDone = true;
     }
 
+    //Génère les graphes pour le mode d'exécution sélection d'équipement
     public void generateChartsSelection(Stage stage, String parSelectionFamille)throws MalformedURLException{
         this.cleanCharts("src/Charts");
         this.barChat(stage);
@@ -122,38 +106,28 @@ public class ChartEngine extends Application {
         }
     }
 
-    //TODO: merge fcts to limitate for loops
-    //TODO: add setStyle fct for X and Y
-    public void generateAllCharts(Stage stage)throws MalformedURLException{
-        this.cleanCharts("src/Charts");
-        this.barChat(stage);
-        String[] tabEquip;
+    //Génère les tout les graphes
+    public void generateAllCharts(Stage stage){
 
-        for(int i = 0; i < data.getTabEquip().length; i++){
+        try {
+            this.cleanCharts("src/Charts");
+            this.barChat(stage);
+            String[] tabEquip;
 
-            tabEquip = data.getTabEquip();
-           // this.generateBarChartRepartitionEquipement(stage, tabEquip[i], i+2);
-            this.generateBarChartRepartitionEquipementSAE(stage, tabEquip[i], i+2);
-            //this.generateLineChartEvolutionEquipement(stage, tabEquip[i], i+2);
-            //this.generateBarChartEvolutionEquipement(stage, tabEquip[i], i+2);
-            //this.generateLineChartEvolutionEquipementSAE(stage, tabEquip[i], i+2);
-            this.generateBarChartEvolutionEquipementSAE(stage, tabEquip[i], i+2);
+            for (int i = 0; i < data.getTabEquip().length; i++) {
 
-            for(String currentLine : data.getTabLinesSAE()){
-                //this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, false);
-                this.generateBarChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, false);
-                /*if(currentLine.equals("M01"))
-                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);
-                else if(currentLine.equals("M03"))
-                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);
-                else if(currentLine.equals("M04"))
-                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);
-                else if(currentLine.equals("M13"))
-                    this.generateLineChartEvolutionEquipementLigne(stage, tabEquip[i], i+2, currentLine, true);*/
+                tabEquip = data.getTabEquip();
+                this.generateBarChartRepartitionEquipementSAE(stage, tabEquip[i], i + 2);
+                this.generateBarChartEvolutionEquipementSAE(stage, tabEquip[i], i + 2);
+
+                for (String currentLine : data.getTabLinesSAE()) {
+                    this.generateBarChartEvolutionEquipementLigne(stage, tabEquip[i], i + 2, currentLine, false);
+                }
             }
-        }
+        }catch (MalformedURLException e){e.printStackTrace();}
     }
 
+    //Génère le graphe de proportion des OTs global
     public void barChat(Stage stage) {
 
         CategoryAxis xAxis = new CategoryAxis();
@@ -202,7 +176,6 @@ public class ChartEngine extends Application {
 
     }
 
-    //TODO: merge RepartitionEquipement et RapartitionEquipementSAE
     public void generateBarChartRepartitionEquipement(Stage stage, String parEquipement, int chartNumber){
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis(0, compareMaxAnnee(listYears.get(0).getMaxOTEquip(parEquipement),listYears.get(1).getMaxOTEquip(parEquipement),listYears.get(2).getMaxOTEquip(parEquipement)),5);
@@ -246,6 +219,7 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
+    //Génère le graphe de répartition des OTs pour un équipement donné
     public void generateBarChartRepartitionEquipementSAE(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -298,7 +272,6 @@ public class ChartEngine extends Application {
 
     }
 
-    //TODO: think about merging EvoEquip et EvoEquipSAE by adding list of SAE lines in Data
     public void generateLineChartEvolutionEquipement(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -379,6 +352,7 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
+    //Génère le graphe d'évolution des OTs pour un équipement donné
     public void generateBarChartEvolutionEquipementSAE(Stage stage, String parEquipement, int chartNumber){
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -550,6 +524,7 @@ public class ChartEngine extends Application {
         stage.setScene(scene);
     }
 
+    //Génère le graphe d'évolution des OTs pour un équipement donné sur une ligne donnée
     public void generateBarChartEvolutionEquipementLigne(Stage stage, String parEquipement, int chartNumber, String parLigne, boolean estSymphonieSAE) throws MalformedURLException {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis(0, compareMaxAnnee(listYears.get(0).getMaxOTEquip(parEquipement),listYears.get(1).getMaxOTEquip(parEquipement),listYears.get(2).getMaxOTEquip(parEquipement))+5,5);
@@ -639,6 +614,7 @@ public class ChartEngine extends Application {
             saveAsPng(scene, "src/Charts/"+ chartNumber+" - barChart-Evolution_"+parLigne+"_" + parEquipement + "_DETAIL.png");
     }
 
+    //Sauvegarde un graphe au format png
     public void saveAsPng(Scene scene, String path) {
         WritableImage image = scene.snapshot(null);
         File file = new File(path);
@@ -649,6 +625,7 @@ public class ChartEngine extends Application {
         }
     }
 
+    //Vide le répertoire contenant les graphes
     public void cleanCharts(String pathToDirectory){
         File chartsDirectory = new File(pathToDirectory);
         File[] directoryListing = chartsDirectory.listFiles();

@@ -17,7 +17,7 @@ import java.util.*;
  * @author Sean Graux
  * @version 1.0
  */
-public class ExtractReader {
+public class ExtractReader { //Lit un extract AGORA au format .xlsx
 
     private XSSFWorkbook extract;
     private ArrayList<Annee> yearList = new ArrayList<Annee>();
@@ -91,6 +91,7 @@ public class ExtractReader {
         Collections.sort(yearList);
     }
 
+    //Gère les données récupérées et les place dans la structure de données
     public void manageCellsContent(Double yearCellContent, String equipmentCellContent, String clientCellContent, String lieuCellContent, String descOTCellContent){
 
         int[] tabDate = parseDate(yearCellContent);

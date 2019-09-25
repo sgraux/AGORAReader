@@ -10,7 +10,7 @@ import java.util.Hashtable;
  * @author Sean Graux
  * @version 1.0
  */
-public class FamilleEquipement {
+public class FamilleEquipement {//Décris une famille d'équipement
 
     private int nbTotalOT; //total OT pour un équipement pendant un mois
     private int nbOTLignesSpe;
@@ -24,6 +24,7 @@ public class FamilleEquipement {
         }
     }
 
+    //Gère la ligne (le client)
     public void manageOT(String parClient) {
         if(data.validateClient(parClient)) {
             hashLignes.put(parClient, hashLignes.get(parClient) + 1);
@@ -32,7 +33,8 @@ public class FamilleEquipement {
         nbTotalOT++;
     }
 
-    public int[] getOTsLines(){//TODO:change name
+    //Retourne un tableau contenant les sommes des OTS pour chaque ligne
+    public int[] getOTsLines(){
         int[] tabOTsLines = new int[15];
         int compteur = 0;
         for(Integer currentInteger : hashLignes.values()) {
@@ -42,10 +44,7 @@ public class FamilleEquipement {
         return tabOTsLines;
     }
 
-    public int getNbOTLignesSpe(){
-        return nbOTLignesSpe;
-    }
-
+    //Retourne la somme d'OTs des lignes 1,3,4 et 13
     public int getNbOTLignesSAE(){
         int nb = 0;
         for(String currentLigne : data.getTabLinesSAE()){
@@ -73,6 +72,10 @@ public class FamilleEquipement {
 
     public int getOTsLigne(String parLigne){
         return hashLignes.get(parLigne);
+    }
+
+    public int getNbOTLignesSpe(){
+        return nbOTLignesSpe;
     }
 
     @Override

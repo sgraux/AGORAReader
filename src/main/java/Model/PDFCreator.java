@@ -22,7 +22,7 @@ import java.util.Date;
  * @author Sean Graux
  * @version 1.0
  */
-public class PDFCreator {
+public class PDFCreator { //Gère la création des PDFs de résultat
 
     private final String pathToPNGs = "src/Charts";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
@@ -31,9 +31,6 @@ public class PDFCreator {
     private static Data data = new Data();
     private static String outputPath;
 
-    /*public PDFCreator(String parOutputPath){
-        outputPath = parOutputPath;
-    }*/
 
 
     public void generatePDF() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
@@ -96,6 +93,7 @@ public class PDFCreator {
         document.close();
     }
 
+    //Génère le pdf contenant le top lieu des incidents
     public void generatePDFTopLieu() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/TopLieu.pdf"));
@@ -106,6 +104,7 @@ public class PDFCreator {
         document.close();
     }
 
+    //Ajoute un titre au pdf
     private static void addTitle(Document document, String parString)
             throws DocumentException {
         Paragraph title = new Paragraph("Extraction OT "+ parString + " --- " + new Date(), catFont);
@@ -114,12 +113,14 @@ public class PDFCreator {
         document.add(title);
     }
 
+    //ajoute une ligne vide au pdf
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
         }
     }
 
+    //Créer un tableau
     public static PdfPTable createTable() throws DocumentException {
 
         PdfPTable table = new PdfPTable(9);
@@ -133,6 +134,7 @@ public class PDFCreator {
         return table;
     }
 
+    //ajoute l'entête du tableau
     public static void addHeader(PdfPTable parTable, String parAnnee){
         Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
 
@@ -165,6 +167,7 @@ public class PDFCreator {
         parTable.addCell(cellM13);
     }
 
+    //Ajoute le top des pannes d'équipement par année et par ligne
     public static void addTabTopPanneEquip(Annee parAnnee, PdfPTable parTable){
         String[][] tabPannes = new String[data.getTabLinesSAE().length][5];//{parAnnee.getTopPanneEquipLigne(1),parAnnee.getTopPanneEquipLigne(3), parAnnee.getTopPanneEquipLigne(4), parAnnee.getTopPanneEquipLigne(13)};
         for(int i = 0; i < data.getTabLinesSAE().length; i++){
@@ -184,6 +187,7 @@ public class PDFCreator {
         }
     }
 
+    //créer le tableau du top lieu des incidents
     public static PdfPTable createTableTopLieu() throws DocumentException{
         PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
@@ -196,6 +200,7 @@ public class PDFCreator {
         return table;
     }
 
+    //Ajoute l'entête du tableau top lieu
     private static void addHeaderTopLieuxGen(PdfPTable table){
         Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
 
@@ -236,6 +241,7 @@ public class PDFCreator {
         table.addCell(cellM13);*/
     }
 
+    //ajoute le top lieu dans son tableau
     private static void addTopLieuxAnnee(Annee parAnnee, PdfPTable parTable){
         Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
         PdfPCell cellN = new PdfPCell(new Phrase("Année " + parAnnee.getAnneeInt(),font));
@@ -256,6 +262,7 @@ public class PDFCreator {
         }
     }
 
+    //Création des cellules
     private static PdfPCell createLabelCell(String text){
 
         // font

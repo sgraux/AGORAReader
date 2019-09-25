@@ -6,7 +6,7 @@ import data.Data;
  * @author Sean Graux
  * @version 1.0
  */
-public class Annee implements Comparable<Annee>{
+public class Annee implements Comparable<Annee>{ //Décris une annee
 
     private int anneeInt;
     private Mois[] mois = new Mois[12];
@@ -19,6 +19,7 @@ public class Annee implements Comparable<Annee>{
         }
     }
 
+    //renvoie un tableau contenant la liste de de la somme des OT de chaque lignes pour une famille d'équipement donnée
     public int[] getSumOTsLines(String parEquipement){
         int[] tabOTsLines = new int[15];
         for(int i = 0; i < 12; i++) tabOTsLines[i] = 0;
@@ -34,6 +35,7 @@ public class Annee implements Comparable<Annee>{
         return tabOTsLines;
     }
 
+    //Renvoie le top  des panne d'équipement sur une ligne (sans pondération)
     public String[] getTopPanneEquipLigne(String parLigne){
         String[] top5PanneEquip = new String[5];
         int[] sommeOTEquipLigne = new int[data.getTabEquip().length];

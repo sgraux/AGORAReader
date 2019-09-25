@@ -1,7 +1,8 @@
 package data;
 
-public class Data {
+public class Data {//Contient les données utilisées par l'outil
 
+    //liste des codes par famille d'équipement (une liste de code par famille)
     private final String[] armoires = {"ARFO"};
     private final String[] centrales = {"CEAS", "PEAS", "DEAS", "PEAL"};
     private final String[] telesono = {"ARTS", "MITS", "RTIP", "RTCL", "TSONO", "PUTS"};
@@ -14,13 +15,16 @@ public class Data {
     private final String[] grillesEtFermeture = {"BL", "BR", "CI", "GC", "GLE", "GR", "GVP", "PB", "PBH", "PTEBV", "PTEC", "PTLBV", "PTLC", "RM", "VR", "VRA", "GS"};
     private final String[] PISI = {"PISI"};
 
+    //Tableau contenant les liste de code
     private final String[][] tabFamille = {armoires, centrales, telesono, video, son,phones, superviseur, escalierMecaniqueEtTrottoir, ascenseur, grillesEtFermeture, PISI};
-    private final String[] tabFamilleCommandeADistance = {"Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
+
+    //private final String[] tabFamilleCommandeADistance = {"Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique"};
 
     private final String[] tabMois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"};
     private final String[] tabLines = {"M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "RER A", "RER B"};
     private final String[] tabLinesSAE = {"M01", "M03", "M04", "M13"};
 
+    //Tableau contenant le nom des familles d'équipement
     private final String[] tabEquip = {"Armoires Fortes", "Centrales d'alarmes", "Telesonorisation", "Caméras", "Sonorisation", "Interphones", "Superviseur", "Commande à distance escalier mécanique et trottoir roulant", "Commande à distance ascenseur", "Commande à distance grilles et fermeture automatique", "PISI"};
 
     public int getIndexFamille(String parFamille){
@@ -34,6 +38,7 @@ public class Data {
         return index;
     }
 
+    //Vérifie que le client est bien une ligne de transport
     public boolean validateClient(String parClient){
         boolean res = false;
         for(String curentLine : tabLines){
@@ -43,6 +48,7 @@ public class Data {
         return res;
     }
 
+    //Donne le nom d'une famille à partir d'un code d'équipement
     public String getFamilleFromCodeTEMP(String parCodeEquipement){
         String famille = "";
         for(int i = 0; i < tabEquip.length; i++){
@@ -54,6 +60,7 @@ public class Data {
         return famille;
     }
 
+    //Donne une chaine de caractère contenant tout les codes pour une famille d'équipement donné
     public String getCodesEquipement(String parEquipement) {
         if (parEquipement.equals("Centrales d'alarmes"))
             return tabToString(centrales);
@@ -80,6 +87,7 @@ public class Data {
         return null;
     }
 
+    //ToString, Getters et Setters
     public String tabToString(String[] parTab) {
         String res = "[ ";
         for (int i = 0; i < parTab.length; i++) {

@@ -1,6 +1,5 @@
 package Model;
 
-
 import Model.PDFCreator;
 import data.Data;
 import javafx.application.Platform;
@@ -16,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-public class MainPanel extends JPanel implements ActionListener {
+public class MainPanel extends JPanel implements ActionListener {//Gère l'IHM et son contenu
 
     private String absoluteInputPath;
     private String absoluteOutputPath;
@@ -77,11 +76,11 @@ public class MainPanel extends JPanel implements ActionListener {
         engine = new ChartEngine(comboBoxFamille.getSelectedItem().toString(), absoluteInputPath, absoluteOutputPath, optionPane);
         try{
             engine.start(stage);
-
         }
-        catch (Exception e){}
+        catch (Exception e){e.printStackTrace();}
     }
 
+    //Gère les actions effectuées
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == buttonInput){
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -142,7 +141,7 @@ public class MainPanel extends JPanel implements ActionListener {
                                 "Erreur",
                                 JOptionPane.ERROR_MESSAGE);
                     }*/
-                } catch (Exception exception) {
+                } catch (Exception exception) {exception.printStackTrace();
                 }
             }
         }
