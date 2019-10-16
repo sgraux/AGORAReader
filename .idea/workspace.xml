@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="XLSExtractToChart:jar" />
+      <artifact name="AgoraReader:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c46abf13-0533-47b0-bd7b-115f04120e74" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/XLSExtractToChart_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/XLSExtractToChart_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XLSExtractToChart.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/XLSExtractToChart.jar" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -22,7 +20,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Model/PDFCreator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="380">
@@ -30,29 +28,16 @@
               <folding>
                 <element signature="docComment;class#PDFCreator#0" />
                 <element signature="method#generatePDF#0;class#PDFCreator#0" />
-                <element signature="e#1776#2347#1" />
-                <element signature="e#1826#2337#1" />
-                <element signature="e#1882#2323#1" />
                 <element signature="method#generatePDFSAE#0;class#PDFCreator#0" />
-                <element signature="e#3007#3734#1" />
-                <element signature="e#3057#3724#1" />
-                <element signature="e#3113#3710#1" />
-                <element signature="e#3311#3692#1" />
                 <element signature="method#generatePDFTopLieu#0;class#PDFCreator#0" />
                 <element signature="method#addTitle#0;class#PDFCreator#0" />
                 <element signature="method#addEmptyLine#0;class#PDFCreator#0" />
-                <element signature="e#4607#4665#1" />
                 <element signature="method#createTable#0;class#PDFCreator#0" />
                 <element signature="method#addHeader#0;class#PDFCreator#0" />
                 <element signature="method#addTabTopPanneEquip#0;class#PDFCreator#0" />
-                <element signature="e#6654#6750#1" />
-                <element signature="e#6866#7173#1" />
-                <element signature="e#6967#7163#1" />
                 <element signature="method#createTableTopLieu#0;class#PDFCreator#0" />
                 <element signature="method#addHeaderTopLieuxGen#0;class#PDFCreator#0" />
                 <element signature="method#addTopLieuxAnnee#0;class#PDFCreator#0" />
-                <element signature="e#9674#10074#1" />
-                <element signature="e#9793#10064#1" />
                 <element signature="method#createLabelCell#0;class#PDFCreator#0" />
                 <element signature="method#createValueCell#0;class#PDFCreator#0" />
                 <element signature="method#createMonthCell#0;class#PDFCreator#0" />
@@ -72,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+            <state relative-caret-position="240">
+              <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -88,16 +73,8 @@
               <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
               <folding>
                 <element signature="method#headerCellStyle#0;class#Style#0" />
-                <element signature="e#439#514#1" />
-                <element signature="e#545#619#1" />
-                <element signature="e#650#726#1" />
-                <element signature="e#758#834#1" />
                 <element signature="method#labelCellStyle#0;class#Style#0" />
                 <element signature="method#valueCellStyle#0;class#Style#0" />
-                <element signature="e#2022#2098#1" />
-                <element signature="e#2130#2204#1" />
-                <element signature="e#2236#2312#1" />
-                <element signature="e#2344#2420#1" />
               </folding>
             </state>
           </provider>
@@ -164,10 +141,10 @@
         <option value="$PROJECT_DIR$/src/main/java/Model/Mainframe.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/MainPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/Mois.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/Model/PDFCreator.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/Style.java" />
         <option value="$PROJECT_DIR$/execution.cmd" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -189,7 +166,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -224,11 +200,12 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569417918230" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571223223590" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -259,7 +236,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.XLSExtractToChart.jar">
+  <component name="RunManager" selected="Application.Mainframe">
     <configuration name="ChartEngine" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Model.ChartEngine" />
       <module name="XLSExtractToChart" />
@@ -313,8 +290,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JAR Application.XLSExtractToChart.jar" />
         <item itemvalue="Application.Mainframe" />
+        <item itemvalue="JAR Application.XLSExtractToChart.jar" />
         <item itemvalue="Application.ChartEngine" />
         <item itemvalue="Application.TestExtractReader" />
         <item itemvalue="Application.HelloWorld" />
@@ -344,9 +321,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3147651" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1261745" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -355,7 +333,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986577" weight="0.28895184" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986577" visible="true" weight="0.28895184" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -694,42 +672,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Model/Style.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
-          <folding>
-            <element signature="method#headerCellStyle#0;class#Style#0" />
-            <element signature="e#439#514#1" />
-            <element signature="e#545#619#1" />
-            <element signature="e#650#726#1" />
-            <element signature="e#758#834#1" />
-            <element signature="method#labelCellStyle#0;class#Style#0" />
-            <element signature="method#valueCellStyle#0;class#Style#0" />
-            <element signature="e#2022#2098#1" />
-            <element signature="e#2130#2204#1" />
-            <element signature="e#2236#2312#1" />
-            <element signature="e#2344#2420#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/execution.cmd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="51" selection-start-column="51" selection-end-column="51" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/PDFCreator.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -738,29 +682,16 @@
           <folding>
             <element signature="docComment;class#PDFCreator#0" />
             <element signature="method#generatePDF#0;class#PDFCreator#0" />
-            <element signature="e#1776#2347#1" />
-            <element signature="e#1826#2337#1" />
-            <element signature="e#1882#2323#1" />
             <element signature="method#generatePDFSAE#0;class#PDFCreator#0" />
-            <element signature="e#3007#3734#1" />
-            <element signature="e#3057#3724#1" />
-            <element signature="e#3113#3710#1" />
-            <element signature="e#3311#3692#1" />
             <element signature="method#generatePDFTopLieu#0;class#PDFCreator#0" />
             <element signature="method#addTitle#0;class#PDFCreator#0" />
             <element signature="method#addEmptyLine#0;class#PDFCreator#0" />
-            <element signature="e#4607#4665#1" />
             <element signature="method#createTable#0;class#PDFCreator#0" />
             <element signature="method#addHeader#0;class#PDFCreator#0" />
             <element signature="method#addTabTopPanneEquip#0;class#PDFCreator#0" />
-            <element signature="e#6654#6750#1" />
-            <element signature="e#6866#7173#1" />
-            <element signature="e#6967#7163#1" />
             <element signature="method#createTableTopLieu#0;class#PDFCreator#0" />
             <element signature="method#addHeaderTopLieuxGen#0;class#PDFCreator#0" />
             <element signature="method#addTopLieuxAnnee#0;class#PDFCreator#0" />
-            <element signature="e#9674#10074#1" />
-            <element signature="e#9793#10064#1" />
             <element signature="method#createLabelCell#0;class#PDFCreator#0" />
             <element signature="method#createValueCell#0;class#PDFCreator#0" />
             <element signature="method#createMonthCell#0;class#PDFCreator#0" />
@@ -770,13 +701,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/execution.cmd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="51" selection-start-column="51" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Model/Style.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
+          <folding>
+            <element signature="method#headerCellStyle#0;class#Style#0" />
+            <element signature="method#labelCellStyle#0;class#Style#0" />
+            <element signature="method#valueCellStyle#0;class#Style#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>XLSExtractToChart:jar</last-edited>
+          <last-edited>AgoraReader:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
