@@ -7,8 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c46abf13-0533-47b0-bd7b-115f04120e74" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Charts/Charts ReadMe" beforeDir="false" afterPath="$PROJECT_DIR$/src/Charts/Charts ReadMe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/ChartEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/ChartEngine.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -23,7 +24,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Model/PDFCreator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
+            <state relative-caret-position="833">
               <caret line="264" column="27" selection-start-line="264" selection-start-column="27" selection-end-line="264" selection-end-column="27" />
               <folding>
                 <element signature="docComment;class#PDFCreator#0" />
@@ -57,11 +58,46 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Model/ChartEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="424">
+              <caret line="633" column="86" selection-start-line="633" selection-start-column="86" selection-end-line="633" selection-end-column="86" />
+              <folding>
+                <element signature="docComment;class#ChartEngine#0" />
+                <element signature="method#ChartEngine#0;class#ChartEngine#0" />
+                <element signature="method#generateChartsSelection#0;class#ChartEngine#0" />
+                <element signature="method#barChat#0;class#ChartEngine#0" />
+                <element signature="method#generateBarChartRepartitionEquipement#0;class#ChartEngine#0" />
+                <element signature="method#generateBarChartRepartitionEquipementSAE#0;class#ChartEngine#0" />
+                <element signature="method#generateLineChartEvolutionEquipement#0;class#ChartEngine#0" />
+                <element signature="method#generateLineChartEvolutionEquipementSAE#0;class#ChartEngine#0" />
+                <element signature="method#generateBarChartEvolutionEquipementSAE#0;class#ChartEngine#0" />
+                <element signature="method#generateLineChartEvolutionEquipementLigne#0;class#ChartEngine#0" />
+                <element signature="method#generateBarChartEvolutionEquipement#0;class#ChartEngine#0" />
+                <element signature="method#generateBarChartEvolutionEquipementLigne#0;class#ChartEngine#0" />
+                <element signature="method#saveAsPng#0;class#ChartEngine#0" />
+                <element signature="method#compareMaxAnnee#0;class#ChartEngine#0" />
+                <element signature="n#!!block;n#getIsDone#0;n#ChartEngine#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Charts/Charts Readme">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="49" selection-start-column="49" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+            <state relative-caret-position="204">
+              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -69,7 +105,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Model/Style.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
+            <state relative-caret-position="68">
               <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
               <folding>
                 <element signature="method#headerCellStyle#0;class#Style#0" />
@@ -135,7 +171,6 @@
         <option value="$PROJECT_DIR$/src/main/java/View/MainPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/data/Data.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/Annee.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Model/ChartEngine.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/ExtractReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/FamilleEquipement.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/Mainframe.java" />
@@ -143,8 +178,10 @@
         <option value="$PROJECT_DIR$/src/main/java/Model/Mois.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/PDFCreator.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/Style.java" />
-        <option value="$PROJECT_DIR$/execution.cmd" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/execution.cmd" />
+        <option value="$PROJECT_DIR$/src/main/java/Model/ChartEngine.java" />
+        <option value="$PROJECT_DIR$/src/Charts/Charts Readme" />
       </list>
     </option>
   </component>
@@ -155,9 +192,9 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="690" />
-    <option name="y" value="245" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="59" />
+    <option name="y" value="280" />
     <option name="width" value="785" />
     <option name="height" value="835" />
   </component>
@@ -166,46 +203,63 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="XLSExtractToChart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="XLSExtractToChart" type="462c0819:PsiDirectoryNode" />
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="XLSExtractToChart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="XLSExtractToChart" type="462c0819:PsiDirectoryNode" />
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="XLSExtractToChart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="XLSExtractToChart" type="462c0819:PsiDirectoryNode" />
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Charts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="XLSExtractToChart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="XLSExtractToChart" type="462c0819:PsiDirectoryNode" />
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="XLSExtractToChart" type="b2602c69:ProjectViewProjectNode" />
-              <item name="XLSExtractToChart" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AGORAReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AGORAReader" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571223223590" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571225269667" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -214,14 +268,14 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Sean\Documents\Project\XLSExtractToChart\src\main\java" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sean\Documents\Project\XLSExtractToChart\src\main\java\Model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="View" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Sean\Documents\Project\XLSExtractToChart\src\main\java\Model" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Sean\Documents\Project\XLSExtractToChart\src\main\java" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -321,10 +375,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1261745" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12739871" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -333,7 +387,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986577" visible="true" weight="0.28895184" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4986577" visible="true" weight="0.2881907" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -387,16 +441,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Doc/index-files/index-1.html" />
     <entry file="file://$PROJECT_DIR$/Doc/index-files/index-13.html" />
-    <entry file="file://$PROJECT_DIR$/Doc/allclasses-frame.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" lean-forward="true" selection-start-column="17" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Doc/index-all.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Doc/allclasses-frame.html" />
+    <entry file="file://$PROJECT_DIR$/Doc/index-all.html" />
     <entry file="file://$PROJECT_DIR$/src/ChartsSAE/2 - barChartSAE_armoire.png" />
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/lineChart.css" />
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/chart.css" />
@@ -426,18 +472,10 @@
     <entry file="file://$PROJECT_DIR$/src/Charts/2 - lineChart_Armoires Fortes_GLOBAL.png" />
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/OT.java" />
     <entry file="file://$PROJECT_DIR$/src/Charts/3 - barChart_Centrales d'alarmes_GLOBAL.png" />
-    <entry file="file://$PROJECT_DIR$/src/Charts/3 - barChart_SAE_Centrales d'alarmes.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Charts/1 - ProportionOts_GLOBAL.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Charts/2 - barChart-Evolution_M01_Armoires Fortes_DETAIL.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Charts/2 - barChart-Evolution_M04_Armoires Fortes_DETAIL.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Charts/3 - barChart_SAE_Centrales d'alarmes.png" />
+    <entry file="file://$PROJECT_DIR$/src/Charts/1 - ProportionOts_GLOBAL.png" />
+    <entry file="file://$PROJECT_DIR$/src/Charts/2 - barChart-Evolution_M01_Armoires Fortes_DETAIL.png" />
+    <entry file="file://$PROJECT_DIR$/src/Charts/2 - barChart-Evolution_M04_Armoires Fortes_DETAIL.png" />
     <entry file="file://$PROJECT_DIR$/src/main/java/data/Data.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
@@ -487,92 +525,6 @@
             <element signature="e#3549#3687#1" />
             <element signature="n#!!block;n#getMoisIndex#0;n#Annee#0" />
             <element signature="method#toString#0;class#Annee#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Model/ChartEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1244">
-          <caret line="627" column="10" selection-start-line="627" selection-start-column="10" selection-end-line="627" selection-end-column="10" />
-          <folding>
-            <element signature="docComment;class#ChartEngine#0" />
-            <element signature="method#ChartEngine#0;class#ChartEngine#0" />
-            <element signature="e#1858#1926#1" />
-            <element signature="method#generateChartsSelection#0;class#ChartEngine#0" />
-            <element signature="e#4307#4428#1" />
-            <element signature="method#barChat#0;class#ChartEngine#0" />
-            <element signature="e#6750#6968#1" />
-            <element signature="e#7124#7342#1" />
-            <element signature="e#7497#7714#1" />
-            <element signature="method#generateBarChartRepartitionEquipement#0;class#ChartEngine#0" />
-            <element signature="e#9166#9269#1" />
-            <element signature="e#9424#9527#1" />
-            <element signature="e#9680#9781#1" />
-            <element signature="method#generateBarChartRepartitionEquipementSAE#0;class#ChartEngine#0" />
-            <element signature="e#11099#11259#1" />
-            <element signature="e#11415#11575#1" />
-            <element signature="e#11729#11887#1" />
-            <element signature="method#generateLineChartEvolutionEquipement#0;class#ChartEngine#0" />
-            <element signature="e#13000#13169#1" />
-            <element signature="e#13325#13494#1" />
-            <element signature="e#13649#13817#1" />
-            <element signature="method#generateLineChartEvolutionEquipementSAE#0;class#ChartEngine#0" />
-            <element signature="e#14951#15120#1" />
-            <element signature="e#15276#15445#1" />
-            <element signature="e#15600#15768#1" />
-            <element signature="method#generateBarChartEvolutionEquipementSAE#0;class#ChartEngine#0" />
-            <element signature="e#16898#17067#1" />
-            <element signature="e#17223#17392#1" />
-            <element signature="e#17547#17715#1" />
-            <element signature="method#generateLineChartEvolutionEquipementLigne#0;class#ChartEngine#0" />
-            <element signature="e#18920#19092#1" />
-            <element signature="e#19248#19420#1" />
-            <element signature="e#19575#19746#1" />
-            <element signature="e#20279#20413#1" />
-            <element signature="e#20453#20530#1" />
-            <element signature="e#20570#20647#1" />
-            <element signature="e#20687#20785#1" />
-            <element signature="e#20825#20902#1" />
-            <element signature="e#20942#21019#1" />
-            <element signature="e#21059#21136#1" />
-            <element signature="e#21176#21253#1" />
-            <element signature="e#21293#21370#1" />
-            <element signature="e#21410#21487#1" />
-            <element signature="e#21527#21604#1" />
-            <element signature="e#21644#21721#1" />
-            <element signature="e#21762#21858#1" />
-            <element signature="method#generateBarChartEvolutionEquipement#0;class#ChartEngine#0" />
-            <element signature="e#22736#22905#1" />
-            <element signature="e#23061#23230#1" />
-            <element signature="e#23385#23553#1" />
-            <element signature="method#generateBarChartEvolutionEquipementLigne#0;class#ChartEngine#0" />
-            <element signature="e#24910#25082#1" />
-            <element signature="e#25238#25410#1" />
-            <element signature="e#25565#25736#1" />
-            <element signature="e#26220#26353#1" />
-            <element signature="e#26393#26469#1" />
-            <element signature="e#26509#26585#1" />
-            <element signature="e#26625#26722#1" />
-            <element signature="e#26762#26838#1" />
-            <element signature="e#26878#26954#1" />
-            <element signature="e#26994#27070#1" />
-            <element signature="e#27110#27186#1" />
-            <element signature="e#27226#27302#1" />
-            <element signature="e#27342#27418#1" />
-            <element signature="e#27458#27534#1" />
-            <element signature="e#27574#27650#1" />
-            <element signature="e#27691#27786#1" />
-            <element signature="method#saveAsPng#0;class#ChartEngine#0" />
-            <element signature="e#28237#28327#0" />
-            <element signature="e#28350#28394#0" />
-            <element signature="method#cleanCharts#0;class#ChartEngine#0" />
-            <element signature="e#28614#28721#1" />
-            <element signature="e#28664#28711#1" />
-            <element signature="method#compareMaxAnnee#0;class#ChartEngine#0" />
-            <element signature="e#28842#28878#1" />
-            <element signature="e#28901#28936#1" />
-            <element signature="n#!!block;n#getIsDone#0;n#ChartEngine#0" />
           </folding>
         </state>
       </provider>
@@ -677,7 +629,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/PDFCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
+        <state relative-caret-position="833">
           <caret line="264" column="27" selection-start-line="264" selection-start-column="27" selection-end-line="264" selection-end-column="27" />
           <folding>
             <element signature="docComment;class#PDFCreator#0" />
@@ -701,16 +653,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/execution.cmd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="51" selection-start-column="51" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/Style.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
+        <state relative-caret-position="68">
           <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
           <folding>
             <element signature="method#headerCellStyle#0;class#Style#0" />
@@ -722,8 +667,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        <state relative-caret-position="204">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/execution.cmd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="51" selection-start-column="51" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Model/ChartEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="633" column="86" selection-start-line="633" selection-start-column="86" selection-end-line="633" selection-end-column="86" />
+          <folding>
+            <element signature="docComment;class#ChartEngine#0" />
+            <element signature="method#ChartEngine#0;class#ChartEngine#0" />
+            <element signature="method#generateChartsSelection#0;class#ChartEngine#0" />
+            <element signature="method#barChat#0;class#ChartEngine#0" />
+            <element signature="method#generateBarChartRepartitionEquipement#0;class#ChartEngine#0" />
+            <element signature="method#generateBarChartRepartitionEquipementSAE#0;class#ChartEngine#0" />
+            <element signature="method#generateLineChartEvolutionEquipement#0;class#ChartEngine#0" />
+            <element signature="method#generateLineChartEvolutionEquipementSAE#0;class#ChartEngine#0" />
+            <element signature="method#generateBarChartEvolutionEquipementSAE#0;class#ChartEngine#0" />
+            <element signature="method#generateLineChartEvolutionEquipementLigne#0;class#ChartEngine#0" />
+            <element signature="method#generateBarChartEvolutionEquipement#0;class#ChartEngine#0" />
+            <element signature="method#generateBarChartEvolutionEquipementLigne#0;class#ChartEngine#0" />
+            <element signature="method#saveAsPng#0;class#ChartEngine#0" />
+            <element signature="method#compareMaxAnnee#0;class#ChartEngine#0" />
+            <element signature="n#!!block;n#getIsDone#0;n#ChartEngine#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Charts/Charts Readme">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="49" selection-start-column="49" selection-end-column="49" />
         </state>
       </provider>
     </entry>

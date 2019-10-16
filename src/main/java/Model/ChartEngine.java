@@ -631,7 +631,8 @@ public class ChartEngine extends Application { //Génère les graphes
         File[] directoryListing = chartsDirectory.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                child.delete();
+                if(child.getName().contains("png") || child.getName().contains("pdf"))
+                    child.delete();
             }
         }
 
