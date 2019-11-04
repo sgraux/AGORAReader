@@ -75,7 +75,7 @@ public class ExtractReader { //Lit un extract AGORA au format .xlsx
                     case 2:
                         clientCellContent  = currentCell.getStringCellValue();
                         break;
-                    case 3:
+                    case 4:
                         descOTCellContent = currentCell.getStringCellValue();
                         break;
                 }

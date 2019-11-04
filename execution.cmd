@@ -1,1 +1,1 @@
-java -jar -Xmx1620m XLSExtractToChart.jar
+java -jar -Xmx1500m XLSExtractToChart.jar

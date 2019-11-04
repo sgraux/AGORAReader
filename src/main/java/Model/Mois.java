@@ -35,8 +35,12 @@ public class Mois { //Décris un mois
         }*/
         String famille = data.getFamilleFromCodeTEMP(parCodeEquipement);
         int indiceFamille = data.getIndexFamille(famille);
-        if(indiceFamille != -1){
-            listeEquipements[indiceFamille].manageOT(parClient);
+        if(!famille.equals("")) {
+            if (famille.contains("Commande")) {
+                if (parDescOT.contains("COMMANDE"))
+                    listeEquipements[indiceFamille].manageOT(parClient);
+            }
+            else listeEquipements[indiceFamille].manageOT(parClient);
         }
 
         if(!parClient.equals("NA")) overallOTsDEBUG ++;

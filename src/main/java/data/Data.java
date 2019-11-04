@@ -38,6 +38,17 @@ public class Data {//Contient les données utilisées par l'outil
         return index;
     }
 
+    public int getIndexLigne(String parClient){
+        int i = 0;
+        int index = -1;
+        while(i < tabLines.length && index < 0){
+            if(parClient.equals(tabLines[i]))
+                index = i;
+            i++;
+        }
+        return index;
+    }
+
     //Vérifie que le client est bien une ligne de transport
     public boolean validateClient(String parClient){
         boolean res = false;
