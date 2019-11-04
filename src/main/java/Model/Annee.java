@@ -105,14 +105,6 @@ public class Annee implements Comparable<Annee>{ //Décris une annee
         return sum;
     }
 
-    public String[][][] getMaxLieuAnnee(){
-        String[][][] resMax = new String[12][3][2];
-        for(int i = 0; i < 12; i++){
-            resMax[i] = mois[i].getMaxLieu();
-        }
-        return resMax;
-    }
-
     public int getMaxOTEquip(String parEquipement){
         int max = 0;
         int maxOT = 0;

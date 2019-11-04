@@ -77,7 +77,7 @@ public class ChartEngine extends Application { //Génère les graphes
 
             //creator.generatePDF();
             creator.generatePDFSAE();
-            creator.generatePDFTopLieu();
+            //creator.generatePDFTopLieu();
 
             System.out.print("--- PDFs DONE --- \n");
             double endPdfs = System.currentTimeMillis();

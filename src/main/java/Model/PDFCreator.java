@@ -94,7 +94,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
     }
 
     //Génère le pdf contenant le top lieu des incidents
-    public void generatePDFTopLieu() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
+    /*public void generatePDFTopLieu() throws FileNotFoundException, DocumentException, MalformedURLException, Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(pathToPNGs + "/TopLieu.pdf"));
         document.open();
@@ -102,7 +102,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
 
         document.add(this.createTableTopLieu());
         document.close();
-    }
+    }*/
 
     //Ajoute un titre au pdf
     private static void addTitle(Document document, String parString)
@@ -188,7 +188,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
     }
 
     //créer le tableau du top lieu des incidents
-    public static PdfPTable createTableTopLieu() throws DocumentException{
+    /*public static PdfPTable createTableTopLieu() throws DocumentException{
         PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
 
@@ -211,7 +211,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
         PdfPCell cellM1 = new PdfPCell(new Phrase("General",font));
         /*PdfPCell cellM3 = new PdfPCell(new Phrase("Metro 3",font));
         PdfPCell cellM4 = new PdfPCell(new Phrase("Metro 4",font));
-        PdfPCell cellM13 = new PdfPCell(new Phrase("Metro 13",font));*/
+        PdfPCell cellM13 = new PdfPCell(new Phrase("Metro 13",font));
 
         cellTitle.setColspan(5);
         cellAnnee.setColspan(1);
@@ -220,7 +220,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
         cellM1.setColspan(2);
         /*cellM3.setColspan(2);
         cellM4.setColspan(2);
-        cellM13.setColspan(2);*/
+        cellM13.setColspan(2);
 
         Style.headerCellStyle(cellTitle, 0);
         Style.headerCellStyle(cellAnnee, 0);
@@ -229,7 +229,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
         Style.headerCellStyle(cellM1, 1);
         /*Style.headerCellStyle(cellM3, 3);
         Style.headerCellStyle(cellM4, 4);
-        Style.headerCellStyle(cellM13, 13);*/
+        Style.headerCellStyle(cellM13, 13);
 
         table.addCell(cellTitle);
         table.addCell(cellAnnee);
@@ -238,11 +238,11 @@ public class PDFCreator { //Gère la création des PDFs de résultat
         table.addCell(cellM1);
         /*table.addCell(cellM3);
         table.addCell(cellM4);
-        table.addCell(cellM13);*/
+        table.addCell(cellM13);
     }
 
     //ajoute le top lieu dans son tableau
-    private static void addTopLieuxAnnee(Annee parAnnee, PdfPTable parTable){
+    /*private static void addTopLieuxAnnee(Annee parAnnee, PdfPTable parTable){
         Font font = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
         PdfPCell cellN = new PdfPCell(new Phrase("Année " + parAnnee.getAnneeInt(),font));
         cellN.setRowspan(36);
@@ -260,7 +260,7 @@ public class PDFCreator { //Gère la création des PDFs de résultat
                 parTable.addCell(new PdfPCell(new Phrase(tabTop[month][top][1],font)));
             }
         }
-    }
+    }*/
 
     //Création des cellules
     private static PdfPCell createLabelCell(String text){

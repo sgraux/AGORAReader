@@ -76,15 +76,12 @@ public class ExtractReader { //Lit un extract AGORA au format .xlsx
                         clientCellContent  = currentCell.getStringCellValue();
                         break;
                     case 3:
-                        lieuCellContent = currentCell.getStringCellValue();
-                        break;
-                    case 4:
                         descOTCellContent = currentCell.getStringCellValue();
                         break;
                 }
                 countCell++;
             }
-            this.manageCellsContent(yearCellContent, equipmentCellContent, clientCellContent, lieuCellContent, descOTCellContent);
+            this.manageCellsContent(yearCellContent, equipmentCellContent, clientCellContent, descOTCellContent);
             countCell = 0;
         }
         //System.out.println(testCountRows);
@@ -92,7 +89,7 @@ public class ExtractReader { //Lit un extract AGORA au format .xlsx
     }
 
     //Gère les données récupérées et les place dans la structure de données
-    public void manageCellsContent(Double yearCellContent, String equipmentCellContent, String clientCellContent, String lieuCellContent, String descOTCellContent){
+    public void manageCellsContent(Double yearCellContent, String equipmentCellContent, String clientCellContent, String descOTCellContent){
 
         int[] tabDate = parseDate(yearCellContent);
         int currentYear = tabDate[1];
@@ -100,39 +97,39 @@ public class ExtractReader { //Lit un extract AGORA au format .xlsx
 
         if(yearList.isEmpty()){
             yearList.add(new Annee(currentYear));
-            yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+            yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
         }
         else{
             if(yearList.size() == 1) {
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
             }
             else if(yearList.size() == 2){
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
                 else{
                     yearList.add(new Annee(currentYear));
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
             }
             else{
                 if (yearList.get(0).getAnneeInt() == currentYear) {
-                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(0).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
                 else if (yearList.get(1).getAnneeInt() == currentYear) {
-                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(1).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
                 else if (yearList.get(2).getAnneeInt() == currentYear) {
-                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), parse(lieuCellContent), descOTCellContent);
+                    yearList.get(2).getMoisIndex(currentMonth-1).manageEquipement(equipmentCellContent, parse(clientCellContent), descOTCellContent);
                 }
             }
         }
